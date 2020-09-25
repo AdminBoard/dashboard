@@ -1,11 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
-  import Page from "./Router.svelte";
-
-  onMount(() => {
-    console.log(Page());
-  });
+  import { Page } from "./Router.svelte";
 </script>
 
 <style>
