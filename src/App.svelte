@@ -3,39 +3,24 @@
 
   import { Page } from "./Router.svelte";
   import { isLogin } from "./Auth.svelte";
+
+  import Drawer, {
+    AppContent,
+    Content,
+    Header,
+    Title,
+    Subtitle,
+    Scrim,
+  } from "@smui/drawer";
 </script>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
-
 {#if isLogin() === true}
-  <svelte:component this={Page()} />
+  <Drawer variant="modal" open="true">
+    <Content>Menu here</Content>
+  </Drawer>
+  <AppContent>
+    <svelte:component this={Page()} />
+  </AppContent>
 {:else if isLogin() === false}
   <svelte:component this={Page()} />
 {:else}Loading...{/if}
-<main>
-  <h1>Hello!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p>
-</main>
