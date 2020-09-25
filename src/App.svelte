@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
 
   import { Page } from "./Router.svelte";
+  import { isLogin } from "./Auth.svelte";
 </script>
 
 <style>
@@ -26,6 +27,11 @@
   }
 </style>
 
+{#if isLogin() === true}
+  <svelte:component this={Page()} />
+{:else if isLogin() === false}
+  <svelte:component this={Page()} />
+{:else}Loading...{/if}
 <main>
   <h1>Hello!</h1>
   <p>
