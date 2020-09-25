@@ -1,7 +1,4 @@
 /node_modules/
-/dist/
+/public/build/
+
 .DS_Store
-**/.history
-/src/tmp/
-.routify
-.netlify
