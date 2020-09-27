@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
+import preprocess from 'svelte-preprocess'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -46,6 +47,7 @@ export default {
 			css: css => {
 				css.write('bundle.css')
 			},
+			preprocess: preprocess(),
 		}),
 
 		// If you have external dependencies installed from
@@ -65,7 +67,6 @@ export default {
 				['sass', {
 					includePaths: [
 						'./src/theme',
-						'./theme',
 						'./node_modules'
 					]
 				}]

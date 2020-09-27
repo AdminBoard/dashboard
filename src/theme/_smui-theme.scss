@@ -3,13 +3,14 @@
 //
 
 @import "@material/theme/color-palette";
+@import 'color';
 
 // Svelte Colors!
-$mdc-theme-primary: #ff3e00;
-$mdc-theme-secondary: #676778;
+$mdc-theme-primary: $primary;
+$mdc-theme-secondary: $secondary;
 // Other Svelte color: #40b3ff
 
-$mdc-theme-background: #fff;
-$mdc-theme-surface: #fff;
+$mdc-theme-background: #424242;
+$mdc-theme-surface: #424242;
 
 $mdc-theme-error: $material-color-red-900;

@@ -1,8 +1,7 @@
 <script>
-  import { onMount } from "svelte";
-
   import { Page } from "./Router.svelte";
-  import { isLogin } from "./Auth.svelte";
+  import { session } from "./Session.svelte";
+  import Sidebar from "./sidebar/component.svelte";
 
   import Drawer, {
     AppContent,
@@ -14,13 +13,19 @@
   } from "@smui/drawer";
 </script>
 
-{#if isLogin() === true}
-  <Drawer variant="modal" open="true">
-    <Content>Menu here</Content>
-  </Drawer>
-  <AppContent>
-    <svelte:component this={Page()} />
-  </AppContent>
-{:else if isLogin() === false}
+{#if $session == null}
+  loading...
+{:else if $session.id == ''}
   <svelte:component this={Page()} />
-{:else}Loading...{/if}
+{:else}
+  <div class="drawer-container">
+    <Drawer>
+      <Content>
+        <Sidebar />
+      </Content>
+    </Drawer>
+    <AppContent class="app-content">
+      <svelte:component this={Page()} />
+    </AppContent>
+  </div>
+{/if}
