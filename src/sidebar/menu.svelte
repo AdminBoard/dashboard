@@ -1,5 +1,7 @@
 <script>
   import Ripple from "@smui/ripple";
+  import { Link } from "svelte-routing";
+
   export let data = { caption: "", kind: "" };
   // export let caption;
 </script>
@@ -23,9 +25,11 @@
   }
 </style>
 
+<Link to="/home">Adminboard</Link>
+
 {#if data.kind == 'page'}
   <div class="menu page" use:Ripple={{ ripple: true, color: 'secondary' }}>
-    <a href={data.path}> {data.caption} </a>
+    <Link to={data.path}>{data.caption}</Link>
   </div>
 {:else if data.kind == 'group'}
   <div class="menu">{data.caption}</div>

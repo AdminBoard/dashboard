@@ -1,31 +1,32 @@
 <script>
-  import { Page } from "./Router.svelte";
+  import { Router, Route } from "svelte-routing";
   import { session } from "./Session.svelte";
-  import Sidebar from "./sidebar/component.svelte";
+  import Sidebar from "./sidebar";
+  import Home from "./pages/Home.svelte";
+  import PageRenderer from "./pages/PageRenderer.svelte";
+  import Drawer, { AppContent, Content } from "@smui/drawer";
 
-  import Drawer, {
-    AppContent,
-    Content,
-    Header,
-    Title,
-    Subtitle,
-    Scrim,
-  } from "@smui/drawer";
+  export let url = "";
 </script>
 
 {#if $session == null}
   loading...
-{:else if $session.id == ''}
-  <svelte:component this={Page()} />
 {:else}
-  <div class="drawer-container">
-    <Drawer>
-      <Content>
-        <Sidebar />
-      </Content>
-    </Drawer>
-    <AppContent class="app-content">
-      <svelte:component this={Page()} />
-    </AppContent>
-  </div>
+  <Router {url}>
+    <div class="drawer-container">
+      <Drawer>
+        <Content>
+          <Sidebar />
+        </Content>
+      </Drawer>
+      <AppContent class="app-content">
+        <Route path="/home">
+          <Home />
+        </Route>
+        <Route path="/">
+          <PageRenderer />
+        </Route>
+      </AppContent>
+    </div>
+  </Router>
 {/if}
