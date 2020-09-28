@@ -1,13 +1,13 @@
 <script>
-  import Router, { Renderer, onChange } from "./router";
+  import Router, { RouterOutlet, onChange } from "./router";
   import { session } from "./Session.svelte";
   import Sidebar from "./sidebar";
   import Drawer, { AppContent, Content } from "@smui/drawer";
   import Home from "./pages/Home.svelte";
-
-  console.log(Router);
+  import Page from "./pages/Page.svelte";
 
   Router.register("/home", Home);
+  Router.register("*", Page);
   Router.start();
 </script>
 
@@ -21,7 +21,7 @@
       </Content>
     </Drawer>
     <AppContent>
-      <Renderer />
+      <RouterOutlet />
     </AppContent>
   </div>
 {/if}
