@@ -1,6 +1,7 @@
 <script>
   import { Post } from "../Api.svelte";
   import Menu from "./menu.svelte";
+  import { Link } from "../router";
 
   let menu = [];
 
@@ -27,6 +28,7 @@
 </style>
 
 <div class="list">
+  <Link href="/home">Adminboard</Link>
   {#each menu as m}
     {#if m.kind == 'group'}
       <Menu bind:data={m} />

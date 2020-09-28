@@ -4,4 +4,9 @@
     const js = await resp.json();
     return js;
   }
+  export async function Get(url) {
+    const resp = await fetch(url, { method: "GET" });
+    const js = await resp.json();
+    return js;
+  }
 </script>
