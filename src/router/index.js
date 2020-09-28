@@ -1,6 +1,6 @@
 import RouterOutlet from './RouterOutlet.svelte'
 import Link from './Link.svelte'
-import Err404 from "../pages/err404.svelte"
+import ErrNotFound from "../pages/ErrNotFound.svelte"
 import { writable, readable } from "svelte/store"
 
 
@@ -13,7 +13,7 @@ const onChange = readable(null, (set) => {
     pageStore.subscribe((page) => set(page))
 })
 
-routeMap.set('/404', Err404)
+routeMap.set('/not-found', ErrNotFound)
 
 //TODO using regex for path finding 
 const navigate = (path) => {
@@ -22,7 +22,7 @@ const navigate = (path) => {
         if (page == null) {
             page = routeMap.get('*')
         }
-        if (page == null) page = Err404
+        if (page == null) page = ErrNotFound
         activePage = page
         pageStore.set(activePage)
         history.pushState(null, "", path)

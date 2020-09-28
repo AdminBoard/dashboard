@@ -8,7 +8,7 @@
         .then((resp) => {
             if (resp.status == 0) {
             } else {
-                Router.navigate("/404");
+                Router.navigate("/not-found");
             }
         })
         .catch((e) => console.log(e));
