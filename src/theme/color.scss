@@ -1,6 +1,8 @@
-$primary: #9C27B0;
-$primary-lite: #E1BEE7;
-$primary-dark:#311B92;
+@import "@material/theme/color-palette";
+
+$primary: $material-color-brown-500;
+$primary-lite: #E0E0E0;
+$primary-dark: $material-color-brown-800;
 $primary-dark-text:#eeeeee;
 
 

@@ -11,6 +11,17 @@
   Router.start();
 </script>
 
+<style lang="scss">
+  @import "theme/color";
+  :global(body) {
+    background-color: $primary-dark;
+  }
+  :global(.drawer-container .content) {
+    flex: 1;
+    background-color: $primary-lite;
+  }
+</style>
+
 {#if $session == null}
   loading...
 {:else}
@@ -20,7 +31,7 @@
         <Sidebar />
       </Content>
     </Drawer>
-    <AppContent>
+    <AppContent class="content">
       <RouterOutlet />
     </AppContent>
   </div>

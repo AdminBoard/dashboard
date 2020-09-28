@@ -1,3 +1,3 @@
-import Sidebar from './sidebar.svelte'
+import Sidebar from './Sidebar.svelte'
 
 export default Sidebar

@@ -1,6 +1,6 @@
 <script>
   import { Post } from "../Api.svelte";
-  import Menu from "./menu.svelte";
+  import Menu from "./Menu.svelte";
   import { Link } from "../router";
 
   let menu = [];
@@ -16,9 +16,7 @@
   @import "../theme/color";
 
   .list {
-    height: calc(100%-16px);
-    // background-color: $primary-dark;
-    color: #fff;
+    height: 100vh;
     padding: 8px;
 
     & .submenu {

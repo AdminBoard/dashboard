@@ -2,7 +2,6 @@
 // MDC Theme
 //
 
-@import "@material/theme/color-palette";
 @import 'color';
 
 // Svelte Colors!
@@ -10,7 +9,7 @@ $mdc-theme-primary: $primary;
 $mdc-theme-secondary: $secondary;
 // Other Svelte color: #40b3ff
 
-$mdc-theme-background: #424242;
-$mdc-theme-surface: #424242;
+$mdc-theme-background: $primary-dark;
+$mdc-theme-surface: $primary-dark;
 
 $mdc-theme-error: $material-color-red-900;
