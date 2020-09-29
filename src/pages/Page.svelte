@@ -13,6 +13,7 @@
             if (resp.status == 0) {
                 title = resp.data.title;
                 widgets = resp.data.widgets;
+                console.log(widgets);
             } else Router.navigate("/not-found");
         })
         .catch((e) => console.log(e));

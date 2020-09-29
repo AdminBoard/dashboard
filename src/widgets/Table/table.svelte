@@ -1,6 +1,7 @@
 <script>
     import { Post } from "../../Api.svelte";
     import Cell from "./cell.svelte";
+    import Title from "./title.svelte";
 
     export let dataSource;
     export let params;
@@ -33,6 +34,7 @@
     @import "table";
 </style>
 
+<Title caption={params.title} />
 <table>
     {#if params != null}
         <tr>
