@@ -8,8 +8,6 @@
 <style lang="scss">
   @import "../theme/color";
   .menu {
-    padding: 8px;
-    border-radius: 8px;
     &.page {
       cursor: pointer;
       &:hover {
@@ -28,5 +26,5 @@
     <Link href={data.path}>{data.caption}</Link>
   </div>
 {:else if data.kind == 'group'}
-  <div class="menu">{data.caption}</div>
+  <div class="menu rounded">{data.caption}</div>
 {:else}{data.caption}{/if}

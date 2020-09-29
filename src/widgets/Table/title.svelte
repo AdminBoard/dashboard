@@ -1,6 +1,5 @@
 <script>
     import Menu from "./menu.svelte";
-    import Select, { Option } from "@smui/select";
 
     export let caption;
     export let filteredColumns = [];
@@ -23,6 +22,9 @@
             align-items: center;
             margin-right: 16px;
         }
+        & .select {
+            font-size: 0.8em;
+        }
     }
 </style>
 
@@ -30,13 +32,13 @@
     <div class="title">
         <div class="caption">{caption}</div>
         <Menu icon="search" tooltip="Filter">
-            <Select>
+            <select class="select rounded">
                 {#each filteredColumns as col}
-                    <Option>
+                    <option value={col.id}>
                         <div>{col.label}</div>
-                    </Option>
+                    </option>
                 {/each}
-            </Select>
+            </select>
         </Menu>
     </div>
 {/if}
