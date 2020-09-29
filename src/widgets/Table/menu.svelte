@@ -1,62 +1,44 @@
 <script>
     import { Icon } from "@smui/common";
+    import { onMount } from "svelte";
     export let icon;
+    export let tooltip;
 
     let show = false;
     let focus = false;
+    let popoverContainer;
 
     function hide() {
         if (!focus) show = false;
     }
+
+    function popover() {
+        focus = true;
+        setTimeout(() => {
+            popoverContainer.focus();
+        }, 200);
+    }
 </script>
 
 <style lang="scss">
-    @import "../../theme/color";
-
-    .icon {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        height: 42px;
-        &:hover {
-            color: $secondary;
-        }
-    }
-    .popover {
-        background-color: $primary-dark;
-        padding: 8px;
-        margin-top: -4px;
-        border-radius: 4px;
-        font-size: 0.8em;
-        position: absolute;
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0.1s, opacity 0.1s ease-out;
-        transition-duration: 100ms;
-        box-shadow: 0 0 8px $primary-dark;
-
-        &.show {
-            visibility: visible;
-            opacity: 1;
-        }
-    }
+    @import "menu";
 </style>
 
-<div>
+<div class="container">
     <div
         class="icon"
-        class:show
-        on:mouseover={() => (show = true)}
-        on:mouseleave={() => (show = false)}>
-        <Icon class="material-icons">{icon}</Icon>
-    </div>
-    <div
-        class="popover"
-        class:show={show || focus}
-        tabindex="-1"
+        class:hover={show || focus}
         on:mouseover={() => (show = true)}
         on:mouseleave={() => (show = false)}
-        on:focus={() => (focus = true)}
+        on:click={popover}>
+        <Icon class="material-icons">{icon}</Icon>
+    </div>
+    <div class="tooltip" class:show={show && !focus}>{tooltip}</div>
+    <div
+        bind:this={popoverContainer}
+        class="popover"
+        class:show={focus}
+        tabindex="-1"
         on:blur={() => (focus = false)}>
         <slot />
     </div>

@@ -47,7 +47,7 @@
         {#if data != null}
             {#each data as row, i}
                 <tr
-                    class:even={i % 2 == 0}
+                    class:odd={i % 2 == 1}
                     class:tenth={(i + 1) % 10 == 0 && i > 0}>
                     {#each visibleColumns as col}
                         <td

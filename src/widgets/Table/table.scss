@@ -18,7 +18,7 @@ table {
         &:last-child td {
             border-bottom: 1px solid $primary;
         }
-        &.even {
+        &.odd {
             background-color: rgba($color: $primary-dark, $alpha: 0.1);
         }
         &.tenth {

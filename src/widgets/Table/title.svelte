@@ -27,7 +27,7 @@
 {#if caption != null}
     <div class="title">
         <div class="caption">{caption}</div>
-        <Menu icon="search">
+        <Menu icon="search" tooltip="Filter">
             {#each filteredColumns as col}
                 <div>{col}</div>
             {/each}
