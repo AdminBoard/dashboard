@@ -18,6 +18,7 @@
   .list {
     height: 100vh;
     padding: 8px;
+    position: fixed;
 
     & .submenu {
       margin-left: 16px;

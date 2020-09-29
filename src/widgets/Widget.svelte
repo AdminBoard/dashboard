@@ -1,8 +1,7 @@
 <script>
-    import Table from "./Table.svelte";
+    import Table from "./Table";
 
     export let content;
-    // console.log(content);
 </script>
 
 {#if content != null}

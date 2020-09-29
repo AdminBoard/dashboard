@@ -1,0 +1,59 @@
+@import "../../theme/color";
+
+table {
+    width: calc(100%-16px);
+    margin: 8px;
+    border-radius: 8px;
+    flex: 1;
+    border: none;
+    border-collapse: collapse;
+
+
+    & tr {
+        &:not(:last-child) {
+            & td {
+                border-bottom: 1px solid $primary-lite;
+            }
+        }
+        &:last-child td {
+            border-bottom: 1px solid $primary;
+        }
+        &.even {
+            background-color: rgba($color: $primary-dark, $alpha: 0.1);
+        }
+        &.tenth {
+            background-color: rgba($color: $secondary-dark, $alpha: 0.1);
+        }
+        & th {
+            background-color: $primary-dark;
+            color: $primary-dark-text;
+            padding: 4px;
+            &:first-child {
+                border-top-left-radius: 4px;
+            }
+            &:last-child {
+                border-top-right-radius: 4px;
+            }
+        }
+    
+        & td {
+            white-space: break-spaces;
+            border-left: 1px solid $primary;
+            padding: 4px;
+            font-size: 0.8em;
+            border-bottom: 1px solid $primary-lite;
+            vertical-align: top;
+    
+            &.right {
+                text-align: right;
+            }
+            &.center {
+                text-align: center;
+            }
+    
+            &:last-child {
+                border-right: 1px solid $primary;
+            }
+        }
+    }
+}

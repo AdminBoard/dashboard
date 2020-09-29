@@ -1,10 +1,11 @@
 @import "@material/theme/color-palette";
 
-$primary: $material-color-brown-500;
-$primary-lite: #E0E0E0;
-$primary-dark: $material-color-brown-800;
+$primary: $material-color-grey-500;
+$primary-lite: $material-color-grey-50;
+$primary-dark: $material-color-grey-900;
 $primary-dark-text:#eeeeee;
 
 
 
-$secondary: #F44336;
+$secondary: $material-color-deep-orange-500;
+$secondary-dark: $material-color-deep-orange-900;
