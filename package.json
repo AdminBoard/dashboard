@@ -15,6 +15,7 @@
     "@smui/drawer": "^1.0.0",
     "@smui/icon-button": "^1.0.0",
     "@smui/ripple": "^1.0.0",
+    "@smui/select": "^1.0.0",
     "postcss": "^8.1.0",
     "rollup": "^2.3.4",
     "rollup-plugin-livereload": "^2.0.0",

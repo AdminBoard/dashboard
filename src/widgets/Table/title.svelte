@@ -1,8 +1,10 @@
 <script>
     import Menu from "./menu.svelte";
+    import Select, { Option } from "@smui/select";
 
     export let caption;
     export let filteredColumns = [];
+    console.log(filteredColumns);
 </script>
 
 <style lang="scss">
@@ -28,9 +30,13 @@
     <div class="title">
         <div class="caption">{caption}</div>
         <Menu icon="search" tooltip="Filter">
-            {#each filteredColumns as col}
-                <div>{col}</div>
-            {/each}
+            <Select>
+                {#each filteredColumns as col}
+                    <Option>
+                        <div>{col.label}</div>
+                    </Option>
+                {/each}
+            </Select>
         </Menu>
     </div>
 {/if}
