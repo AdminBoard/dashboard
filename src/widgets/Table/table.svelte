@@ -3,13 +3,14 @@
     import Cell from "./cell.svelte";
     import Title from "./title.svelte";
 
+    export let title;
     export let dataSource;
     export let params;
 
     let visibleColumns = [];
+    let filteredColumns = [];
     let data;
 
-    console.log(params.columns);
     function reload() {
         if (dataSource == null || dataSource == "") return;
         Post(dataSource)
@@ -23,6 +24,7 @@
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false)
                 visibleColumns.push(el);
+            if (el.filter != null) filteredColumns.push(el);
         });
     }
 
@@ -34,7 +36,7 @@
     @import "table";
 </style>
 
-<Title caption={params.title} />
+<Title caption={title} bind:filteredColumns />
 <table>
     {#if params != null}
         <tr>
