@@ -20,14 +20,14 @@
 
     function reloadData() {
         if (dataSource == null || dataSource == "") return;
-        let params = {};
+        let filters = {};
         for (const key in filterParams) {
-            params[key] = {
+            filters[key] = {
                 value: filterParams[key].value,
                 filter: filterParams[key].filter,
             };
         }
-        Post(dataSource, params)
+        Post(dataSource, { filters: filters })
             .then((resp) => {
                 if (resp.status == 0) data = resp.data;
             })
