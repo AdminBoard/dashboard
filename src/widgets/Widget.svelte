@@ -4,6 +4,7 @@
 
     export let title;
     export let content;
+    export let page;
 </script>
 
 {#if content != null}
@@ -11,7 +12,8 @@
         <Table
             {title}
             dataSource={content.data_source}
-            params={content.params} />
+            params={content.params}
+            {page} />
         <!-- {:else if content.name == 'Topbar'}
         <Topbar params={content.params} /> -->
     {/if}

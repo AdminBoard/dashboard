@@ -8,6 +8,7 @@
     export let title;
     export let dataSource;
     export let params;
+    export let page;
 
     let titleComponent;
 
@@ -27,6 +28,7 @@
                 filter: filterParams[key].filter,
             };
         }
+        page.save("filter", filterParams);
         Post(dataSource, { filters: filters })
             .then((resp) => {
                 if (resp.status == 0) data = resp.data;
@@ -34,7 +36,10 @@
             .catch((e) => console.log(e));
     }
 
-    function processParams() {
+    function init() {
+        let filter = page.get("filter");
+        if (filter != null) filterParams = JSON.parse(filter);
+
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
             if (el.filter != null) filterCols.push(el);
@@ -42,9 +47,10 @@
         visibleCols = visibleCols; //refresh view
     }
     onMount(() => {
-        processParams();
         reloadData();
     });
+
+    init();
 </script>
 
 <style lang="scss">

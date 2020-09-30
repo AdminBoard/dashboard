@@ -15,9 +15,11 @@
 <style lang="scss">
   @import "../theme/color";
 
-  .list {
+  .container {
     height: 100vh;
+    width: calc(256px-16px);
     position: fixed;
+    background-color: $primary-dark;
 
     & .submenu {
       margin-left: 16px;
@@ -25,7 +27,7 @@
   }
 </style>
 
-<div class="list padding">
+<div class="container padding">
   <Link href="/home">Adminboard</Link>
   {#each menu as m}
     {#if m.kind == 'group'}

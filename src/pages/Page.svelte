@@ -8,6 +8,16 @@
     let title;
     let widgets;
 
+    let page = {
+        save: (key, value) => {
+            console.log(path + "." + key, JSON.stringify(value));
+            localStorage.setItem(path + "." + key, JSON.stringify(value));
+        },
+        get: (key) => {
+            return localStorage.getItem(path + "." + key);
+        },
+    };
+
     Get("/api?page=" + path)
         .then((resp) => {
             if (resp.status == 0) {
@@ -39,7 +49,7 @@
         <div class="line">
             {#each line as widget}
                 <div class="widget">
-                    <Widget {title} content={widget} />
+                    <Widget {title} content={widget} {page} />
                 </div>
             {/each}
         </div>
