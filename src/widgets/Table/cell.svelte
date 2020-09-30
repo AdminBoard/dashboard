@@ -1,6 +1,6 @@
 <script>
     import { formatDate, formatNumber, formatMap } from "./formatter";
-    export let value;
+    export let value = null;
     export let label = value;
     export let format;
     export let map;

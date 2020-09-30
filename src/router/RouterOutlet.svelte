@@ -13,8 +13,6 @@
     let unique;
 </script>
 
-{#if currPage != null}
-    {#key unique}
-        <svelte:component this={currPage} />
-    {/key}
-{/if}
+{#key unique}
+    <svelte:component this={currPage} />
+{/key}

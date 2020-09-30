@@ -17,7 +17,6 @@
 
   .list {
     height: 100vh;
-    padding: 8px;
     position: fixed;
 
     & .submenu {
@@ -26,7 +25,7 @@
   }
 </style>
 
-<div class="list">
+<div class="list padding">
   <Link href="/home">Adminboard</Link>
   {#each menu as m}
     {#if m.kind == 'group'}

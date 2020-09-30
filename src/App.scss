@@ -1,5 +1,5 @@
 @import "@material/typography/mdc-typography";
-
+@import "theme/color";
 
 .drawer-container {
     display: flex;
@@ -9,3 +9,34 @@
     border-radius: 8px;
     padding: 8px;
 }
+
+.padding {
+    padding: 8px;
+}
+
+.column {
+    flex-direction: column;
+    align-items: stretch;
+    display: flex;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    &.center {
+        align-items: center;
+    }
+}
+
+select, button, input[type=number], input[type=text] {
+    border: 1px solid $primary-border;
+    border-radius: 8px;
+    padding: 8px;
+    outline: none;
+    &:hover {
+        border: 1px solid $secondary;
+    }
+}
+

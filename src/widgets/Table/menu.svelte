@@ -6,6 +6,11 @@
 
     let show = false;
     let focus = false;
+
+    export function close() {
+        focus = false;
+        show = false;
+    }
 </script>
 
 <style lang="scss">
@@ -23,9 +28,9 @@
         on:click|stopPropagation={() => (focus = true)}>
         <Icon class="material-icons">{icon}</Icon>
     </div>
-    <div class="tooltip" class:show={show && !focus}>{tooltip}</div>
+    <div class="tooltip padding" class:show={show && !focus}>{tooltip}</div>
     <div
-        class="popover"
+        class="popover padding"
         class:show={focus}
         tabindex="-1"
         on:click|stopPropagation

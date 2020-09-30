@@ -19,7 +19,6 @@
     font-size: .75em;
     background-color: $primary-lite;
     color: $primary;
-    padding: 8px;
     border-radius: 4px;
     box-shadow: 0 0 4px $primary-dark;
     font-weight: bold;
@@ -27,7 +26,7 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.1s, opacity 0.1s ease-out;
-    transition-duration: 100ms;
+    transition-duration: 200ms;
     &.show {
         visibility: visible;
         opacity: 1;
@@ -35,7 +34,6 @@
 }
 .popover {
     background-color: $primary-lite;
-    padding: 8px;
     margin-top: -4px;
     border-radius: 4px;
     font-size: 0.8em;
