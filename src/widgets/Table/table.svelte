@@ -1,8 +1,8 @@
 <script>
     import { onMount } from "svelte";
+    import { formatDate, formatNumber, formatMap } from "./formatter";
 
     import { Post } from "../../Api.svelte";
-    import Cell from "./cell.svelte";
     import Title from "./title.svelte";
 
     export let title;
@@ -17,7 +17,7 @@
     let visibleCols = [];
     let filterCols = [];
 
-    let data;
+    let data = [];
 
     function reloadData() {
         if (dataSource == null || dataSource == "") return;
@@ -31,9 +31,30 @@
         page.save("filter", filterParams);
         Post(dataSource, { filters: filters })
             .then((resp) => {
+                data = [];
                 if (resp.status == 0) data = resp.data;
+                console.log(data);
             })
             .catch((e) => console.log(e));
+    }
+
+    function formatCell(col, value) {
+        if (value == "") return "";
+        const format = col.format;
+        if (format == "map") return formatMap(col.map, value);
+        let command = format;
+        let subcommand = "";
+        let idx = command.indexOf(" ");
+        if (idx >= 0) {
+            command = format.substr(0, idx);
+            subcommand = format.substr(idx + 1, format.length);
+        }
+        switch (command) {
+            case "number":
+                return formatNumber(value);
+            case "date":
+                return formatDate(format, value);
+        }
     }
 
     function init() {
@@ -70,23 +91,18 @@
                 <th>{col.label}</th>
             {/each}
         </tr>
-        {#if data != null}
-            {#each data as row, i}
-                <tr
-                    class:odd={i % 2 == 1}
-                    class:tenth={(i + 1) % 10 == 0 && i > 0}>
-                    {#each visibleCols as col}
-                        <td
-                            class:right={col.align == 'right'}
-                            class:center={col.align == 'center'}>
-                            <Cell
-                                bind:value={row[col.id]}
-                                format={col.format}
-                                map={col.map} />
-                        </td>
-                    {/each}
-                </tr>
-            {/each}
-        {/if}
+        {#each data as row, i}
+            <tr class:odd={i % 2 == 1} class:tenth={(i + 1) % 10 == 0 && i > 0}>
+                {#each visibleCols as col}
+                    <td
+                        class:right={col.align == 'right'}
+                        class:center={col.align == 'center'}>
+                        {#if col.format != null}
+                            {formatCell(col, row[col.id])}
+                        {:else if row[col.id] != null}{row[col.id]}{/if}
+                    </td>
+                {/each}
+            </tr>
+        {/each}
     {/if}
 </table>

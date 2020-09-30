@@ -1,4 +1,4 @@
-export function formatDate(value, format) {
+export function formatDate(format, value) {
     if (value == null) return ""
     const date = new Date(value)
     value = format
@@ -13,7 +13,7 @@ export function formatDate(value, format) {
     return value
 }
 
-export function formatMap(value, map) {
+export function formatMap(map, value) {
     if (map != null) value = map[value]
     return (value + "").trim()
 }
