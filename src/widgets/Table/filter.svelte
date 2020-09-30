@@ -1,4 +1,6 @@
 <script>
+    import { Icon } from "@smui/common";
+
     import { createEventDispatcher } from "svelte";
     import Menu from "./menu.svelte";
 
@@ -27,6 +29,12 @@
         }
     }
 
+    function remove(key) {
+        delete filters[key];
+        filters = filters; //refresh view
+        dispatch("change", filters);
+    }
+
     function click() {
         let label = selColumn.label + ": ";
         if (selColumn.filter == "map") label += selColumn.map[value];
@@ -53,17 +61,36 @@
     }
     .chip {
         background-color: $primary-dark;
-        padding: 8px;
+        margin: 4px;
         border-radius: 16px;
         font-size: 0.8em;
+        display: flex;
+        padding-left: 6px;
+        & .label {
+            margin: 8px;
+        }
         &:not(:last-child) {
             margin-right: 4px;
+        }
+        & :global(i) {
+            padding: 4px;
+            margin-right: 4px;
+            color: $primary;
+            border-radius: 16px;
+            align-self: center;
+            cursor: pointer;
+            font-size: 1em;
+            border: 1px solid $primary-dark;
+            &:hover {
+                color: $primary-lite;
+                border: 1px solid $primary;
+            }
         }
     }
 </style>
 
 {#if columns != null}
-    <div class="row center">
+    <div class="row">
         <Menu bind:this={menuSearch} icon="search" tooltip="Filter">
             <div class="filter row center">
                 <select bind:value={selColumn}>
@@ -92,7 +119,12 @@
 
         {#if filters != null}
             {#each Object.keys(filters) as key}
-                <div class="chip">{filters[key].label}</div>
+                <div class="chip">
+                    <span class="label">{filters[key].label}</span>
+                    <Icon class="material-icons" on:click={remove(key)}>
+                        clear
+                    </Icon>
+                </div>
             {/each}
         {/if}
     </div>

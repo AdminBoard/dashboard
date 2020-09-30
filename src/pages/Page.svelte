@@ -10,7 +10,6 @@
 
     let page = {
         save: (key, value) => {
-            console.log(path + "." + key, JSON.stringify(value));
             localStorage.setItem(path + "." + key, JSON.stringify(value));
         },
         get: (key) => {
