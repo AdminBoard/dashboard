@@ -37,9 +37,11 @@
     }
 
     function formatCell(col, value) {
+        if (col.map != null) return formatMap(col.map, value);
+
         if (value == "") return "";
         const format = col.format;
-        if (format == "map") return formatMap(col.map, value);
+
         let command = format;
         let subcommand = "";
         let idx = command.indexOf(" ");
@@ -95,7 +97,7 @@
                     <td
                         class:right={col.align == 'right'}
                         class:center={col.align == 'center'}>
-                        {#if col.format != null}
+                        {#if col.format != null || col.map != null}
                             {formatCell(col, row[col.id])}
                         {:else if row[col.id] != null}{row[col.id]}{/if}
                     </td>
