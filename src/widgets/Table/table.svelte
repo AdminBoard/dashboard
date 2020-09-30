@@ -51,7 +51,7 @@
             case "number":
                 return formatNumber(value);
             case "date":
-                return formatDate(format, value);
+                return formatDate(subcommand, value);
         }
     }
 
