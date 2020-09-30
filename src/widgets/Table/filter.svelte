@@ -37,8 +37,10 @@
 
     function click() {
         let label = selColumn.label + ": ";
-        if (selColumn.filter == "map") label += selColumn.map[value];
-        else label += value;
+        if (selColumn.filter == "map") {
+            value = selectionValue;
+            label += selColumn.map[value];
+        } else label += value;
 
         filters[key] = { label: label, value: value, filter: selColumn.filter };
         value = "";
