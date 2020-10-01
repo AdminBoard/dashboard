@@ -4,6 +4,7 @@
 
     import { Post } from "../../Api.svelte";
     import Title from "./title.svelte";
+    import Icon from "@smui/common/Icon.svelte";
 
     export let title;
     export let dataSource;
@@ -12,7 +13,8 @@
 
     let titleComponent;
 
-    let filterParams = {};
+    let filterParam = {};
+    let sortParam = {};
 
     let visibleCols = [];
     let filterCols = [];
@@ -22,14 +24,14 @@
     function reloadData() {
         if (dataSource == null || dataSource == "") return;
         let filters = {};
-        for (const key in filterParams) {
+        for (const key in filterParam) {
             filters[key] = {
-                value: filterParams[key].value,
-                filter: filterParams[key].filter,
+                value: filterParam[key].value,
+                filter: filterParam[key].filter,
             };
         }
-        page.save("filter", filterParams);
-        Post(dataSource, { filters: filters })
+        page.save("filter", filterParam);
+        Post(dataSource, { filters: filters, sort: sortParam })
             .then((resp) => {
                 if (resp.status == 0)
                     data = resp.data.items == null ? [] : resp.data.items;
@@ -58,9 +60,15 @@
         }
     }
 
+    function sort(col) {
+        console.log(col);
+    }
+
     function init() {
         let filter = page.get("filter");
-        if (filter != null) filterParams = JSON.parse(filter);
+        if (filter != null) filterParam = JSON.parse(filter);
+
+        if (params.sort != null) sortParam = params.sort;
 
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
@@ -83,13 +91,22 @@
     bind:this={titleComponent}
     caption={title}
     on:filterChange={reloadData}
-    {filterParams}
+    {filterParam}
     {filterCols} />
 <table>
     {#if params != null}
         <tr>
             {#each visibleCols as col}
-                <th>{col.label}</th>
+                <th>
+                    {#if col.sortable}
+                        <span class="sort" on:click={sort(col)}>
+                            {col.label}
+                            <Icon class="material-icons">
+                                keyboard_arrow_down
+                            </Icon>
+                        </span>
+                    {:else}{col.label}{/if}
+                </th>
             {/each}
         </tr>
         {#each data as row, i}

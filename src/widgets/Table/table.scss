@@ -35,6 +35,12 @@ table {
             &:last-child {
                 border-top-right-radius: 4px;
             }
+            & :global(i) {
+                font-size: 1em;
+            }
+            & .sort {
+                cursor: pointer;
+            }
         }
     
         & td {

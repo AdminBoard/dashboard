@@ -5,7 +5,7 @@
 
     export let caption;
     export let filterCols;
-    export let filterParams;
+    export let filterParam;
 
     const dispatch = createEventDispatcher();
 </script>
@@ -35,7 +35,7 @@
         <div class="caption padding">{caption}</div>
         {#if filterCols}
             <Filter
-                filters={filterParams}
+                filters={filterParam}
                 on:change={(ev) => dispatch('filterChange', ev.detail)}
                 columns={filterCols} />
         {/if}
