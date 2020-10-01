@@ -11,12 +11,12 @@
     &.page {
       cursor: pointer;
       &:hover {
-        background-color: $primary-dark;
+        // background-color: $primary-dark;
       }
     }
   }
   :global(.menu a) {
-    color: $primary-dark-text;
+    // color: $primary-dark-text;
     text-decoration: none;
   }
 </style>

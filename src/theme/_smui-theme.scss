@@ -1,15 +1,14 @@
-//
-// MDC Theme
-//
+@import "color";
 
-@import 'color';
+$mdc-theme-primary: $col-primary;
+$mdc-theme-secondary: $col-secondary;
 
-// Svelte Colors!
-$mdc-theme-primary: $primary;
-$mdc-theme-secondary: $secondary;
-// Other Svelte color: #40b3ff
+$mdc-theme-on-primary: $col-primary-text;
+$mdc-theme-on-secondary: $col-secondary-text;
 
-$mdc-theme-background: $primary-dark;
-$mdc-theme-surface: $primary-dark;
+$mdc-theme-background: $col-background;
+$mdc-theme-surface: $col-surface;
 
-$mdc-theme-error: $material-color-red-900;
+$mdc-theme-error: $col-error;
+
+@import "@material/theme/mdc-theme";

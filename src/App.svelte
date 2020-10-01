@@ -1,8 +1,7 @@
 <script>
-  import Router, { RouterOutlet, onChange } from "./router";
+  import Router, { RouterOutlet } from "./router";
   import { session } from "./Session.svelte";
   import Sidebar from "./sidebar";
-  import Drawer, { AppContent, Content } from "@smui/drawer";
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
 
@@ -12,20 +11,26 @@
 </script>
 
 <style lang="scss">
-  @import "theme/color";
+  .container {
+    height: 100%;
+  }
+  .sidebar {
+    width: 256px;
+  }
+  .content {
+    flex: 1;
+  }
 </style>
 
 {#if $session == null}
   loading...
 {:else}
-  <div class="drawer-container">
-    <Drawer>
-      <Content>
-        <Sidebar />
-      </Content>
-    </Drawer>
-    <AppContent class="content">
+  <div class="container row">
+    <div class="sidebar primary-bg">
+      <Sidebar />
+    </div>
+    <div class="content">
       <RouterOutlet />
-    </AppContent>
+    </div>
   </div>
 {/if}

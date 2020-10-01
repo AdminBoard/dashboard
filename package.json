@@ -12,7 +12,6 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@smui/button": "^1.0.0",
     "@smui/common": "^1.0.0",
-    "@smui/drawer": "^1.0.0",
     "@smui/icon-button": "^1.0.0",
     "@smui/ripple": "^1.0.0",
     "postcss": "^8.1.0",

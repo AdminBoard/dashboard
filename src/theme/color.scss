@@ -1,19 +1,12 @@
 @import "@material/theme/color-palette";
 
-$primary: $material-color-grey-800;
-$primary-text: $material-color-grey-100;
+$col-primary: $material-color-indigo-500;
+$col-secondary: $material-color-deep-orange-500;
 
-$primary-lite: $material-color-grey-50;
-$primary-lite-text: $material-color-grey-800;
+$col-primary-text: #fff;
+$col-secondary-text: #fff;
 
-$primary-dark: $material-color-grey-900;
-$primary-dark-text: $material-color-grey-200;
+$col-background: $material-color-indigo-800;
+$col-surface: $material-color-indigo-100;
 
-$primary-border: $material-color-grey-400;
-
-$secondary: $material-color-deep-orange-500;
-
-$secondary-lite: $material-color-deep-orange-200;
-
-$secondary-dark: $material-color-deep-orange-900;
-$secondary-dark-text: $material-color-deep-orange-500;
+$col-error: $material-color-red-900;

@@ -13,18 +13,16 @@
 </script>
 
 <style lang="scss">
-  @import "../theme/color";
+  // .container {
+  //   height: 100vh;
+  //   width: 100%;
+  //   position: fixed;
+  //   background-color: var(--mdc-theme-primary);
 
-  .container {
-    height: 100vh;
-    width: calc(256px-16px);
-    position: fixed;
-    background-color: $primary-dark;
-
-    & .submenu {
-      margin-left: 16px;
-    }
-  }
+  //   & .submenu {
+  //     margin-left: 16px;
+  //   }
+  // }
 </style>
 
 <div class="container padding">
