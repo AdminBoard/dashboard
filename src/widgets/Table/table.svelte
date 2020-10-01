@@ -1,17 +1,16 @@
 <script>
+    import { Icon } from "@smui/common";
+
     import { onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
 
     import { Post } from "../../Api.svelte";
     import Title from "./title.svelte";
-    import Icon from "@smui/common/Icon.svelte";
 
     export let title;
     export let dataSource;
     export let params;
     export let page;
-
-    let titleComponent;
 
     let filterParam = {};
     let sortParam;
@@ -20,6 +19,7 @@
     let filterCols = [];
 
     let data = [];
+    let loading = false;
 
     function reloadData() {
         if (dataSource == null || dataSource == "") return;
@@ -31,12 +31,15 @@
             };
         }
         page.save("filter", filterParam);
+
+        loading = true;
         Post(dataSource, { filters: filters, sort: sortParam })
             .then((resp) => {
                 if (resp.status == 0)
                     data = resp.data.items == null ? [] : resp.data.items;
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            .finally(() => (loading = false));
     }
 
     function formatCell(col, value) {
@@ -94,11 +97,15 @@
 </style>
 
 <Title
-    bind:this={titleComponent}
     caption={title}
     on:filterChange={reloadData}
     {filterParam}
     {filterCols} />
+
+{#if title != null}
+    <div class="title-placeholder" />
+{/if}
+
 <table>
     {#if params != null}
         <tr>
@@ -134,3 +141,9 @@
         {/each}
     {/if}
 </table>
+<div class="loading-container">
+    {#if title != null}
+        <div class="title-placeholder" />
+    {/if}
+    <div class="loading" class:hide={!loading}>Loading...</div>
+</div>

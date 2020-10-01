@@ -1,9 +1,11 @@
 @import "../../theme/color";
 
+.title-placeholder {
+    height: 42px;
+}
 table {
     width: calc(100%-16px);
     margin: 8px;
-    margin-top: 48px;
     border-radius: 8px;
     flex: 1;
     border: none;
@@ -64,6 +66,30 @@ table {
             &:last-child {
                 border-right: 1px solid $primary;
             }
+        }
+    }
+}
+
+.loading-container {
+    right: 16px;
+    top: 16px;
+    position: absolute;
+    font-weight: bold;
+
+    & > div.loading {
+        background-color: $primary-lite;
+        color: $primary-lite-text;
+        box-shadow: 0 0 8px $primary;
+        padding: 8px;
+        border-radius: 8px;
+        opacity: 1;
+        visibility: visible;
+
+        transition: visibility 0.1s opacity 0.1s ease-out;
+        transition-duration: 500ms;
+        &.hide {
+            opacity: 0;
+            visibility: hidden;
         }
     }
 }
