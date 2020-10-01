@@ -14,7 +14,7 @@
     let titleComponent;
 
     let filterParam = {};
-    let sortParam = {};
+    let sortParam;
 
     let visibleCols = [];
     let filterCols = [];
@@ -61,7 +61,13 @@
     }
 
     function sort(col) {
-        console.log(col);
+        if (sortParam == null || col.id != sortParam.active) {
+            sortParam = { active: col.id, direction: "asc" };
+        } else {
+            if (sortParam.direction == "asc") sortParam.direction = "desc";
+            else sortParam = null;
+        }
+        reloadData();
     }
 
     function init() {
@@ -101,9 +107,13 @@
                     {#if col.sortable}
                         <span class="sort" on:click={sort(col)}>
                             {col.label}
-                            <Icon class="material-icons">
-                                keyboard_arrow_down
-                            </Icon>
+                            {#if sortParam != null && col.id == sortParam.active}
+                                <Icon class="material-icons">
+                                    {#if sortParam.direction == 'asc'}
+                                        keyboard_arrow_down
+                                    {:else}keyboard_arrow_up{/if}
+                                </Icon>
+                            {/if}
                         </span>
                     {:else}{col.label}{/if}
                 </th>

@@ -40,6 +40,9 @@ table {
             }
             & .sort {
                 cursor: pointer;
+                &:hover {
+                    color: $secondary-lite;
+                }
             }
         }
     

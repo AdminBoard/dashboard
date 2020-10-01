@@ -1,14 +1,19 @@
 @import "@material/theme/color-palette";
 
 $primary: $material-color-grey-800;
+$primary-text: $material-color-grey-100;
+
 $primary-lite: $material-color-grey-50;
 $primary-lite-text: $material-color-grey-800;
+
 $primary-dark: $material-color-grey-900;
-$primary-dark-text:$material-color-grey-100;
-$primary-text: $material-color-grey-100;
+$primary-dark-text: $material-color-grey-200;
+
 $primary-border: $material-color-grey-400;
 
-
-
 $secondary: $material-color-deep-orange-500;
+
+$secondary-lite: $material-color-deep-orange-200;
+
 $secondary-dark: $material-color-deep-orange-900;
+$secondary-dark-text: $material-color-deep-orange-500;
