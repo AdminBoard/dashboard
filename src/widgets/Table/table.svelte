@@ -31,7 +31,8 @@
         page.save("filter", filterParams);
         Post(dataSource, { filters: filters })
             .then((resp) => {
-                if (resp.status == 0) data = resp.data == null ? [] : resp.data;
+                if (resp.status == 0)
+                    data = resp.data.items == null ? [] : resp.data.items;
             })
             .catch((e) => console.log(e));
     }
