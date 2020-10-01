@@ -1,12 +1,10 @@
 <script>
-  import Ripple from "@smui/ripple";
   import { Link } from "../router";
 
   export let data = { caption: "", kind: "" };
 </script>
 
 <style lang="scss">
-  @import "../theme/color";
   .menu {
     &.page {
       cursor: pointer;
@@ -22,7 +20,7 @@
 </style>
 
 {#if data.kind == 'page'}
-  <div class="menu page" use:Ripple={{ ripple: true, color: 'secondary' }}>
+  <div class="menu page">
     <Link href={data.path}>{data.caption}</Link>
   </div>
 {:else if data.kind == 'group'}

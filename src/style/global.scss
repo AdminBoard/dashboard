@@ -1,8 +1,7 @@
-@import "@material/typography/mdc-typography";
-@import "@material/drawer/mdc-drawer";
-
-@import "theme/color";
-
+html, body {
+    margin: 0;
+    padding: 0;
+}
 .rounded {
     border-radius: 8px;
     padding: 8px;
@@ -43,7 +42,13 @@ select, button, input[type=number], input[type=text] {
     }
 }
 
+table {
+    border: none;
+    border-collapse: collapse;
+}
+
 .primary-bg {
+    // @debug theme.accessible-ink-color(secondary);
     background-color: var(--mdc-theme-primary);
     color: var(--mdc-theme-on-primary);
 

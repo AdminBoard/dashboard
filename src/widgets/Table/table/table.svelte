@@ -2,10 +2,10 @@
     import { Icon } from "@smui/common";
 
     import { onMount } from "svelte";
-    import { formatDate, formatNumber, formatMap } from "./formatter";
+    import { formatDate, formatNumber, formatMap } from "../formatter";
 
-    import { Post } from "../../Api.svelte";
-    import Filter from "./filter.svelte";
+    import { Post } from "../../../Api.svelte";
+    import Filter from "../filter.svelte";
 
     export let title;
     export let dataSource;
@@ -95,7 +95,33 @@
 </script>
 
 <style lang="scss">
-    @import "table";
+    thead {
+        background-color: var(--mdc-theme-primary);
+        top: 0;
+
+        & th,
+        td {
+            position: sticky;
+            &:not(.notitle) {
+                top: 42;
+            }
+            &.notitle {
+                top: 0;
+            }
+        }
+
+        & th {
+            top: 0;
+            height: 42px;
+        }
+
+        & td {
+            background-color: rgba(
+                $color: var(--mdc-theme-primary),
+                $alpha: 0.9
+            );
+        }
+    }
 </style>
 
 <!-- <Title
@@ -127,9 +153,9 @@
                 </th>
             </tr>
             {/if}
-            <tr class:notitle={title == null}>
+            <tr>
                 {#each visibleCols as col}
-                    <td>
+                    <td class:notitle={title == null}>
                         {#if col.sortable}
                             <span class="sort" on:click={sort(col)}>
                                 {col.label}

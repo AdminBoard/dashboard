@@ -50,8 +50,6 @@
 </script>
 
 <style lang="scss">
-    @import "../../theme/color";
-
     .filter {
         & select {
             outline: none;
