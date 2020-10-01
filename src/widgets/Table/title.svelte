@@ -19,7 +19,7 @@
         display: flex;
         align-items: stretch;
         font-size: 1.2em;
-        background-color: $primary;
+        background-color: rgba($primary, 0.98);
         color: $primary-text;
         height: 42px;
         & .caption {
