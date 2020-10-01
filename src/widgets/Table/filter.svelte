@@ -62,7 +62,7 @@
         }
     }
     .chip {
-        background-color: $primary-dark;
+        background-color: $primary;
         margin: 4px;
         border-radius: 16px;
         font-size: 0.8em;
@@ -77,15 +77,17 @@
         & :global(i) {
             padding: 4px;
             margin-right: 4px;
-            color: $primary;
+            color: $primary-dark;
             border-radius: 16px;
             align-self: center;
             cursor: pointer;
             font-size: 1em;
-            border: 1px solid $primary-dark;
+            border: 1px solid $primary;
+            transition: color 0.1s ease-out;
+            transition-duration: 100ms;
             &:hover {
                 color: $primary-lite;
-                border: 1px solid $primary;
+                border: 1px solid $primary-lite;
             }
         }
     }

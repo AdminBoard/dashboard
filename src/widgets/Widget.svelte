@@ -3,7 +3,21 @@
 
     export let title;
     export let content;
-    export let page;
+
+    const storage = {
+        save: (key, value) => {
+            console.log(key, value);
+            localStorage.setItem(
+                "widget." + content.id + "." + key,
+                JSON.stringify(value)
+            );
+        },
+        get: (key) => {
+            return JSON.parse(
+                localStorage.getItem("widget." + content.id + "." + key)
+            );
+        },
+    };
 </script>
 
 {#if content != null}
@@ -12,6 +26,6 @@
             {title}
             dataSource={content.data_source}
             params={content.params}
-            {page} />
+            {storage} />
     {/if}
 {/if}
