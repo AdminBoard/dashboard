@@ -13,24 +13,14 @@
 </script>
 
 <style lang="scss">
-  // .container {
-  //   height: 100vh;
-  //   width: 100%;
-  //   position: fixed;
-  //   background-color: var(--mdc-theme-primary);
-
-  //   & .submenu {
-  //     margin-left: 16px;
-  //   }
-  // }
 </style>
 
-<div class="container padding">
+<div>
   <Link href="/home">Adminboard</Link>
   {#each menu as m}
     {#if m.kind == 'group'}
       <Menu bind:data={m} />
-      <div class="submenu">
+      <div>
         {#each m.submenu as sm}
           <Menu bind:data={sm} />
         {/each}

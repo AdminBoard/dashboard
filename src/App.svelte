@@ -16,9 +16,12 @@
   }
   .sidebar {
     width: 256px;
+    position: fixed;
+    height: 100%;
   }
   .content {
     flex: 1;
+    margin-left: 256px;
   }
 </style>
 
