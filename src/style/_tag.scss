@@ -1,0 +1,23 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+select, button, input[type=number], input[type=text] {
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 8px;
+    outline: none;
+    &:hover {
+        // border: 1px solid $secondary;
+    }
+}
+
+table {
+    border: none;
+    border-collapse: collapse;
+}
