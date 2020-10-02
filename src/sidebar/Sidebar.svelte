@@ -26,9 +26,18 @@
 
 <style lang="scss">
   @import "../style/color";
+
+  .menus {
+    padding: 8px;
+
+    & > div {
+      margin-top: 8px;
+    }
+  }
   .title {
     background-color: darken($col-primary, 20);
-    height: 76px;
+    height: 60px;
+    padding: 8px;
     vertical-align: middle;
     font-size: 1.4em;
 
@@ -38,13 +47,17 @@
   }
 </style>
 
-<div class="column stretch">
+<div class="sidebar column stretch">
   <div class="title column stretch">
     <Link href="/home" class="fill row center">
       <div>Adminboard</div>
     </Link>
   </div>
-  {#each menu as m}
-    <Menu bind:data={m} bind:expand={expand[m.id]} />
-  {/each}
+  <div class="menus column stretch">
+    {#each menu as m}
+      <div>
+        <Menu bind:data={m} bind:expand={expand[m.id]} />
+      </div>
+    {/each}
+  </div>
 </div>

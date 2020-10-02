@@ -159,8 +159,9 @@
             vertical-align: top;
             border-bottom: 1px solid #e0e0e0;
             padding: 2px;
-            &:not(:last-child) {
-                border-right: 1px solid #e0e0e0;
+
+            & + td {
+                border-left: 1px solid #e0e0e0;
             }
         }
     }
