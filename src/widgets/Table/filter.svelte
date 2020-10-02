@@ -68,7 +68,7 @@
         padding-left: 6px;
         cursor: default;
         & .label {
-            margin: 8px;
+            margin: 8px 4px 8px 8px;
         }
         &:not(:last-child) {
             margin-right: 4px;
