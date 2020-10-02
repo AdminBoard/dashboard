@@ -1,5 +1,4 @@
 <script>
-    import { Icon } from "@smui/common";
     export let icon;
     export let tooltip;
 
@@ -76,7 +75,7 @@
         on:mouseover={() => (show = true)}
         on:mouseleave={() => (show = false)}
         on:click|stopPropagation={() => (focus = true)}>
-        <Icon class="material-icons">{icon}</Icon>
+        <i class="material-icons">{icon}</i>
     </div>
     <div class="tooltip padding" class:show={show && !focus}>{tooltip}</div>
     <div
