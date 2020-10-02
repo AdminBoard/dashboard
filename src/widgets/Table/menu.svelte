@@ -23,7 +23,7 @@
         border-radius: 8px;
         padding: 0 4px;
         &.hover {
-            background-color: lighten($color: $col-primary, $amount: 8);
+            background-color: lighten($col-primary, 8);
         }
     }
     .tooltip {

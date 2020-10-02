@@ -5,28 +5,46 @@
 
   let menu = [];
 
-  Post("/api?menu")
-    .then((resp) => {
-      if (resp.status == 0) menu = resp.data;
-    })
-    .catch((e) => console.log(e));
+  let expand = {};
+  $: localStorage.setItem("expand", JSON.stringify(expand));
+
+  function init() {
+    const ex = localStorage.getItem("expand");
+    if (ex != null) expand = JSON.parse(ex);
+
+    Post("/api?menu")
+      .then((resp) => {
+        if (resp.status == 0) menu = resp.data;
+      })
+      .catch((e) => console.log(e));
+  }
+
+  function toggleExpand() {}
+
+  init();
 </script>
 
 <style lang="scss">
+  @import "../style/color";
+  .title {
+    background-color: darken($col-primary, 20);
+    height: 76px;
+    vertical-align: middle;
+    font-size: 1.4em;
+
+    &:hover {
+      background-color: darken($col-primary, 10);
+    }
+  }
 </style>
 
-<div>
-  <Link href="/home">Adminboard</Link>
+<div class="column stretch">
+  <div class="title column stretch">
+    <Link href="/home" class="fill row center">
+      <div>Adminboard</div>
+    </Link>
+  </div>
   {#each menu as m}
-    {#if m.kind == 'group'}
-      <Menu bind:data={m} />
-      <div>
-        {#each m.submenu as sm}
-          <Menu bind:data={sm} />
-        {/each}
-      </div>
-    {:else}
-      <Menu bind:data={m} />
-    {/if}
+    <Menu bind:data={m} bind:expand={expand[m.id]} />
   {/each}
 </div>

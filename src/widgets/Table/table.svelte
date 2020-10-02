@@ -122,7 +122,7 @@
         }
 
         & td {
-            background-color: lighten($color: $col-primary, $amount: 3);
+            background-color: lighten($col-primary, 3);
             text-shadow: 0 0 8px #000;
 
             &:not(.notitle) {
@@ -133,6 +133,7 @@
             }
 
             & i {
+                position: fixed;
                 font-size: 1em;
             }
 
@@ -147,10 +148,10 @@
     tbody {
         & tr {
             &.odd {
-                background-color: lighten($color: $col-primary, $amount: 48);
+                background-color: lighten($col-primary, 48);
             }
             &.tenth {
-                background-color: lighten($color: $col-primary, $amount: 40);
+                background-color: lighten($col-primary, 40);
             }
         }
         & td {

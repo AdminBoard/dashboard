@@ -59,7 +59,7 @@
         }
     }
     .chip {
-        background-color: darken($color: $col-primary, $amount: 12);
+        background-color: darken($col-primary, 12);
         margin: 4px;
         border-radius: 16px;
         align-items: center;
@@ -89,7 +89,7 @@
             border: 1px solid transparent;
             &:hover {
                 border: 1px solid $col-secondary;
-                background-color: lighten($color: $col-secondary, $amount: 10);
+                background-color: lighten($col-secondary, 10);
                 color: $col-secondary-text;
             }
         }

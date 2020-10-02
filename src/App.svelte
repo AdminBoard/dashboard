@@ -19,7 +19,7 @@
     width: 256px;
     position: fixed;
     height: 100%;
-    background-color: darken($color: $col-primary, $amount: 12);
+    background-color: darken($col-primary, 12);
   }
   .content {
     flex: 1;
