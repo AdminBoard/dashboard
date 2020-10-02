@@ -1,4 +1,4 @@
-import Table from './table/table.svelte'
+import Table from './table.svelte'
 
 export default Table
 

@@ -1,4 +1,4 @@
-import './style/theme.scss'
+import './style/_theme.scss'
 import './style/_global.scss'
 import './style/_tag.scss'
 

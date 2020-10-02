@@ -1,11 +1,9 @@
 <script>
-    import { Icon } from "@smui/common";
-
     import { onMount } from "svelte";
-    import { formatDate, formatNumber, formatMap } from "../formatter";
+    import { formatDate, formatNumber, formatMap } from "./formatter";
 
-    import { Post } from "../../../Api.svelte";
-    import Filter from "../filter.svelte";
+    import { Post } from "../../Api.svelte";
+    import Filter from "./filter.svelte";
 
     export let title;
     export let dataSource;
@@ -95,63 +93,122 @@
 </script>
 
 <style lang="scss">
+    @import "../../style/color";
+
+    table {
+        font-size: 0.9em;
+        width: 100%;
+    }
     thead {
-        background-color: var(--mdc-theme-primary);
-        top: 0;
+        &.sticky {
+            top: 0;
+            & th,
+            td {
+                position: sticky;
+                text-align: center;
+            }
+        }
 
         & th,
         td {
-            position: sticky;
-            &:not(.notitle) {
-                top: 42;
-            }
-            &.notitle {
-                top: 0;
-            }
+            height: 32px;
         }
 
         & th {
             top: 0;
             height: 42px;
+            background-color: $col-primary;
+            z-index: 1;
         }
 
         & td {
-            background-color: rgba(
-                $color: var(--mdc-theme-primary),
-                $alpha: 0.9
-            );
+            background-color: lighten($color: $col-primary, $amount: 3);
+            text-shadow: 0 0 8px #000;
+
+            &:not(.notitle) {
+                top: 43px;
+            }
+            &.notitle {
+                top: 0;
+            }
+
+            & i {
+                font-size: 1em;
+            }
+
+            & .sort {
+                cursor: pointer;
+                &:hover {
+                    text-shadow: 0 0 8px $col-secondary;
+                }
+            }
+        }
+    }
+    tbody {
+        & tr {
+            &.odd {
+                background-color: lighten($color: $col-primary, $amount: 48);
+            }
+            &.tenth {
+                background-color: lighten($color: $col-primary, $amount: 40);
+            }
+        }
+        & td {
+            white-space: pre;
+            vertical-align: top;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 2px;
+            &:not(:last-child) {
+                border-right: 1px solid #e0e0e0;
+            }
+        }
+    }
+    .loading-container {
+        z-index: 1;
+        position: fixed;
+        right: 16px;
+        &.notitle {
+            top: 24px;
+        }
+        &:not(.notitle) {
+            top: 66px;
+        }
+        & .loading {
+            box-shadow: 0 0 8px #000;
+            opacity: 1;
+            transition: opacity 0.1s ease-out;
+            transition-duration: 100ms;
+            &.hide {
+                opacity: 0;
+                transition-duration: 500ms;
+            }
         }
     }
 </style>
 
-<!-- <Title
-    caption={title}
-    on:filterChange={reloadData}
-    {filterParam}
-    {filterCols} />
+<div class="loading-container" class:notitle={title == null}>
+    <div class="loading secondary-bg rounded" class:hide={!loading}>
+        Loading...
+    </div>
+</div>
 
-{#if title != null}
-    <div class="title-placeholder" />
-{/if}
- -->
 <table>
     {#if params != null}
-        <thead>
+        <thead class="primary-bg" class:sticky={params.sticky}>
             {#if title != null}
-            <tr>
-                <th colspan="{visibleCols.length}">
-                    <div class="row center">
-                        <div class="caption padding">{title}</div>
-                        {#if filterCols}
-                            <Filter
-                                filters={filterParam}
-                                on:change={reloadData}
-                                columns={filterCols} />
-                        {/if}
-    
-                    </div>
-                </th>
-            </tr>
+                <tr>
+                    <th colspan={visibleCols.length}>
+                        <div class="row center">
+                            <div class="caption padding">{title}</div>
+                            {#if filterCols}
+                                <Filter
+                                    filters={filterParam}
+                                    on:change={reloadData}
+                                    columns={filterCols} />
+                            {/if}
+                        </div>
+                    </th>
+                </tr>
             {/if}
             <tr>
                 {#each visibleCols as col}
@@ -160,11 +217,11 @@
                             <span class="sort" on:click={sort(col)}>
                                 {col.label}
                                 {#if col.id == sortParam.active}
-                                    <Icon class="material-icons">
+                                    <i class="material-icons">
                                         {#if sortParam.direction == 'asc'}
                                             keyboard_arrow_down
                                         {:else}keyboard_arrow_up{/if}
-                                    </Icon>
+                                    </i>
                                 {/if}
                             </span>
                         {:else}{col.label}{/if}
@@ -174,7 +231,9 @@
         </thead>
         <tbody>
             {#each data as row, i}
-                <tr class:odd={i % 2 == 1} class:tenth={(i + 1) % 10 == 0 && i > 0}>
+                <tr
+                    class:odd={i % 2 == 1}
+                    class:tenth={(i + 1) % 10 == 0 && i > 0}>
                     {#each visibleCols as col}
                         <td
                             class:right={col.align == 'right'}
@@ -189,9 +248,3 @@
         </tbody>
     {/if}
 </table>
-<div class="loading-container">
-    {#if title != null}
-        <div class="title-placeholder" />
-    {/if}
-    <div class="loading" class:hide={!loading}>Loading...</div>
-</div>

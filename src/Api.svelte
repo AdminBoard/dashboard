@@ -16,7 +16,3 @@
     return js;
   }
 </script>
-
-<script>
-  import { stringify } from "querystring";
-</script>

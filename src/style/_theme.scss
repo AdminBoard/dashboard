@@ -1,0 +1,16 @@
+@import "@material/typography/mdc-typography";
+
+@import 'color';
+
+$mdc-theme-primary: $col-primary;
+$mdc-theme-secondary: $col-secondary;
+
+$mdc-theme-on-primary: $col-primary-text;
+$mdc-theme-on-secondary: $col-secondary-text;
+
+$mdc-theme-background: $col-primary-bg;
+$mdc-theme-surface: $col-primary-bg;
+
+$mdc-theme-error: $col-error;
+
+@import "@material/theme/mdc-theme";

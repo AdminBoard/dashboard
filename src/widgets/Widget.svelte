@@ -6,7 +6,6 @@
 
     const storage = {
         save: (key, value) => {
-            console.log(key, value);
             localStorage.setItem(
                 "widget." + content.id + "." + key,
                 JSON.stringify(value)

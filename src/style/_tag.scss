@@ -1,3 +1,5 @@
+@import 'color';
+
 html, body {
     margin: 0;
     padding: 0;
@@ -12,8 +14,10 @@ select, button, input[type=number], input[type=text] {
     border-radius: 8px;
     padding: 8px;
     outline: none;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 2px #ccc;
     &:hover {
-        // border: 1px solid $secondary;
+       box-shadow: 0 0 2px $col-primary;
     }
 }
 

@@ -11,6 +11,7 @@
 </script>
 
 <style lang="scss">
+  @import "style/color";
   .container {
     height: 100%;
   }
@@ -18,6 +19,7 @@
     width: 256px;
     position: fixed;
     height: 100%;
+    background-color: darken($color: $col-primary, $amount: 12);
   }
   .content {
     flex: 1;

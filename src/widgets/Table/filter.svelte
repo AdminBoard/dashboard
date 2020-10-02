@@ -1,6 +1,4 @@
 <script>
-    import { Icon } from "@smui/common";
-
     import { createEventDispatcher } from "svelte";
     import Menu from "./menu.svelte";
 
@@ -50,6 +48,7 @@
 </script>
 
 <style lang="scss">
+    @import "../../style/color";
     .filter {
         & select {
             outline: none;
@@ -60,34 +59,55 @@
         }
     }
     .chip {
-        // background-color: $primary;
+        background-color: darken($color: $col-primary, $amount: 12);
         margin: 4px;
         border-radius: 16px;
-        font-size: 0.8em;
+        align-items: center;
+        font-size: 0.9em;
         display: flex;
         padding-left: 6px;
+        cursor: default;
         & .label {
             margin: 8px;
         }
         &:not(:last-child) {
             margin-right: 4px;
         }
-        & :global(i) {
-            padding: 4px;
-            margin-right: 4px;
-            // color: $primary-dark;
-            border-radius: 16px;
-            align-self: center;
-            cursor: pointer;
-            font-size: 1em;
-            // border: 1px solid $primary;
-            transition: color 0.1s ease-out;
-            transition-duration: 100ms;
-            &:hover {
-                // color: $primary-lite;
-                // border: 1px solid $primary-lite;
+        &:hover {
+            & i {
+                box-shadow: 0 0 2px $col-secondary;
             }
         }
+        & i {
+            font-size: 1em;
+            color: #999;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 16px;
+            margin-right: 4px;
+            border: 1px solid transparent;
+            &:hover {
+                border: 1px solid $col-secondary;
+                background-color: lighten($color: $col-secondary, $amount: 10);
+                color: $col-secondary-text;
+            }
+        }
+        // & :global(i) {
+        //     margin-right: 4px;
+        //     // color: $primary-dark;
+        //     border-radius: 16px;
+        //     align-self: center;
+        //     cursor: pointer;
+        //     font-size: 1em;
+        //     // border: 1px solid $primary;
+        //     transition: color 0.1s ease-out;
+        //     transition-duration: 100ms;
+        //     &:hover {
+        //         // color: $primary-lite;
+        //         // border: 1px solid $primary-lite;
+        //     }
+        // }
     }
 </style>
 
@@ -123,9 +143,7 @@
             {#each Object.keys(filters) as key}
                 <div class="chip">
                     <span class="label">{filters[key].label}</span>
-                    <Icon class="material-icons" on:click={remove(key)}>
-                        clear
-                    </Icon>
+                    <i class="material-icons" on:click={remove(key)}>clear</i>
                 </div>
             {/each}
         {/if}
