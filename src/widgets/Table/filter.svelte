@@ -93,21 +93,6 @@
                 color: $col-secondary-text;
             }
         }
-        // & :global(i) {
-        //     margin-right: 4px;
-        //     // color: $primary-dark;
-        //     border-radius: 16px;
-        //     align-self: center;
-        //     cursor: pointer;
-        //     font-size: 1em;
-        //     // border: 1px solid $primary;
-        //     transition: color 0.1s ease-out;
-        //     transition-duration: 100ms;
-        //     &:hover {
-        //         // color: $primary-lite;
-        //         // border: 1px solid $primary-lite;
-        //     }
-        // }
     }
 </style>
 
