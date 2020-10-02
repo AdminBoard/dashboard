@@ -19,8 +19,6 @@
       .catch((e) => console.log(e));
   }
 
-  function toggleExpand() {}
-
   init();
 </script>
 
@@ -30,7 +28,7 @@
   .menus {
     padding: 8px;
 
-    & > div {
+    & > .item {
       margin-top: 8px;
     }
   }
@@ -41,6 +39,10 @@
     vertical-align: middle;
     font-size: 1.4em;
 
+    & .caption {
+      height: 100%;
+    }
+
     &:hover {
       background-color: darken($col-primary, 10);
     }
@@ -49,13 +51,15 @@
 
 <div class="sidebar column stretch">
   <div class="title column stretch">
-    <Link href="/home" class="fill row center">
-      <div>Adminboard</div>
+    <Link href="/home">
+      <div class="caption row center">
+        <div>Adminboard</div>
+      </div>
     </Link>
   </div>
   <div class="menus column stretch">
     {#each menu as m}
-      <div>
+      <div class="item">
         <Menu bind:data={m} bind:expand={expand[m.id]} />
       </div>
     {/each}

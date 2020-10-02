@@ -7,6 +7,7 @@ import { writable, readable } from "svelte/store"
 let routeMap = new Map()
 let activePage
 let activePath = window.location.pathname
+
 const pageStore = writable()
 
 const onChange = readable(null, (set) => {

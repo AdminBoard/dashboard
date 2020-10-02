@@ -5,14 +5,15 @@
 
     onMount(() => {
         onChange.subscribe((page) => {
-            if (currPage == page) unique = {};
-            else currPage = page;
+            if (activePage != page) activePage = page;
+            else unique = {};
         });
     });
-    let currPage;
+
+    let activePage;
     let unique;
 </script>
 
 {#key unique}
-    <svelte:component this={currPage} />
+    <svelte:component this={activePage} />
 {/key}

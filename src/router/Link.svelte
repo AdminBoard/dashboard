@@ -1,15 +1,18 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+
     import Router from "./index";
     export let href;
-    export let className = "";
-    export { className as class };
+
+    let dispatch = createEventDispatcher();
 
     function click() {
         Router.navigate(href);
+        dispatch("click", href);
     }
 </script>
 
 <a
     {href}
     on:click|preventDefault|stopPropagation={click}
-    class={className}><slot /></a>
+    class="fill"><slot /></a>
