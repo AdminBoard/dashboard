@@ -13,10 +13,9 @@
 
     let filterParam = {};
     let sortParam = {};
-    let pageParam = { location: 1, length: 10 };
+    let pageParam = { location: 1, length: 100 };
+    let pages = [];
 
-    let prevPages = [];
-    let nextPages = [2, 3];
     let visibleCols = [];
     let filterCols = [];
 
@@ -40,8 +39,7 @@
             .then((resp) => {
                 if (resp.status == 0) {
                     data = resp.data.items == null ? [] : resp.data.items;
-                    if (pageParam != null && pageParam.length > data.length)
-                        nextPages = [];
+                    refreshPages();
                 }
             })
             .catch((e) => console.log(e))
@@ -81,27 +79,36 @@
 
     function pageChange(page) {
         pageParam.location = page;
-        let pages = [];
-
-        for (let i = page - 1; i > page - 3 && i > 0; i--) {
-            pages.unshift(i);
-        }
-        prevPages = pages;
-        pages = [];
-        for (let i = page + 1; i < page + 3; i++) {
-            pages.push(i);
-        }
-        nextPages = pages;
         reloadData();
     }
 
-    function init() {
-        let filter = storage.get("filter");
-        if (filter != null) filterParam = filter;
-        const sort = storage.get("sort");
-        if (sort != null) sortParam = sort;
-        else if (params.sort != null) sortParam = params.sort;
+    function loadFromStorage(name) {
+        let val = storage.get(name);
+        if (val != null) return val;
+        if (params[name] != null) return params[name];
+        return null;
+    }
 
+    function refreshPages() {
+        const page = pageParam.location;
+        pages = [];
+        for (let i = page - 1; i > page - 3 && i > 0; i--) {
+            pages.unshift(i);
+        }
+        pages.push(pageParam.location);
+        if (data.length == pageParam.length) {
+            for (let i = page + 1; i < page + 3; i++) {
+                pages.push(i);
+            }
+        }
+        pages = pages; //refresh view
+    }
+
+    function init() {
+        filterParam = loadFromStorage("filter");
+        sortParam = loadFromStorage("sort");
+        pageParam = loadFromStorage("page");
+        refreshPages();
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
             if (el.filter != null) filterCols.push(el);
@@ -300,18 +307,10 @@
                         <div class="column right">
                             <div class="page content rounded row center">
                                 Page:
-                                {#each prevPages as page}
-                                    <div on:click={() => pageChange(page)}>
-                                        {page}
-                                    </div>
-                                {/each}
-                                <div
-                                    class="current"
-                                    on:click={() => pageChange(pageParam.location)}>
-                                    {pageParam.location}
-                                </div>
-                                {#each nextPages as page}
-                                    <div on:click={() => pageChange(page)}>
+                                {#each pages as page}
+                                    <div
+                                        on:click={() => pageChange(page)}
+                                        class:current={page == pageParam.location}>
                                         {page}
                                     </div>
                                 {/each}
