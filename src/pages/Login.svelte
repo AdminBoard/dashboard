@@ -6,10 +6,9 @@
 
     let username = "";
     let password = "";
+    let error = "";
 
     let loading = false;
-
-    console.log(sha1("test").toString(hex));
 
     function click() {
         let u = username.trim();
@@ -32,11 +31,14 @@
                 if (resp.status == 0) {
                     Router.navigate("/home");
                     Router.reload();
+                } else {
+                    error = resp.message;
                 }
             })
             .catch((e) => {
-                console.log(e);
-            });
+                error = e;
+            })
+            .finally(() => (loading = false));
     }
 </script>
 
@@ -75,6 +77,14 @@
             width: 100px;
         }
     }
+    .error {
+        padding: 8px;
+        font-size: 1em;
+        border-radius: 8px;
+        font-weight: normal;
+        background-color: lighten($col-error, 20);
+        color: #fff;
+    }
 </style>
 
 <div class="display row center">
@@ -109,6 +119,12 @@
                     on:click={click}
                     disabled={loading}>Login</button>
             </div>
+
+            {#if error != ''}
+                <div class="error">
+                    <div>{error}</div>
+                </div>
+            {/if}
         </div>
     </div>
 </div>

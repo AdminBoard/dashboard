@@ -4,6 +4,7 @@
 
     import { Post } from "../../Api.svelte";
     import Filter from "./filter.svelte";
+    import Link from "../../router/Link.svelte";
 
     export let title;
     export let dataSource;
@@ -12,7 +13,10 @@
 
     let filterParam = {};
     let sortParam = {};
+    let pageParam = { location: 1, length: 10 };
 
+    let prevPages = [];
+    let nextPages = [2, 3];
     let visibleCols = [];
     let filterCols = [];
 
@@ -32,10 +36,13 @@
         storage.save("sort", sortParam);
 
         loading = true;
-        Post(dataSource, { filters: filters, sort: sortParam })
+        Post(dataSource, { filters: filters, sort: sortParam, page: pageParam })
             .then((resp) => {
-                if (resp.status == 0)
+                if (resp.status == 0) {
                     data = resp.data.items == null ? [] : resp.data.items;
+                    if (pageParam != null && pageParam.length > data.length)
+                        nextPages = [];
+                }
             })
             .catch((e) => console.log(e))
             .finally(() => (loading = false));
@@ -69,6 +76,22 @@
             if (sortParam.direction == "asc") sortParam.direction = "desc";
             else sortParam = {};
         }
+        reloadData();
+    }
+
+    function pageChange(page) {
+        pageParam.location = page;
+        let pages = [];
+
+        for (let i = page - 1; i > page - 3 && i > 0; i--) {
+            pages.unshift(i);
+        }
+        prevPages = pages;
+        pages = [];
+        for (let i = page + 1; i < page + 3; i++) {
+            pages.push(i);
+        }
+        nextPages = pages;
         reloadData();
     }
 
@@ -150,18 +173,42 @@
             &.odd {
                 background-color: lighten($col-primary, 48);
             }
-            &.tenth {
-                background-color: lighten($col-primary, 40);
-            }
         }
         & td {
             white-space: pre;
             vertical-align: top;
             border-bottom: 1px solid #e0e0e0;
-            padding: 2px;
+            padding: 4px;
 
             & + td {
-                border-left: 1px solid #e0e0e0;
+                border-left: 1px solid #ccc;
+            }
+        }
+    }
+    tfoot {
+        & td {
+            position: sticky;
+            bottom: 0;
+            padding: 8px 16px;
+        }
+        & .content {
+            background-color: #eee;
+            padding: 8px;
+            box-shadow: 0 0 4px #000;
+            display: inherit;
+        }
+        & .page > div {
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            &:hover {
+                box-shadow: 0 0 4px $col-secondary;
+            }
+            &.current {
+                box-shadow: 0 0 4px $col-primary;
+            }
+            &:first-child {
+                margin-left: 8px;
             }
         }
     }
@@ -233,9 +280,7 @@
         </thead>
         <tbody>
             {#each data as row, i}
-                <tr
-                    class:odd={i % 2 == 1}
-                    class:tenth={(i + 1) % 10 == 0 && i > 0}>
+                <tr class:odd={i % 2 == 1}>
                     {#each visibleCols as col}
                         <td
                             class:right={col.align == 'right'}
@@ -248,5 +293,33 @@
                 </tr>
             {/each}
         </tbody>
+        {#if pageParam != null}
+            <tfoot>
+                <tr>
+                    <td colspan={visibleCols.length}>
+                        <div class="column right">
+                            <div class="page content rounded row center">
+                                Page:
+                                {#each prevPages as page}
+                                    <div on:click={() => pageChange(page)}>
+                                        {page}
+                                    </div>
+                                {/each}
+                                <div
+                                    class="current"
+                                    on:click={() => pageChange(pageParam.location)}>
+                                    {pageParam.location}
+                                </div>
+                                {#each nextPages as page}
+                                    <div on:click={() => pageChange(page)}>
+                                        {page}
+                                    </div>
+                                {/each}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        {/if}
     {/if}
 </table>

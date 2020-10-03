@@ -29,6 +29,9 @@
     &.center {
         align-items: center;
     }
+    &.right {
+        align-items: flex-end;
+    }
 }
 
 .row {
@@ -55,3 +58,4 @@
     background-color: $col-secondary;
     color: $col-secondary-text;
 }
+

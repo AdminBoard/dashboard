@@ -12,7 +12,6 @@
             );
         },
         get: (key) => {
-            console.log("widget." + content.id + "." + key);
             return JSON.parse(
                 localStorage.getItem("widget." + content.id + "." + key)
             );
