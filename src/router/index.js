@@ -34,12 +34,10 @@ const navigate = (path) => {
 export { RouterOutlet, Link, onChange }
 
 export default {
-    register: (path, component) => {
-        routeMap.set(path, component)
-    },
-    start: () => {
-        navigate(window.location.pathname)
-    },
+    register: (path, component) => routeMap.set(path, component),
+    start: () => navigate(window.location.pathname),
     navigate: navigate,
+    reload: () => window.location.reload()
+
 }
 

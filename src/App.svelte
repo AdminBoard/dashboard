@@ -1,13 +1,26 @@
 <script>
   import Router, { RouterOutlet } from "./router";
-  import { session } from "./Session.svelte";
+  import { Get } from "./Api.svelte";
   import Sidebar from "./sidebar";
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
+  import Login from "./pages/Login.svelte";
 
+  let session = null;
+
+  Router.register("/login", Login);
   Router.register("/home", Home);
   Router.register("*", Page);
-  Router.start();
+
+  //check session
+  Get("/api/public?session").then((resp) => {
+    if (resp.status != 0 || resp.data == null) {
+      Router.navigate("/login");
+    } else {
+      session = resp.data;
+      Router.start();
+    }
+  });
 </script>
 
 <style lang="scss">
@@ -27,8 +40,8 @@
   }
 </style>
 
-{#if $session == null}
-  loading...
+{#if session == null}
+  <RouterOutlet />
 {:else}
   <div class="container row">
     <div class="sidebar primary-bg">
