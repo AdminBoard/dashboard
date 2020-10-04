@@ -105,8 +105,10 @@
     }
 
     function init() {
-        filterParam = loadFromStorage("filter");
-        sortParam = loadFromStorage("sort");
+        let val = loadFromStorage("filter");
+        filterParam = val == null ? {} : val;
+        val = loadFromStorage("sort");
+        sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
         refreshPages();
         params.columns.forEach((el) => {
@@ -163,7 +165,6 @@
             }
 
             & i {
-                position: fixed;
                 font-size: 1em;
             }
 

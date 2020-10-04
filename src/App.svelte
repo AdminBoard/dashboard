@@ -7,6 +7,7 @@
   import Login from "./pages/Login.svelte";
 
   let session = null;
+  let refresh;
 
   Router.register("/login", Login);
   Router.register("/home", Home);
@@ -19,6 +20,9 @@
     } else {
       session = resp.data;
       Router.start();
+      refresh = setInterval(() => {
+        Get("/api/public?session");
+      }, 1 * 60 * 1000);
     }
   });
 </script>
