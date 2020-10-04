@@ -6,6 +6,7 @@
     import Chips from "../Chips.svelte";
     import Menu from "./menu.svelte";
     import Filter from "./filter.svelte";
+    import Header from "./header.svelte";
 
     export let title;
     export let dataSource;
@@ -25,7 +26,7 @@
     let data = [];
     let loading = false;
 
-    function reloadData() {
+    function reload() {
         if (dataSource == null || dataSource == "") return;
 
         storage.save("filter", filterParam);
@@ -68,41 +69,9 @@
         }
     }
 
-    function sort(col) {
-        if (col.id != sortParam.active) {
-            sortParam = { active: col.id, direction: "asc" };
-        } else {
-            if (sortParam.direction == "asc") sortParam.direction = "desc";
-            else sortParam = {};
-        }
-        reloadData();
-    }
-
-    function addFilterLabel(col, value) {
-        selectedFilters = selectedFilters.filter((el) => el.id != col.id);
-        filterParam[col.id] = { value: value, filter: col.filter };
-        let label = col.label + ": ";
-        if (col.map == null) label += value;
-        else label += col.map[value];
-        selectedFilters = [...selectedFilters, { id: col.id, label: label }];
-    }
-
-    function addFilter(ev) {
-        const col = ev.detail.column;
-        const val = ev.detail.value;
-        addFilterLabel(col, val);
-        reloadData();
-    }
-
-    function deleteFilter(ev) {
-        const item = ev.detail;
-        delete filterParam[item.id];
-        reloadData();
-    }
-
     function pageChange(page) {
         pageParam.location = page;
-        reloadData();
+        reload();
     }
 
     function loadFromStorage(name) {
@@ -143,7 +112,7 @@
             }
         });
         visibleCols = visibleCols; //refresh view
-        reloadData();
+        reload();
     }
     onMount(() => {
         init();
@@ -163,44 +132,14 @@
 
 <table>
     {#if params != null}
-        <thead class="primary-bg" class:sticky={params.sticky}>
-            {#if title != null}
-                <tr>
-                    <th colspan={visibleCols.length}>
-                        <div class="row center">
-                            <div class="caption padding">{title}</div>
-                            <Menu let:dismiss icon="search">
-                                <Filter
-                                    columns={filterCols}
-                                    {dismiss}
-                                    on:select={addFilter} />
-                            </Menu>
-                            <Chips
-                                bind:items={selectedFilters}
-                                on:delete={deleteFilter} />
-                        </div>
-                    </th>
-                </tr>
-            {/if}
-            <tr>
-                {#each visibleCols as col}
-                    <td class:notitle={title == null}>
-                        {#if col.sortable}
-                            <span class="sort" on:click={sort(col)}>
-                                {col.label}
-                                {#if col.id == sortParam.active}
-                                    <i class="material-icons">
-                                        {#if sortParam.direction == 'asc'}
-                                            keyboard_arrow_down
-                                        {:else}keyboard_arrow_up{/if}
-                                    </i>
-                                {/if}
-                            </span>
-                        {:else}{col.label}{/if}
-                    </td>
-                {/each}
-            </tr>
-        </thead>
+        <Header
+            {title}
+            columns={visibleCols}
+            {filterCols}
+            bind:filterParam
+            bind:sortParam
+            sticky={params.sticky}
+            on:reload={reload} />
         <tbody>
             {#each data as row, i}
                 <tr class:odd={i % 2 == 1}>
@@ -217,5 +156,9 @@
             {/each}
         </tbody>
     {/if}
-    <tfoot />
+    <tfoot>
+        <tr>
+            <td colspan={visibleCols.length}>Page</td>
+        </tr>
+    </tfoot>
 </table>

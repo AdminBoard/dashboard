@@ -2,51 +2,7 @@ table {
     font-size: 0.9em;
     width: 100%;
 }
-thead {
-    &.sticky {
-        top: 0;
-        & th,
-        td {
-            position: sticky;
-            text-align: center;
-        }
-    }
 
-    & th,
-    td {
-        height: 32px;
-    }
-
-    & th {
-        top: 0;
-        height: 42px;
-        background-color: $col-primary;
-        z-index: 1;
-    }
-
-    & td {
-        background-color: lighten($col-primary, 3);
-        text-shadow: 0 0 8px #000;
-
-        &:not(.notitle) {
-            top: 43px;
-        }
-        &.notitle {
-            top: 0;
-        }
-
-        & i {
-            font-size: 1em;
-        }
-
-        & .sort {
-            cursor: pointer;
-            &:hover {
-                text-shadow: 0 0 8px $col-secondary;
-            }
-        }
-    }
-}
 tbody {
     & tr {
         &.odd {
