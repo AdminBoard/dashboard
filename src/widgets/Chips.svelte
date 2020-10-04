@@ -4,6 +4,11 @@
     export let items = [];
 
     let dispatch = createEventDispatcher();
+
+    function deleteItem(item) {
+        items = items.filter((el) => el != item);
+        dispatch("delete", item);
+    }
 </script>
 
 <style lang="scss">
@@ -50,7 +55,7 @@
             <div>{item.label}</div>
             <i
                 class="material-icons"
-                on:click={() => dispatch('delete', item)}>clear</i>
+                on:click={() => deleteItem(item)}>clear</i>
         </div>
     {/each}
 </div>

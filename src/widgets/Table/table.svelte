@@ -3,7 +3,6 @@
     import { formatDate, formatNumber, formatMap } from "./formatter";
 
     import { Post } from "../../Api.svelte";
-    import Link from "../../router/Link.svelte";
     import Chips from "../Chips.svelte";
     import Menu from "./menu.svelte";
     import Filter from "./filter.svelte";
@@ -79,12 +78,25 @@
         reloadData();
     }
 
-    function selectFilter(ev) {
+    function addFilterLabel(col, value) {
+        selectedFilters = selectedFilters.filter((el) => el.id != col.id);
+        filterParam[col.id] = { value: value, filter: col.filter };
+        let label = col.label + ": ";
+        if (col.map == null) label += value;
+        else label += col.map[value];
+        selectedFilters = [...selectedFilters, { id: col.id, label: label }];
+    }
+
+    function addFilter(ev) {
         const col = ev.detail.column;
-        filterParam[col.id] = {
-            value: ev.detail.value,
-            filter: col.filter,
-        };
+        const val = ev.detail.value;
+        addFilterLabel(col, val);
+        reloadData();
+    }
+
+    function deleteFilter(ev) {
+        const item = ev.detail;
+        delete filterParam[item.id];
         reloadData();
     }
 
@@ -124,15 +136,18 @@
         refreshPages();
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
-            if (el.filter != null) filterCols.push(el);
+            if (el.filter != null) {
+                filterCols.push(el);
+                const param = filterParam[el.id];
+                if (param != null) addFilterLabel(el, param.value);
+            }
         });
         visibleCols = visibleCols; //refresh view
+        reloadData();
     }
     onMount(() => {
-        reloadData();
+        init();
     });
-
-    init();
 </script>
 
 <style lang="scss">
@@ -158,9 +173,11 @@
                                 <Filter
                                     columns={filterCols}
                                     {dismiss}
-                                    on:select={selectFilter} />
+                                    on:select={addFilter} />
                             </Menu>
-                            <Chips items={selectedFilters} />
+                            <Chips
+                                bind:items={selectedFilters}
+                                on:delete={deleteFilter} />
                         </div>
                     </th>
                 </tr>

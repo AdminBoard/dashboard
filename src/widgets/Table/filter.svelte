@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
 
     export let columns = [];
+    $: columns && selectColumn();
     export let dismiss;
 
     let dispatch = createEventDispatcher();
@@ -18,7 +19,12 @@
         if (dismiss != null) dismiss();
 
         value = "";
+        selColumn = null;
+        selectColumn();
         selectionValue = "";
+    }
+    function selectColumn() {
+        if (columns.length > 0 && selColumn == null) selColumn = columns[0];
     }
 </script>
 
