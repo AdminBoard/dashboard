@@ -3,10 +3,8 @@
     import { formatDate, formatNumber, formatMap } from "./formatter";
 
     import { Post } from "../../Api.svelte";
-    import Chips from "../Chips.svelte";
-    import Menu from "./menu.svelte";
-    import Filter from "./filter.svelte";
     import Header from "./header.svelte";
+    import Footer from "./footer.svelte";
 
     export let title;
     export let dataSource;
@@ -16,12 +14,10 @@
     let filterParam = {};
     let sortParam = {};
     let pageParam = { location: 1, length: 100 };
-    let pages = [];
-
-    let selectedFilters = [];
 
     let visibleCols = [];
     let filterCols = [];
+    let footer;
 
     let data = [];
     let loading = false;
@@ -41,7 +37,7 @@
             .then((resp) => {
                 if (resp.status == 0) {
                     data = resp.data.items == null ? [] : resp.data.items;
-                    refreshPages();
+                    footer.refreshPages();
                 }
             })
             .catch((e) => console.log(e))
@@ -69,31 +65,11 @@
         }
     }
 
-    function pageChange(page) {
-        pageParam.location = page;
-        reload();
-    }
-
     function loadFromStorage(name) {
         let val = storage.get(name);
         if (val != null) return val;
         if (params[name] != null) return params[name];
         return null;
-    }
-
-    function refreshPages() {
-        const page = pageParam.location;
-        pages = [];
-        for (let i = page - 1; i > page - 3 && i > 0; i--) {
-            pages.unshift(i);
-        }
-        pages.push(pageParam.location);
-        if (data.length == pageParam.length) {
-            for (let i = page + 1; i < page + 3; i++) {
-                pages.push(i);
-            }
-        }
-        pages = pages; //refresh view
     }
 
     function init() {
@@ -102,7 +78,7 @@
         val = loadFromStorage("sort");
         sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
-        refreshPages();
+        footer.refreshPages();
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
             if (el.filter != null) {
@@ -156,9 +132,10 @@
             {/each}
         </tbody>
     {/if}
-    <tfoot>
-        <tr>
-            <td colspan={visibleCols.length}>Page</td>
-        </tr>
-    </tfoot>
+    <Footer
+        bind:data
+        bind:this={footer}
+        bind:pageParam
+        columnLength={visibleCols.length}
+        on:reload={reload} />
 </table>

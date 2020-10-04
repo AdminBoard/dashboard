@@ -20,34 +20,7 @@ tbody {
         }
     }
 }
-tfoot {
-    & td {
-        background-color: transparentize(#ccc, .1);
-        box-shadow: 0 0 4px transparentize(#000000, $amount: 0.8);
-        position: sticky;
-        bottom: 0;
-    }
-    // & .content {
-    //     background-color: #eee;
-    //     padding: 8px;
-    //     box-shadow: 0 0 4px #000;
-    //     display: inherit;
-    // }
-    // & .page > div {
-    //     cursor: pointer;
-    //     padding: 4px 8px;
-    //     border-radius: 4px;
-    //     &:hover {
-    //         box-shadow: 0 0 4px $col-secondary;
-    //     }
-    //     &.current {
-    //         box-shadow: 0 0 4px $col-primary;
-    //     }
-    //     &:first-child {
-    //         margin-left: 8px;
-    //     }
-    // }
-}
+
 .loading-container {
     z-index: 1;
     position: fixed;
