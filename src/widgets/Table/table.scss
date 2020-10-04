@@ -1,0 +1,115 @@
+table {
+    font-size: 0.9em;
+    width: 100%;
+}
+thead {
+    &.sticky {
+        top: 0;
+        & th,
+        td {
+            position: sticky;
+            text-align: center;
+        }
+    }
+
+    & th,
+    td {
+        height: 32px;
+    }
+
+    & th {
+        top: 0;
+        height: 42px;
+        background-color: $col-primary;
+        z-index: 1;
+    }
+
+    & td {
+        background-color: lighten($col-primary, 3);
+        text-shadow: 0 0 8px #000;
+
+        &:not(.notitle) {
+            top: 43px;
+        }
+        &.notitle {
+            top: 0;
+        }
+
+        & i {
+            font-size: 1em;
+        }
+
+        & .sort {
+            cursor: pointer;
+            &:hover {
+                text-shadow: 0 0 8px $col-secondary;
+            }
+        }
+    }
+}
+tbody {
+    & tr {
+        &.odd {
+            background-color: lighten($col-primary, 48);
+        }
+    }
+    & td {
+        white-space: pre;
+        vertical-align: top;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 4px;
+
+        & + td {
+            border-left: 1px solid #ccc;
+        }
+    }
+}
+tfoot {
+    & td {
+        background-color: transparentize(#ccc, .1);
+        box-shadow: 0 0 4px transparentize(#000000, $amount: 0.8);
+        position: sticky;
+        bottom: 0;
+    }
+    // & .content {
+    //     background-color: #eee;
+    //     padding: 8px;
+    //     box-shadow: 0 0 4px #000;
+    //     display: inherit;
+    // }
+    // & .page > div {
+    //     cursor: pointer;
+    //     padding: 4px 8px;
+    //     border-radius: 4px;
+    //     &:hover {
+    //         box-shadow: 0 0 4px $col-secondary;
+    //     }
+    //     &.current {
+    //         box-shadow: 0 0 4px $col-primary;
+    //     }
+    //     &:first-child {
+    //         margin-left: 8px;
+    //     }
+    // }
+}
+.loading-container {
+    z-index: 1;
+    position: fixed;
+    right: 16px;
+    &.notitle {
+        top: 24px;
+    }
+    &:not(.notitle) {
+        top: 66px;
+    }
+    & .loading {
+        box-shadow: 0 0 8px #000;
+        opacity: 1;
+        transition: opacity 0.1s ease-out;
+        transition-duration: 100ms;
+        &.hide {
+            opacity: 0;
+            transition-duration: 500ms;
+        }
+    }
+}

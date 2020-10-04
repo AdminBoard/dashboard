@@ -3,8 +3,10 @@
     import { formatDate, formatNumber, formatMap } from "./formatter";
 
     import { Post } from "../../Api.svelte";
-    import Filter from "./filter.svelte";
     import Link from "../../router/Link.svelte";
+    import Chips from "../Chips.svelte";
+    import Menu from "./menu.svelte";
+    import Filter from "./filter.svelte";
 
     export let title;
     export let dataSource;
@@ -16,6 +18,8 @@
     let pageParam = { location: 1, length: 100 };
     let pages = [];
 
+    let selectedFilters = [];
+
     let visibleCols = [];
     let filterCols = [];
 
@@ -24,18 +28,16 @@
 
     function reloadData() {
         if (dataSource == null || dataSource == "") return;
-        let filters = {};
-        for (const key in filterParam) {
-            filters[key] = {
-                value: filterParam[key].value,
-                filter: filterParam[key].filter,
-            };
-        }
+
         storage.save("filter", filterParam);
         storage.save("sort", sortParam);
 
         loading = true;
-        Post(dataSource, { filters: filters, sort: sortParam, page: pageParam })
+        Post(dataSource, {
+            filters: filterParam,
+            sort: sortParam,
+            page: pageParam,
+        })
             .then((resp) => {
                 if (resp.status == 0) {
                     data = resp.data.items == null ? [] : resp.data.items;
@@ -74,6 +76,15 @@
             if (sortParam.direction == "asc") sortParam.direction = "desc";
             else sortParam = {};
         }
+        reloadData();
+    }
+
+    function selectFilter(ev) {
+        const col = ev.detail.column;
+        filterParam[col.id] = {
+            value: ev.detail.value,
+            filter: col.filter,
+        };
         reloadData();
     }
 
@@ -126,121 +137,7 @@
 
 <style lang="scss">
     @import "../../style/color";
-
-    table {
-        font-size: 0.9em;
-        width: 100%;
-    }
-    thead {
-        &.sticky {
-            top: 0;
-            & th,
-            td {
-                position: sticky;
-                text-align: center;
-            }
-        }
-
-        & th,
-        td {
-            height: 32px;
-        }
-
-        & th {
-            top: 0;
-            height: 42px;
-            background-color: $col-primary;
-            z-index: 1;
-        }
-
-        & td {
-            background-color: lighten($col-primary, 3);
-            text-shadow: 0 0 8px #000;
-
-            &:not(.notitle) {
-                top: 43px;
-            }
-            &.notitle {
-                top: 0;
-            }
-
-            & i {
-                font-size: 1em;
-            }
-
-            & .sort {
-                cursor: pointer;
-                &:hover {
-                    text-shadow: 0 0 8px $col-secondary;
-                }
-            }
-        }
-    }
-    tbody {
-        & tr {
-            &.odd {
-                background-color: lighten($col-primary, 48);
-            }
-        }
-        & td {
-            white-space: pre;
-            vertical-align: top;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 4px;
-
-            & + td {
-                border-left: 1px solid #ccc;
-            }
-        }
-    }
-    tfoot {
-        & td {
-            position: sticky;
-            bottom: 0;
-            padding: 8px 16px;
-        }
-        & .content {
-            background-color: #eee;
-            padding: 8px;
-            box-shadow: 0 0 4px #000;
-            display: inherit;
-        }
-        & .page > div {
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            &:hover {
-                box-shadow: 0 0 4px $col-secondary;
-            }
-            &.current {
-                box-shadow: 0 0 4px $col-primary;
-            }
-            &:first-child {
-                margin-left: 8px;
-            }
-        }
-    }
-    .loading-container {
-        z-index: 1;
-        position: fixed;
-        right: 16px;
-        &.notitle {
-            top: 24px;
-        }
-        &:not(.notitle) {
-            top: 66px;
-        }
-        & .loading {
-            box-shadow: 0 0 8px #000;
-            opacity: 1;
-            transition: opacity 0.1s ease-out;
-            transition-duration: 100ms;
-            &.hide {
-                opacity: 0;
-                transition-duration: 500ms;
-            }
-        }
-    }
+    @import "table";
 </style>
 
 <div class="loading-container" class:notitle={title == null}>
@@ -257,12 +154,13 @@
                     <th colspan={visibleCols.length}>
                         <div class="row center">
                             <div class="caption padding">{title}</div>
-                            {#if filterCols}
+                            <Menu let:dismiss icon="search">
                                 <Filter
-                                    filters={filterParam}
-                                    on:change={reloadData}
-                                    columns={filterCols} />
-                            {/if}
+                                    columns={filterCols}
+                                    {dismiss}
+                                    on:select={selectFilter} />
+                            </Menu>
+                            <Chips items={selectedFilters} />
                         </div>
                     </th>
                 </tr>
@@ -301,25 +199,6 @@
                 </tr>
             {/each}
         </tbody>
-        {#if pageParam != null}
-            <tfoot>
-                <tr>
-                    <td colspan={visibleCols.length}>
-                        <div class="column right">
-                            <div class="page content rounded row center">
-                                Page:
-                                {#each pages as page}
-                                    <div
-                                        on:click={() => pageChange(page)}
-                                        class:current={page == pageParam.location}>
-                                        {page}
-                                    </div>
-                                {/each}
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        {/if}
     {/if}
+    <tfoot />
 </table>

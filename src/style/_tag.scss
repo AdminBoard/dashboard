@@ -41,6 +41,12 @@ select, input {
 button {
     font-weight: bold;
     font-size: .9em;
+    &:active {
+        box-shadow: 0 0 4px $col-secondary;
+        background-color: $col-primary;
+        color: $col-primary-text;
+        border: 1px solid $col-primary;
+    }
 
     &.primary {
         color: $col-primary-text;

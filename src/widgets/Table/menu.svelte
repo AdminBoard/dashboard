@@ -1,11 +1,13 @@
 <script>
     export let icon;
-    export let tooltip;
+    export let tooltip = null;
+    export let menuLocation = "bottom";
+    export let color = "";
 
     let show = false;
     let focus = false;
 
-    export function close() {
+    function dismiss() {
         focus = false;
         show = false;
     }
@@ -22,8 +24,14 @@
         margin: 4px;
         border-radius: 8px;
         padding: 0 4px;
-        &.hover {
+        &:hover {
             background-color: lighten($col-primary, 8);
+        }
+        &.primary {
+            background-color: $col-primary;
+            &:hover {
+                box-shadow: 0 0 4px $col-secondary;
+            }
         }
     }
     .tooltip {
@@ -39,6 +47,9 @@
         transition: visibility 0.1s, opacity 0.1s ease-out;
         transition-duration: 400ms;
         transition-delay: 500ms;
+        &.top {
+            transform: translateY(-100%);
+        }
         &.show {
             transition-duration: 100ms;
             visibility: visible;
@@ -59,6 +70,10 @@
         transition-duration: 100ms;
         outline: none;
 
+        &.top {
+            transform: translateY(calc(-100% + 4px));
+        }
+
         &.show {
             visibility: visible;
             opacity: 1;
@@ -69,21 +84,43 @@
 <svelte:body on:click={() => (focus = false)} />
 
 <div>
+    {#if menuLocation == 'top'}
+        <div
+            class="popover top padding"
+            class:show={focus}
+            tabindex="-1"
+            on:click|stopPropagation
+            on:blur={() => (focus = false)}>
+            <slot dismiss={() => (focus = false)} />
+        </div>
+        {#if tooltip != null}
+            <div class="tooltip top padding" class:show={show && !focus}>
+                {tooltip}
+            </div>
+        {/if}
+    {/if}
     <div
         class="icon"
         class:hover={show || focus}
         on:mouseover={() => (show = true)}
         on:mouseleave={() => (show = false)}
+        class:primary={color == 'primary'}
         on:click|stopPropagation={() => (focus = true)}>
         <i class="material-icons">{icon}</i>
     </div>
-    <div class="tooltip padding" class:show={show && !focus}>{tooltip}</div>
-    <div
-        class="popover padding"
-        class:show={focus}
-        tabindex="-1"
-        on:click|stopPropagation
-        on:blur={() => (focus = false)}>
-        <slot />
-    </div>
+    {#if menuLocation == 'bottom'}
+        {#if tooltip != null}
+            <div class="tooltip padding" class:show={show && !focus}>
+                {tooltip}
+            </div>
+        {/if}
+        <div
+            class="popover padding"
+            class:show={focus}
+            tabindex="-1"
+            on:click|stopPropagation
+            on:blur={() => (focus = false)}>
+            <slot {dismiss} />
+        </div>
+    {/if}
 </div>
