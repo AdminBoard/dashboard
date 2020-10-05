@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
 
     import { Post } from "../../Api.svelte";
@@ -10,6 +10,7 @@
     export let dataSource;
     export let params;
     export let storage;
+    export let selectable = false;
 
     let filterParam = {};
     let sortParam = {};
@@ -21,6 +22,8 @@
 
     let data = [];
     let loading = false;
+
+    let dispatch = createEventDispatcher();
 
     function reload() {
         if (dataSource == null || dataSource == "") return;
@@ -37,7 +40,7 @@
             .then((resp) => {
                 if (resp.status == 0) {
                     data = resp.data.items == null ? [] : resp.data.items;
-                    footer.refreshPages();
+                    if (footer != null) footer.refreshPages();
                 }
             })
             .catch((e) => console.log(e))
@@ -78,7 +81,6 @@
         val = loadFromStorage("sort");
         sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
-        footer.refreshPages();
         params.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
             if (el.filter != null) {
@@ -97,7 +99,59 @@
 
 <style lang="scss">
     @import "../../style/color";
-    @import "table";
+
+    .component {
+        position: relative;
+    }
+
+    table {
+        font-size: 0.9em;
+        width: 100%;
+    }
+
+    tbody {
+        & tr {
+            &.odd {
+                background-color: lighten($col-primary, 48);
+            }
+        }
+        & td {
+            white-space: pre;
+            vertical-align: top;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 4px;
+
+            & + td {
+                border-left: 1px solid #ccc;
+            }
+        }
+        &.selectable tr:hover {
+            cursor: pointer;
+            background-color: lighten($col-primary, 40);
+        }
+    }
+
+    .loading-container {
+        z-index: 1;
+        position: fixed;
+        right: 16px;
+        &.notitle {
+            top: 24px;
+        }
+        &:not(.notitle) {
+            top: 66px;
+        }
+        & .loading {
+            box-shadow: 0 0 8px #000;
+            opacity: 1;
+            transition: opacity 0.1s ease-out;
+            transition-duration: 100ms;
+            &.hide {
+                opacity: 0;
+                transition-duration: 500ms;
+            }
+        }
+    }
 </style>
 
 <div class="loading-container" class:notitle={title == null}>
@@ -106,36 +160,38 @@
     </div>
 </div>
 
-<table>
-    {#if params != null}
-        <Header
-            {title}
-            columns={visibleCols}
-            {filterCols}
-            bind:filterParam
-            bind:sortParam
-            sticky={params.sticky}
-            on:reload={reload} />
-        <tbody>
-            {#each data as row, i}
-                <tr class:odd={i % 2 == 1}>
-                    {#each visibleCols as col}
-                        <td
-                            class:right={col.align == 'right'}
-                            class:center={col.align == 'center'}>
-                            {#if col.format != null || col.map != null}
-                                {formatCell(col, row[col.id])}
-                            {:else if row[col.id] != null}{row[col.id]}{/if}
-                        </td>
-                    {/each}
-                </tr>
-            {/each}
-        </tbody>
-    {/if}
-    <Footer
-        bind:data
-        bind:this={footer}
-        bind:pageParam
-        columnLength={visibleCols.length}
-        on:reload={reload} />
-</table>
+<div class="component">
+    <table>
+        {#if params != null}
+            <Header
+                {title}
+                columns={visibleCols}
+                {filterCols}
+                bind:filterParam
+                bind:sortParam
+                sticky={params.sticky}
+                on:reload={reload} />
+            <tbody class:selectable>
+                {#each data as row, i}
+                    <tr
+                        class:odd={i % 2 == 1}
+                        on:click|stopPropagation={(ev) => dispatch('select', {
+                                action: params.select,
+                                data: row,
+                            })}>
+                        {#each visibleCols as col}
+                            <td
+                                class:right={col.align == 'right'}
+                                class:center={col.align == 'center'}>
+                                {#if col.format != null || col.map != null}
+                                    {formatCell(col, row[col.id])}
+                                {:else if row[col.id] != null}{row[col.id]}{/if}
+                            </td>
+                        {/each}
+                    </tr>
+                {/each}
+            </tbody>
+        {/if}
+    </table>
+    <Footer bind:data bind:this={footer} bind:pageParam on:reload={reload} />
+</div>

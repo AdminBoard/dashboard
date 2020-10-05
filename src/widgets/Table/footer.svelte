@@ -1,7 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
 
-    export let columnLength;
     export let pageParam;
     export let data;
 
@@ -32,44 +31,28 @@
 <style lang="scss">
     @import "../../style/color";
 
-    tfoot {
-        & td {
-            padding: 8px;
-            position: sticky;
-            bottom: 0;
-            // background-color: transparentize(#ccc, 0.1);
-            // box-shadow: 0 0 4px transparentize(#000000, $amount: 0.8);
-        }
-        // & .content {
-        //     background-color: #eee;
-        //     padding: 8px;
-        //     box-shadow: 0 0 4px #000;
-        //     display: inherit;
-        // }
-        // & .page > div {
-        //     cursor: pointer;
-        //     padding: 4px 8px;
-        //     border-radius: 4px;
-        //     &:hover {
-        //         box-shadow: 0 0 4px $col-secondary;
-        //     }
-        //     &.current {
-        //         box-shadow: 0 0 4px $col-primary;
-        //     }
-        //     &:first-child {
-        //         margin-left: 8px;
-        //     }
-        // }
-        .paging {
-            background-color: #ccc;
+    .component {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+
+        & .paging {
+            margin: 0 8px 8px 0;
+            background-color: transparentize(#eee, 0.1);
+            box-shadow: 0 0 4px transparentize(#000, 0.3);
             flex: 0;
             & > div {
                 cursor: pointer;
                 padding: 4px 8px;
                 border-radius: 4px;
-                background-color: #eee;
+                background-color: #fff;
                 &:hover {
                     box-shadow: 0 0 4px $col-secondary;
+                    background-color: transparentize($col-secondary, 0.4);
+                    color: $col-secondary-text;
+                }
+                &:active {
+                    background-color: $col-secondary;
                 }
                 &.current {
                     box-shadow: 0 0 4px $col-primary;
@@ -82,13 +65,11 @@
     }
 </style>
 
-<tfoot>
-    <tr>
-        <td colspan={columnLength}>
-            <div class="row center">
-                <div class="fill">&nbsp;</div>
-                <div class="fill">&nbsp;</div>
-                <div class="paging rounded row center">
+<div class="component">
+    <div class="column right">
+        <div class="row">
+            {#if data != null && data.length > 0}
+                <div class="paging rounded row">
                     Page:
                     {#each pages as page}
                         <div
@@ -98,7 +79,7 @@
                         </div>
                     {/each}
                 </div>
-            </div>
-        </td>
-    </tr>
-</tfoot>
+            {/if}
+        </div>
+    </div>
+</div>
