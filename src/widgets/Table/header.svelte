@@ -8,6 +8,7 @@
     import Menu from "./menu.svelte";
 
     export let sticky;
+    export let color;
     export let title;
     export let columns;
     export let filterCols;
@@ -65,24 +66,30 @@
         & th,
         td {
             height: 32px;
+            background-color: #ddd;
         }
 
         & th {
             top: 0;
             height: 42px;
-            background-color: $col-primary;
             z-index: 1;
+            &.primary {
+                background-color: $col-primary;
+                color: $col-primary-text;
+            }
         }
 
         & td {
-            background-color: lighten($col-primary, 3);
-            text-shadow: 0 0 8px #000;
-
             &:not(.notitle) {
                 top: 43px;
             }
             &.notitle {
                 top: 0;
+            }
+            &.primary {
+                background-color: lighten($col-primary, 3);
+                text-shadow: 0 0 4px #000;
+                color: $col-primary-text;
             }
 
             & i {
@@ -99,10 +106,10 @@
     }
 </style>
 
-<thead class="primary-bg" class:sticky>
+<thead class:sticky class:primary={color == 'primary'}>
     {#if title != null}
         <tr>
-            <th colspan={columns.length}>
+            <th colspan={columns.length} class:primary={color == 'primary'}>
                 <div class="row center">
                     <div class="caption padding">{title}</div>
                     <Menu let:dismiss icon="search">
@@ -120,7 +127,9 @@
     {/if}
     <tr>
         {#each columns as col}
-            <td class:notitle={title == null}>
+            <td
+                class:notitle={title == null}
+                class:primary={color == 'primary'}>
                 {#if col.sortable}
                     <span class="sort" on:click={sort(col)}>
                         {col.label}

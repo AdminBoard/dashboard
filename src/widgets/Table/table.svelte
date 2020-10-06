@@ -119,7 +119,6 @@
     .component {
         position: relative;
     }
-
     table {
         font-size: 0.9em;
         width: 100%;
@@ -186,6 +185,7 @@
                 bind:filterParam
                 bind:sortParam
                 sticky={params.sticky}
+                color={params.color}
                 on:reload={reload} />
             <tbody class:selectable>
                 {#each data as item, i}
