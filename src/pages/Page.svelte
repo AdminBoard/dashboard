@@ -1,14 +1,15 @@
 <script>
-    import { Get } from "../Api.svelte";
+    import { get, pageByPath } from "../Api.svelte";
     import Router from "../router";
     import Widget from "../widgets/Widget.svelte";
+    import { openContentPage } from "../Content.svelte";
 
     let path = window.location.pathname;
 
     let title;
     let widgets;
 
-    Get("/api?page=" + path)
+    pageByPath(path)
         .then((resp) => {
             if (resp.status == 0) {
                 title = resp.data.title;
@@ -39,7 +40,10 @@
         <div class="line">
             {#each line as widget}
                 <div class="widget">
-                    <Widget {title} content={widget} />
+                    <Widget
+                        {title}
+                        content={widget}
+                        on:action={(ev) => openContentPage(ev.detail)} />
                 </div>
             {/each}
         </div>

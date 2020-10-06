@@ -2,7 +2,7 @@
     import { createEventDispatcher, onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
 
-    import { Post } from "../../Api.svelte";
+    import { post } from "../../Api.svelte";
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
 
@@ -21,6 +21,7 @@
     let footer;
 
     let data = [];
+    let cellLabels = [];
     let loading = false;
 
     let dispatch = createEventDispatcher();
@@ -32,7 +33,7 @@
         storage.save("sort", sortParam);
 
         loading = true;
-        Post(dataSource, {
+        post(dataSource, {
             filters: filterParam,
             sort: sortParam,
             page: pageParam,
@@ -47,10 +48,25 @@
             .finally(() => (loading = false));
     }
 
+    function selectItem(item) {
+        if (!selectable) return;
+        if (params.columns == null) return;
+        const data = {};
+        for (const [key, val] of Object.entries(item)) {
+            const col = params.columns.filter((col) => col.id == key);
+            if (col.length == 1) {
+                data[key] = formatCell(col[0], val);
+            } else data[key] = val;
+        }
+        dispatch("select", { action: params.select, data: data });
+    }
+
     function formatCell(col, value) {
         if (col.map != null) return formatMap(col.map, value);
 
         if (value == "") return "";
+        else if (col.format == null) return value;
+
         const format = col.format;
 
         let command = format;
@@ -172,20 +188,19 @@
                 sticky={params.sticky}
                 on:reload={reload} />
             <tbody class:selectable>
-                {#each data as row, i}
+                {#each data as item, i}
                     <tr
                         class:odd={i % 2 == 1}
-                        on:click|stopPropagation={(ev) => dispatch('select', {
-                                action: params.select,
-                                data: row,
-                            })}>
+                        on:click|stopPropagation={() => selectItem(item)}>
                         {#each visibleCols as col}
                             <td
                                 class:right={col.align == 'right'}
                                 class:center={col.align == 'center'}>
                                 {#if col.format != null || col.map != null}
-                                    {formatCell(col, row[col.id])}
-                                {:else if row[col.id] != null}{row[col.id]}{/if}
+                                    {formatCell(col, item[col.id])}
+                                {:else if item[col.id] != null}
+                                    {item[col.id]}
+                                {/if}
                             </td>
                         {/each}
                     </tr>

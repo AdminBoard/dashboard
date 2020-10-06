@@ -1,10 +1,12 @@
 <script>
   import Router, { RouterOutlet } from "./router";
-  import { Get } from "./Api.svelte";
+  import { get } from "./Api.svelte";
   import Sidebar from "./sidebar";
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
   import Login from "./pages/Login.svelte";
+  import Window from "./Window.svelte";
+  import Content from "./Content.svelte";
 
   let session = null;
   let refresh;
@@ -14,14 +16,14 @@
   Router.register("*", Page);
 
   //check session
-  Get("/api/public?session").then((resp) => {
+  get("/api/public?session").then((resp) => {
     if (resp.status != 0 || resp.data == null) {
       Router.navigate("/login");
     } else {
       session = resp.data;
       Router.start();
       refresh = setInterval(() => {
-        Get("/api/public?session");
+        get("/api/public?session");
       }, 1 * 60 * 1000);
     }
   });
@@ -53,6 +55,8 @@
     </div>
     <div class="content">
       <RouterOutlet />
+      <Content />
     </div>
   </div>
 {/if}
+<Window />

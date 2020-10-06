@@ -1,5 +1,5 @@
 <script>
-    import { Post } from "../Api.svelte";
+    import { post } from "../Api.svelte";
     import sha1 from "crypto-js/sha1";
     import hex from "crypto-js/enc-hex";
     import Router from "../router";
@@ -22,7 +22,7 @@
         let time = Math.round(Date.now() / 1000);
         signature = sha1(signature + time).toString(hex);
 
-        Post("/api/public?login", {
+        post("/api/public?login", {
             username: u,
             signature: signature,
             time: time,
