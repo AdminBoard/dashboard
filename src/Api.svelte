@@ -1,4 +1,6 @@
 <script context="module">
+  let pageCache = {};
+
   export async function post(url, data) {
     const resp = await fetch(url, {
       method: "POST",
@@ -22,16 +24,19 @@
 
   export function pageById(id) {
     return new Promise((resolve, reject) => {
-      get("/api?page_id=" + id)
-        .then((resp) => {
-          if (resp.status == 0) resolve(resp.data);
-          else reject(resp);
-        })
-        .catch((e) => reject(e));
+      const cache = pageCache[id];
+      if (!cache) {
+        get("/api?page_id=" + id)
+          .then((resp) => {
+            if (resp.status == 0) {
+              pageCache[id] = resp.data;
+              resolve(resp.data);
+            } else reject(resp);
+          })
+          .catch((e) => reject(e));
+      } else {
+        resolve(cache);
+      }
     });
   }
-</script>
-
-<script>
-  import { resolve } from "path";
 </script>
