@@ -19,7 +19,9 @@
     let visibleCols = [];
     let filterCols = [];
     let footer;
+
     let selectable = false;
+    let selectedIndex = {};
 
     let records = [];
     let loading = false;
@@ -58,6 +60,18 @@
                 }
             })
             .finally(() => (loading = false));
+    }
+
+    function select(ev, item, index) {
+        if (ev.ctrlKey) {
+            console.log("ctrl");
+        } else if (ev.shiftKey) {
+            console.log("shift");
+        } else {
+            if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
+            if (selectedIndex[index] != null) selectItem(item);
+            else selectedIndex[index] = true;
+        }
     }
 
     function selectItem(item) {
@@ -153,9 +167,22 @@
                 border-left: 1px solid #ccc;
             }
         }
-        &.selectable tr:hover {
-            cursor: pointer;
-            background-color: lighten($col-primary, 40);
+        &.selectable {
+            & tr {
+                cursor: pointer;
+                &:hover {
+                    background-color: lighten($col-primary, 40);
+                }
+                &.selected {
+                    background-color: lighten($col-secondary, 30);
+                    &:hover {
+                        background-color: lighten($col-secondary, 35);
+                    }
+                }
+                &:active {
+                    background-color: lighten($col-secondary, 40);
+                }
+            }
         }
     }
 
@@ -204,7 +231,8 @@
                 {#each records as item, i}
                     <tr
                         class:odd={i % 2 == 1}
-                        on:click|stopPropagation={() => selectItem(item)}>
+                        on:click|stopPropagation={(ev) => select(ev, item, i)}
+                        class:selected={selectedIndex[i] != null}>
                         {#each visibleCols as col}
                             <td
                                 class:right={col.align == 'right'}
@@ -223,5 +251,3 @@
     </table>
     <Footer bind:records bind:this={footer} bind:pageParam on:reload={reload} />
 </div>
-
-<svelte:window on:keydown={keydown} />
