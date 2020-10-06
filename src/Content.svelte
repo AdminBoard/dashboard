@@ -29,11 +29,11 @@
 <style lang="scss">
     .component {
         font-size: 0.9em;
+        position: relative;
         & > div {
-            display: table;
+            max-height: calc(100%-60px);
             padding: 16px;
             overflow-y: auto;
-            margin-top: 8px;
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
             box-shadow: 0 0 8px transparentize(#000000, 0.1);
@@ -46,12 +46,13 @@
             transition: right 0.2s ease-out;
             &.show {
                 right: 0;
+                transition-duration: 500ms;
             }
             & > .line {
-                display: table-row;
+                // display: table-row;
                 & > .col {
-                    display: table-cell;
-                    vertical-align: top;
+                    // display: table-cell;
+                    // vertical-align: top;
                 }
             }
         }
@@ -70,9 +71,9 @@
             <div class="loading rounded row center">Loading...</div>
         {:else}
             {#each $widgets as line}
-                <div class="line">
+                <div class="row">
                     {#each line as widget}
-                        <div class="col">
+                        <div class="fill">
                             <Widget {data} content={widget} />
                         </div>
                     {/each}

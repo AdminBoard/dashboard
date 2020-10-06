@@ -58,5 +58,5 @@
       <Content />
     </div>
   </div>
+  <Window />
 {/if}
-<Window />

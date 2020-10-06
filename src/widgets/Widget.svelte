@@ -22,7 +22,6 @@
             );
         },
     };
-    console.log(content, data);
 </script>
 
 <style lang="scss">
@@ -56,15 +55,14 @@
     {#if content.name == 'Table'}
         <Table
             {title}
-            dataSource={content.data_source}
-            params={content.params}
-            selectable={content.params.select != null}
+            {data}
+            properties={content.properties}
             on:select={(ev) => dispatch('action', ev.detail)}
             {storage} />
     {:else if content.name == 'Label'}
         <div class="label column">
-            <div><span>{content.params.label}</span></div>
-            <div>{data[content.params.id]}</div>
+            <div><span>{content.properties.label}</span></div>
+            <div>{data[content.properties.id]}</div>
         </div>
     {/if}
 {/if}

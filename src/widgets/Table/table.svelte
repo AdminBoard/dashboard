@@ -1,16 +1,16 @@
 <script>
     import { createEventDispatcher, onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
-
     import { post } from "../../Api.svelte";
+
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
+    import { openContentPage } from "../../Content.svelte";
 
     export let title;
-    export let dataSource;
-    export let params;
+    export let properties;
     export let storage;
-    export let selectable = false;
+    export let data;
 
     let filterParam = {};
     let sortParam = {};
@@ -19,46 +19,58 @@
     let visibleCols = [];
     let filterCols = [];
     let footer;
+    let selectable = false;
 
-    let data = [];
-    let cellLabels = [];
+    let records = [];
     let loading = false;
 
-    let dispatch = createEventDispatcher();
-
     function reload() {
-        if (dataSource == null || dataSource == "") return;
+        const dataSource = properties.data_source;
+
+        if (dataSource == null) return;
 
         storage.save("filter", filterParam);
         storage.save("sort", sortParam);
 
         loading = true;
-        post(dataSource, {
+
+        const params = {
             filters: filterParam,
             sort: sortParam,
             page: pageParam,
-        })
+        };
+
+        if (dataSource.params != null) {
+            const split = dataSource.params.split(",");
+            split.forEach((el) => {
+                params[el.trim()] = data[el.trim()];
+            });
+        }
+
+        post(properties.data_source.path, params)
             .then((resp) => {
                 if (resp.status == 0) {
-                    data = resp.data.items == null ? [] : resp.data.items;
+                    records =
+                        resp.data == null || resp.data.items == null
+                            ? []
+                            : resp.data.items;
                     if (footer != null) footer.refreshPages();
                 }
             })
-            .catch((e) => console.log(e))
             .finally(() => (loading = false));
     }
 
     function selectItem(item) {
         if (!selectable) return;
-        if (params.columns == null) return;
+        if (properties.columns == null) return;
         const data = {};
         for (const [key, val] of Object.entries(item)) {
-            const col = params.columns.filter((col) => col.id == key);
+            const col = properties.columns.filter((col) => col.id == key);
             if (col.length == 1) {
                 data[key] = formatCell(col[0], val);
             } else data[key] = val;
         }
-        dispatch("select", { action: params.select, data: data });
+        openContentPage({ action: properties.select, data: data });
     }
 
     function formatCell(col, value) {
@@ -87,7 +99,7 @@
     function loadFromStorage(name) {
         let val = storage.get(name);
         if (val != null) return val;
-        if (params[name] != null) return params[name];
+        if (properties[name] != null) return properties[name];
         return null;
     }
 
@@ -97,7 +109,7 @@
         val = loadFromStorage("sort");
         sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
-        params.columns.forEach((el) => {
+        properties.columns.forEach((el) => {
             if (el.hidden == null || el.hidden == false) visibleCols.push(el);
             if (el.filter != null) {
                 filterCols.push(el);
@@ -107,6 +119,7 @@
         });
         visibleCols = visibleCols; //refresh view
         reload();
+        selectable = properties.select != null;
     }
     onMount(() => {
         init();
@@ -177,18 +190,18 @@
 
 <div class="component">
     <table>
-        {#if params != null}
+        {#if properties != null}
             <Header
                 {title}
                 columns={visibleCols}
                 {filterCols}
                 bind:filterParam
                 bind:sortParam
-                sticky={params.sticky}
-                color={params.color}
+                sticky={properties.sticky}
+                color={properties.color}
                 on:reload={reload} />
             <tbody class:selectable>
-                {#each data as item, i}
+                {#each records as item, i}
                     <tr
                         class:odd={i % 2 == 1}
                         on:click|stopPropagation={() => selectItem(item)}>
@@ -208,5 +221,7 @@
             </tbody>
         {/if}
     </table>
-    <Footer bind:data bind:this={footer} bind:pageParam on:reload={reload} />
+    <Footer bind:records bind:this={footer} bind:pageParam on:reload={reload} />
 </div>
+
+<svelte:window on:keydown={keydown} />

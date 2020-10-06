@@ -2,19 +2,20 @@
     import { createEventDispatcher } from "svelte";
 
     export let pageParam;
-    export let data;
+    export let records;
 
     let pages = [];
     let dispatch = createEventDispatcher();
 
     export function refreshPages() {
+        if (pageParam == null) return;
         const page = pageParam.location;
         pages = [];
         for (let i = page - 1; i > page - 3 && i > 0; i--) {
             pages.unshift(i);
         }
         pages.push(pageParam.location);
-        if (data.length == pageParam.length) {
+        if (records.length == pageParam.length) {
             for (let i = page + 1; i < page + 3; i++) {
                 pages.push(i);
             }
@@ -68,7 +69,7 @@
 <div class="component">
     <div class="column right">
         <div class="row">
-            {#if data != null && data.length > 0}
+            {#if records != null && records.length > 0 && pages.length > 0}
                 <div class="paging rounded row">
                     Page:
                     {#each pages as page}

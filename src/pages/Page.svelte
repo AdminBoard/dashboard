@@ -1,8 +1,7 @@
 <script>
-    import { get, pageByPath } from "../Api.svelte";
+    import { pageByPath } from "../Api.svelte";
     import Router from "../router";
     import Widget from "../widgets/Widget.svelte";
-    import { openContentPage } from "../Content.svelte";
 
     let path = window.location.pathname;
 
@@ -40,10 +39,7 @@
         <div class="line">
             {#each line as widget}
                 <div class="widget">
-                    <Widget
-                        {title}
-                        content={widget}
-                        on:action={(ev) => openContentPage(ev.detail)} />
+                    <Widget {title} content={widget} />
                 </div>
             {/each}
         </div>
