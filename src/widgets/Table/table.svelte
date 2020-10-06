@@ -63,28 +63,29 @@
     }
 
     function select(ev, item, index) {
-        if (ev.ctrlKey) {
-            console.log("ctrl");
-        } else if (ev.shiftKey) {
-            console.log("shift");
-        } else {
-            if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
-            if (selectedIndex[index] != null) selectItem(item);
-            else selectedIndex[index] = true;
-        }
-    }
+        if (!selectable || properties.columns == null) return;
 
-    function selectItem(item) {
-        if (!selectable) return;
-        if (properties.columns == null) return;
-        const data = {};
-        for (const [key, val] of Object.entries(item)) {
-            const col = properties.columns.filter((col) => col.id == key);
-            if (col.length == 1) {
-                data[key] = formatCell(col[0], val);
-            } else data[key] = val;
+        if (ev.ctrlKey) {
+            selectedIndex[index] = true;
+        } else if (ev.shiftKey) {
+            //TODO click table row when shift key pressed
+            // selectedIndex[index] = true;
+        } else {
+            if (selectedIndex[index] != null) {
+                const data = {};
+                for (const [key, val] of Object.entries(item)) {
+                    const col = properties.columns.filter(
+                        (col) => col.id == key
+                    );
+                    if (col.length == 1) {
+                        data[key] = formatCell(col[0], val);
+                    } else data[key] = val;
+                }
+                openContentPage({ action: properties.select, data: data });
+            }
+            if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
+            selectedIndex[index] = true;
         }
-        openContentPage({ action: properties.select, data: data });
     }
 
     function formatCell(col, value) {
