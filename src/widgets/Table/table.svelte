@@ -119,22 +119,20 @@
     }
 
     function init() {
+        properties.columns.forEach((el) => {
+            if (el.hidden == null || el.hidden == false) visibleCols.push(el);
+            if (el.filter != null) filterCols.push(el);
+        });
+
         let val = loadFromStorage("filter");
         filterParam = val == null ? {} : val;
         val = loadFromStorage("sort");
         sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
-        properties.columns.forEach((el) => {
-            if (el.hidden == null || el.hidden == false) visibleCols.push(el);
-            if (el.filter != null) {
-                filterCols.push(el);
-                const param = filterParam[el.id];
-                if (param != null) addFilterLabel(el, param.value);
-            }
-        });
+        selectable = properties.select != null;
+
         visibleCols = visibleCols; //refresh view
         reload();
-        selectable = properties.select != null;
     }
     onMount(() => {
         init();

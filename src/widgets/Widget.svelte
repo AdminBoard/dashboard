@@ -11,14 +11,14 @@
 
     const storage = {
         save: (key, value) => {
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "widget." + content.id + "." + key,
                 JSON.stringify(value)
             );
         },
         get: (key) => {
             return JSON.parse(
-                localStorage.getItem("widget." + content.id + "." + key)
+                sessionStorage.getItem("widget." + content.id + "." + key)
             );
         },
     };

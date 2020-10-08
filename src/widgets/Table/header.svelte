@@ -13,30 +13,38 @@
     export let columns;
     export let filterCols;
     export let filterParam;
+    $: filterParam && render();
     export let sortParam;
 
     let dispatch = createEventDispatcher();
     let selectedFilters = [];
 
-    function addFilterLabel(col, value) {
-        selectedFilters = selectedFilters.filter((el) => el.id != col.id);
-        filterParam[col.id] = { value: value, filter: col.filter };
-        let label = col.label + ": ";
-        if (col.map == null) label += value;
-        else label += col.map[value];
-        selectedFilters = [...selectedFilters, { id: col.id, label: label }];
+    function render() {
+        selectedFilters = [];
+        for (const [key, val] of Object.entries(filterParam)) {
+            const col = filterCols.find(el => el.id == key);
+            if (col != null) {
+                let label = col.label + ': ';
+                label += val.filter == 'map' ? col.map[val.value] : val.value;
+
+                selectedFilters = [...selectedFilters, { id: col.id, label: label }];
+            }
+        }
     }
 
     function addFilter(ev) {
         const col = ev.detail.column;
         const val = ev.detail.value;
-        addFilterLabel(col, val);
+
+        filterParam[col.id] = { value: val, filter: col.filter };
+
         dispatch("reload");
     }
 
     function deleteFilter(ev) {
         const item = ev.detail;
         delete filterParam[item.id];
+        dispatch("reload");
     }
 
     function sort(col) {
