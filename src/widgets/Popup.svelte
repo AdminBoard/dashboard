@@ -1,14 +1,14 @@
-<script context="module">
+<script>
     import { writable } from "svelte/store";
-    import Widget from "./widgets/Widget.svelte";
-    import { pageById } from "./Api.svelte";
+    import { pageById } from "../Api.svelte";
+    import Widget from "./Widget.svelte";
 
     let show = writable(false);
     let loading = writable(true);
     let widgets = writable([]);
     let data;
 
-    export function openContentPage(action) {
+    export const open = (action) => {
         loading.set(true);
         show.set(true);
         data = action.data;
@@ -19,7 +19,8 @@
             })
             .catch((e) => console.log(e))
             .finally(() => loading.set(false));
-    }
+    };
+
     function dismiss() {
         loading.set(false);
         show.set(false);
@@ -48,13 +49,6 @@
                 right: 0;
                 transition-duration: 500ms;
             }
-            & > .line {
-                // display: table-row;
-                & > .col {
-                    // display: table-cell;
-                    // vertical-align: top;
-                }
-            }
         }
         .loading {
             width: 100px;
@@ -74,7 +68,7 @@
                 <div class="row">
                     {#each line as widget}
                         <div class="fill">
-                            <Widget {data} content={widget} />
+                            <Widget popup={this} {data} content={widget} />
                         </div>
                     {/each}
                 </div>

@@ -6,7 +6,6 @@
   import Page from "./pages/Page.svelte";
   import Login from "./pages/Login.svelte";
   import Window from "./Window.svelte";
-  import Content from "./Content.svelte";
 
   let session = null;
   let refresh;
@@ -56,7 +55,6 @@
     </div>
     <div class="content">
       <Outlet />
-      <Content />
     </div>
   </div>
   <Window />

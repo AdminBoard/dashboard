@@ -1,12 +1,12 @@
 <script>
-    import { createEventDispatcher, onMount } from "svelte";
+    import { onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
     import { post } from "../../Api.svelte";
 
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
-    import { openContentPage } from "../../Content.svelte";
 
+    export let popup;
     export let title;
     export let properties;
     export let storage;
@@ -81,7 +81,7 @@
                         data[key] = formatCell(col[0], val);
                     } else data[key] = val;
                 }
-                openContentPage({ action: properties.select, data: data });
+                popup.open({ action: properties.select, data: data });
             }
             if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
             selectedIndex[index] = true;

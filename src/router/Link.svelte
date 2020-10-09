@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import { navigate} from './function'
+    import { navigate } from './function'
 
     export let href;
 

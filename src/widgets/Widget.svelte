@@ -1,8 +1,8 @@
 <script>
     import { createEventDispatcher } from "svelte";
-
     import Table from "./Table";
 
+    export let popup;
     export let title = null;
     export let content; //content of admin_page_widget
     export let data = null;
@@ -54,11 +54,12 @@
 {#if content != null}
     {#if content.name == 'Table'}
         <Table
+            {popup}
+            {storage}
             {title}
             {data}
             properties={content.properties}
-            on:select={(ev) => dispatch('action', ev.detail)}
-            {storage} />
+            on:select={(ev) => dispatch('action', ev.detail)} />
     {:else if content.name == 'Label'}
         <div class="label column">
             <div><span>{content.properties.label}</span></div>

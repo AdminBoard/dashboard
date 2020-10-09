@@ -2,11 +2,13 @@
     import { pageByPath } from "../Api.svelte";
     import Router from "../router";
     import Widget from "../widgets/Widget.svelte";
+    import Popup from "../widgets/Popup.svelte";
 
     let path = window.location.pathname;
 
     let title;
     let widgets;
+    let popup;
 
     pageByPath(path)
         .then((resp) => {
@@ -39,9 +41,11 @@
         <div class="line">
             {#each line as widget}
                 <div class="widget">
-                    <Widget {title} content={widget} />
+                    <Widget {popup} {title} content={widget} />
                 </div>
             {/each}
         </div>
     {/each}
 {/if}
+
+<Popup bind:this={popup} />
