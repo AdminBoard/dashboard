@@ -67,7 +67,6 @@
             & th,
             td {
                 position: sticky;
-                text-align: center;
             }
         }
 
@@ -75,6 +74,7 @@
         td {
             height: 32px;
             background-color: #ddd;
+            text-align: center;
         }
 
         & th {
