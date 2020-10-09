@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
 
-    import { onChange } from "./index";
+    import { onChange } from "./function";
 
     onMount(() => {
         onChange.subscribe((page) => {
