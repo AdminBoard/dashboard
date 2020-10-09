@@ -1,5 +1,5 @@
 <script>
-  import Router, { RouterOutlet } from "./router";
+  import Router, { Outlet } from "./router";
   import { get } from "./Api.svelte";
   import Sidebar from "./sidebar";
   import Home from "./pages/Home.svelte";
@@ -48,14 +48,14 @@
 </style>
 
 {#if session == null}
-  <RouterOutlet />
+  <Outlet />
 {:else}
   <div class="container row">
     <div class="sidebar primary-bg">
       <Sidebar />
     </div>
     <div class="content">
-      <RouterOutlet />
+      <Outlet />
       <Content />
     </div>
   </div>
