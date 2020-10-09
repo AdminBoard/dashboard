@@ -1,13 +1,13 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import { navigate} from '/function';
 
-    import Router from "./index";
     export let href;
 
     let dispatch = createEventDispatcher();
 
     function click() {
-        Router.navigate(href);
+        navigate(href);
         dispatch("click", href);
     }
 </script>
