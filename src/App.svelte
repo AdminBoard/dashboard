@@ -38,6 +38,7 @@
     width: 256px;
     position: fixed;
     height: 100%;
+    overflow-y: auto;
     background-color: darken($col-primary, 12);
   }
   .content {
