@@ -31,7 +31,7 @@
 
         if (dataSource == null) return;
 
-        storage.save("filter", filterParam);
+        storage.save("filters", filterParam);
         storage.save("sort", sortParam);
 
         loading = true;
@@ -124,8 +124,11 @@
             if (el.filter != null) filterCols.push(el);
         });
 
-        let val = loadFromStorage("filter");
-        filterParam = val == null ? {} : val;
+        let val = loadFromStorage("filters");
+        if (val == null)
+            filterParam = properties.filters != null ? properties.filters : {};
+        else filterParam = val;
+
         val = loadFromStorage("sort");
         sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
