@@ -2,6 +2,7 @@
   import Router, { Outlet } from "./router";
   import { get } from "./Api.svelte";
   import Sidebar from "./sidebar";
+  import Widgets, { Table, Label } from "./widgets";
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
   import Login from "./pages/Login.svelte";
@@ -9,6 +10,9 @@
 
   let session = null;
   let refresh;
+
+  Widgets.register("Table", Table);
+  Widgets.register("Label", Label);
 
   Router.register("/login", Login);
   Router.register("/home", Home);
