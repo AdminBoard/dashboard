@@ -1,8 +1,7 @@
 <script>
     import { pageByPath } from "../Api.svelte";
     import Router from "../router";
-    import Widget from "../widgets/Widget.svelte";
-    import Popup from "../widgets/Popup.svelte";
+    import { Widget, Popup } from "../widgets";
 
     let path = window.location.pathname;
 
