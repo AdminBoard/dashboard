@@ -27,7 +27,7 @@
       Router.start();
       refresh = setInterval(() => {
         get("/api/public?session");
-      }, 1 * 60 * 1000);
+      }, 10 * 60 * 1000);
     }
   });
 </script>
