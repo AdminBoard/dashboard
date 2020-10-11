@@ -32,6 +32,9 @@ function serve() {
 export default {
 	input: 'src/main.js',
 	output: {
+		globals: {
+			'crypto': 'crypto'
+		},
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
