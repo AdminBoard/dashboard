@@ -1,3 +1,1 @@
-import App from './src/App.svelte'
-
-module.exports = { App }
+module.exports = { App: require('./src/main.js') }
