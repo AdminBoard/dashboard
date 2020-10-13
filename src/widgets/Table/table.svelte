@@ -142,6 +142,8 @@
         pageParam = loadFromStorage("page");
         selectable = properties.select == null ? 0 : 1;
 
+        if (properties.multiple) selectable = 2;
+
         visibleCols = visibleCols; //refresh view
         reload();
     }
