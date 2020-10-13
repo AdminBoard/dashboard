@@ -70,7 +70,7 @@
     <div class="column right">
         <div class="row">
             {#if records != null && records.length > 0 && pages.length > 0}
-                <div class="paging rounded row">
+                <div class="paging rounded row center">
                     Page:
                     {#each pages as page}
                         <div
