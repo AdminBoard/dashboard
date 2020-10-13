@@ -20,7 +20,7 @@
     let filterCols = [];
     let footer;
 
-    let selectable = false;
+    let selectable = 0; // 0 = not selectable, 1 = single, 2 = multiple
     let selectedIndex = {};
 
     let records = [];
@@ -63,28 +63,36 @@
     }
 
     function select(ev, item, index) {
-        if (!selectable || properties.columns == null) return;
-
-        if (ev.ctrlKey) {
-            selectedIndex[index] = true;
-        } else if (ev.shiftKey) {
-            //TODO click table row when shift key pressed
-            // selectedIndex[index] = true;
-        } else {
-            if (selectedIndex[index] != null) {
-                const data = {};
-                for (const [key, val] of Object.entries(item)) {
-                    const col = properties.columns.filter(
-                        (col) => col.id == key
-                    );
-                    if (col.length == 1) {
-                        data[key] = formatCell(col[0], val);
-                    } else data[key] = val;
+        if (properties.columns == null) return;
+        switch (selectable) {
+            case 1:
+                if (selectedIndex[index] != null) {
+                    const data = {};
+                    for (const [key, val] of Object.entries(item)) {
+                        const col = properties.columns.filter(
+                            (col) => col.id == key
+                        );
+                        if (col.length == 1) {
+                            data[key] = formatCell(col[0], val);
+                        } else data[key] = val;
+                    }
+                    popup.open({ action: properties.select, data: data });
                 }
-                popup.open({ action: properties.select, data: data });
-            }
-            if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
-            selectedIndex[index] = true;
+                if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
+                selectedIndex[index] = true;
+                break;
+            case 2:
+                if (ev.ctrlKey) {
+                    if (selectedIndex[index]) selectedIndex[index] = null;
+                    else selectedIndex[index] = true;
+                } else if (ev.shiftKey) {
+                    //TODO click table row when shift key pressed
+                    // selectedIndex[index] = true;
+                } else {
+                    selectedIndex = {};
+                    selectedIndex[index] = true;
+                }
+                break;
         }
     }
 
@@ -132,7 +140,7 @@
         val = loadFromStorage("sort");
         sortParam = val == null ? {} : val;
         pageParam = loadFromStorage("page");
-        selectable = properties.select != null;
+        selectable = properties.select == null ? 0 : 1;
 
         visibleCols = visibleCols; //refresh view
         reload();
@@ -229,9 +237,10 @@
                 sticky={properties.sticky}
                 color={properties.color}
                 on:reload={reload} />
-            <tbody class:selectable>
+            <tbody class:selectable={selectable > 0}>
                 {#each records as item, i}
                     <tr
+                        on:contextmenu|preventDefault={(ev) => select(ev, item, i)}
                         class:odd={i % 2 == 1}
                         on:click|stopPropagation={(ev) => select(ev, item, i)}
                         class:selected={selectedIndex[i] != null}>
