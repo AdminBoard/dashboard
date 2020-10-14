@@ -66,20 +66,7 @@
         if (properties.columns == null) return;
         switch (selectable) {
             case 1:
-                if (selectedIndex[index] != null) {
-                    const data = {};
-                    for (const [key, val] of Object.entries(item)) {
-                        const col = properties.columns.filter(
-                            (col) => col.id == key
-                        );
-                        if (col.length == 1) {
-                            data[key] = formatCell(col[0], val);
-                        } else data[key] = val;
-                    }
-                    popup.open({ action: properties.select, data: data });
-                }
-                if (Object.keys(selectedIndex).length > 0) selectedIndex = {};
-                selectedIndex[index] = true;
+                selectItem(item, index);
                 break;
             case 2:
                 if (ev.ctrlKey) {
@@ -89,11 +76,26 @@
                     //TODO click table row when shift key pressed
                     // selectedIndex[index] = true;
                 } else {
-                    selectedIndex = {};
-                    selectedIndex[index] = true;
+                    selectItem(item, index);
                 }
                 break;
         }
+    }
+
+    //doubleclick
+    function selectItem(item, index) {
+        if (selectedIndex[index] != null) {
+            const data = {};
+            for (const [key, val] of Object.entries(item)) {
+                const col = properties.columns.filter((col) => col.id == key);
+                if (col.length == 1) {
+                    data[key] = formatCell(col[0], val);
+                } else data[key] = val;
+            }
+            popup.open({ action: properties.select, data: data });
+        }
+        selectedIndex = {};
+        selectedIndex[index] = true;
     }
 
     function formatCell(col, value) {
