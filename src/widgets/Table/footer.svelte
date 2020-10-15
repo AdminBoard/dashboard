@@ -28,6 +28,10 @@
         pageParam.location = page;
         dispatch("reload");
     }
+
+    function actionClick(action) {
+        console.log(action);
+    }
 </script>
 
 <style lang="scss">
@@ -89,7 +93,10 @@
     <div class="component rounded row center">
         {#if actions != null}
             <div class="actions">
-                {#each actions as action}<button>{action.label}</button>{/each}
+                {#each actions as action}
+                    <button
+                        on:click={() => actionClick(action)}>{action.label}</button>
+                {/each}
             </div>
         {/if}
 
@@ -107,24 +114,3 @@
         {/if}
     </div>
 {/if}
-
-<!-- <div class="component">
-    <div class="column">
-        <div class="row">
-            <div class="actions rounded"><button>Print</button></div>
-
-            {#if records != null && records.length > 0 && pages.length > 0}
-                <div class="paging rounded row center">
-                    Page:
-                    {#each pages as page}
-                        <div
-                            class:current={page == pageParam.location}
-                            on:click={() => changePage(page)}>
-                            {page}
-                        </div>
-                    {/each}
-                </div>
-            {/if}
-        </div>
-    </div>
-</div> -->
