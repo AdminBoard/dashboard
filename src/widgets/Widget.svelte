@@ -9,14 +9,14 @@
 <script>
     import { createEventDispatcher } from "svelte";
 
-    export let title = null;
+    export let page = { title: null };
     export let content; //content of admin_page_widget
     export let data = null;
 
     let dispatch = createEventDispatcher();
 
-    const storage = {
-        save: (key, value) => {
+    const session = {
+        set: (key, value) => {
             sessionStorage.setItem(
                 "widget." + content.id + "." + key,
                 JSON.stringify(value)
@@ -28,16 +28,13 @@
             );
         },
     };
-    // const system = {
-    //     storage: storage,
-    // }
 </script>
 
 {#if content != null}
     <svelte:component
         this={widgetMap[content.name]}
-        {storage}
-        {title}
+        {session}
+        {page}
         {data}
         properties={content.properties}
         on:select={(ev) => dispatch('action', ev.detail)} />

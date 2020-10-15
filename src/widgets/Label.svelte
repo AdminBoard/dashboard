@@ -1,6 +1,6 @@
 <script>
-    export let title;
-    export let storage;
+    export let session;
+    export let page;
     export let properties;
     export let data;
 </script>

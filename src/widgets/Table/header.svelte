@@ -9,7 +9,7 @@
 
     export let sticky;
     export let color;
-    export let title;
+    export let page;
     export let columns;
     export let filterCols;
     export let filterParam;
@@ -22,12 +22,15 @@
     function render() {
         selectedFilters = [];
         for (const [key, val] of Object.entries(filterParam)) {
-            const col = filterCols.find(el => el.id == key);
+            const col = filterCols.find((el) => el.id == key);
             if (col != null) {
-                let label = col.label + ': ';
-                label += val.filter == 'map' ? col.map[val.value] : val.value;
+                let label = col.label + ": ";
+                label += val.filter == "map" ? col.map[val.value] : val.value;
 
-                selectedFilters = [...selectedFilters, { id: col.id, label: label }];
+                selectedFilters = [
+                    ...selectedFilters,
+                    { id: col.id, label: label },
+                ];
             }
         }
     }
@@ -115,11 +118,11 @@
 </style>
 
 <thead class:sticky class:primary={color == 'primary'}>
-    {#if title != null}
+    {#if page.title != null}
         <tr>
             <th colspan={columns.length} class:primary={color == 'primary'}>
                 <div class="row center">
-                    <div class="caption padding">{title}</div>
+                    <div class="caption padding">{page.title}</div>
                     <Menu let:dismiss icon="search">
                         <Filter
                             columns={filterCols}
@@ -136,7 +139,7 @@
     <tr>
         {#each columns as col}
             <td
-                class:notitle={title == null}
+                class:notitle={page.title == null}
                 class:primary={color == 'primary'}>
                 {#if col.sortable}
                     <span class="sort" on:click={sort(col)}>

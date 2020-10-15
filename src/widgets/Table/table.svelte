@@ -7,9 +7,10 @@
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
 
-    export let title;
+    export let session;
+    export let page;
+
     export let properties;
-    export let storage;
     export let data;
 
     let filterParam = {};
@@ -32,8 +33,8 @@
 
         if (dataSource == null) return;
 
-        storage.save("filters", filterParam);
-        storage.save("sort", sortParam);
+        session.set("filters", filterParam);
+        session.set("sort", sortParam);
 
         loading = true;
 
@@ -122,8 +123,8 @@
         }
     }
 
-    function loadFromStorage(name) {
-        let val = storage.get(name);
+    function loadFromSession(name) {
+        let val = session.get(name);
         if (val != null) return val;
         if (properties[name] != null) return properties[name];
         return null;
@@ -135,14 +136,14 @@
             if (el.filter != null) filterCols.push(el);
         });
 
-        let val = loadFromStorage("filters");
+        let val = loadFromSession("filters");
         if (val == null)
             filterParam = properties.filters != null ? properties.filters : {};
         else filterParam = val;
 
-        val = loadFromStorage("sort");
+        val = loadFromSession("sort");
         sortParam = val == null ? {} : val;
-        pageParam = loadFromStorage("page");
+        pageParam = loadFromSession("page");
         selectable = properties.select == null ? 0 : 1;
 
         if (properties.multiple) selectable = 2;
@@ -225,7 +226,7 @@
     }
 </style>
 
-<div class="loading-container" class:notitle={title == null}>
+<div class="loading-container" class:notitle={page.title == null}>
     <div class="loading secondary-bg rounded" class:hide={!loading}>
         Loading...
     </div>
@@ -235,7 +236,7 @@
     <table>
         {#if properties != null}
             <Header
-                {title}
+                {page}
                 columns={visibleCols}
                 {filterCols}
                 bind:filterParam

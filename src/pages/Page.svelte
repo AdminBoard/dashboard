@@ -3,15 +3,17 @@
     import Router from "../router";
     import { Widget } from "../widgets";
 
-    let path = window.location.pathname;
-
-    let title;
     let widgets;
 
-    pageByPath(path)
+    let page = {
+        title: "",
+        path: window.location.pathname,
+    };
+
+    pageByPath(page.path)
         .then((resp) => {
             if (resp.status == 0) {
-                title = resp.data.title;
+                page.title = resp.data.title;
                 widgets = resp.data.widgets;
             } else Router.navigate("/not-found");
         })
@@ -29,8 +31,8 @@
 </style>
 
 <svelte:head>
-    {#if title != null}
-        <title>AB :: {title}</title>
+    {#if page.title != null}
+        <title>AB :: {page.title}</title>
     {/if}
 </svelte:head>
 
@@ -39,7 +41,7 @@
         <div class="line">
             {#each line as widget}
                 <div class="widget">
-                    <Widget {title} content={widget} />
+                    <Widget {page} content={widget} />
                 </div>
             {/each}
         </div>
