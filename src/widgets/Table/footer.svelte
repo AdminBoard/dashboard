@@ -87,7 +87,11 @@
 
 {#if actions != null || pageParam != null}
     <div class="component rounded row center">
-        {#if actions != null}{/if}
+        {#if actions != null}
+            <div class="actions">
+                {#each actions as action}<button>{action.label}</button>{/each}
+            </div>
+        {/if}
 
         {#if pageParam != null}
             <div class="row center">
