@@ -33,8 +33,7 @@
     function actionClick(action) {
         switch (action.command) {
             case "openPage":
-                Popup.slideRight(action);
-
+                Popup.fromRight(action);
                 break;
         }
     }

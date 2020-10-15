@@ -46,9 +46,11 @@
 
         if (dataSource.params != null) {
             const split = dataSource.params.split(",");
-            split.forEach((el) => {
-                params[el.trim()] = data[el.trim()];
-            });
+            if (data != null) {
+                split.forEach((el) => {
+                    params[el.trim()] = data[el.trim()];
+                });
+            }
         }
 
         post(properties.data_source.path, params)
