@@ -6,7 +6,7 @@
     let widgets;
 
     let page = {
-        title: "",
+        title: null,
         path: window.location.pathname,
     };
 
