@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import { Popup } from "../../window";
 
     export let pageParam;
     export let records;
@@ -30,7 +31,12 @@
     }
 
     function actionClick(action) {
-        console.log(action);
+        switch (action.command) {
+            case "openPage":
+                Popup.slideRight(action);
+
+                break;
+        }
     }
 </script>
 

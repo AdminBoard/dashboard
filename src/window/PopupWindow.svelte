@@ -7,17 +7,20 @@
     let widgets = writable([]);
     let data;
 
-    export function slideRight(action) {
+    export function fromRight(action) {
         loading.set(true);
         show.set(true);
         data = action.data;
 
-        pageById(action.action.page_id)
-            .then((resp) => {
-                widgets.set(resp.widgets);
-            })
-            .catch((e) => console.log(e))
-            .finally(() => loading.set(false));
+        console.log(action);
+        if (action.page_id != null) {
+            pageById(action.page_id)
+                .then((resp) => {
+                    widgets.set(resp.widgets);
+                })
+                .catch((e) => console.log(e))
+                .finally(() => loading.set(false));
+        }
     }
 
     export function dismiss() {

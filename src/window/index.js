@@ -1,8 +1,8 @@
-import PopupWindow, { slideRight } from './PopupWindow.svelte'
+import PopupWindow, { fromRight } from './PopupWindow.svelte'
 
 
 export const Popup = {
-    slideRight
+    fromRight
 }
 
 export { PopupWindow }

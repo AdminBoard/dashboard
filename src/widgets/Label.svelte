@@ -34,5 +34,8 @@
 
 <div class="component column">
     <div><span>{properties.label}</span></div>
-    <div>{data[properties.id]}</div>
+
+    <div>
+        {#if data != null}{data[properties.id]}{/if}
+    </div>
 </div>

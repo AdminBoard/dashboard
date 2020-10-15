@@ -94,7 +94,9 @@
                     data[key] = formatCell(col[0], val);
                 } else data[key] = val;
             }
-            Popup.slideRight({ action: properties.select, data: data });
+            const action = Object.assign({}, properties.select);
+            action.data = data;
+            Popup.fromRight(action);
         }
         selectedIndex = {};
         selectedIndex[index] = true;
