@@ -1,6 +1,5 @@
 <script>
     export let title;
-    export let popup;
     export let storage;
     export let properties;
     export let data;

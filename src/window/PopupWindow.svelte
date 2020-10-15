@@ -1,14 +1,13 @@
-<script>
+<script context="module">
     import { writable } from "svelte/store";
     import { pageById } from "../Api.svelte";
-    import Widget from "./Widget.svelte";
 
     let show = writable(false);
     let loading = writable(true);
     let widgets = writable([]);
     let data;
 
-    export const open = (action) => {
+    export function slideRight(action) {
         loading.set(true);
         show.set(true);
         data = action.data;
@@ -19,12 +18,16 @@
             })
             .catch((e) => console.log(e))
             .finally(() => loading.set(false));
-    };
+    }
 
-    function dismiss() {
+    export function dismiss() {
         loading.set(false);
         show.set(false);
     }
+</script>
+
+<script>
+    import Widget from "../widgets/Widget.svelte";
 </script>
 
 <style lang="scss">
@@ -68,7 +71,7 @@
                 <div class="row">
                     {#each line as widget}
                         <div class="fill">
-                            <Widget popup={this} {data} content={widget} />
+                            <Widget {data} content={widget} />
                         </div>
                     {/each}
                 </div>

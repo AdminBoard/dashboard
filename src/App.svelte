@@ -6,7 +6,7 @@
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
   import Login from "./pages/Login.svelte";
-  import Window from "./Window.svelte";
+  import { PopupWindow } from "./window";
 
   let session = null;
   let refresh;
@@ -60,6 +60,6 @@
     <div class="content">
       <Outlet />
     </div>
+    <PopupWindow />
   </div>
-  <Window />
 {/if}

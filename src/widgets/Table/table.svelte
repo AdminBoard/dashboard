@@ -2,11 +2,11 @@
     import { onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
     import { post } from "../../Api.svelte";
+    import { Popup } from "../../window";
 
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
 
-    export let popup;
     export let title;
     export let properties;
     export let storage;
@@ -92,7 +92,7 @@
                     data[key] = formatCell(col[0], val);
                 } else data[key] = val;
             }
-            popup.open({ action: properties.select, data: data });
+            Popup.slideRight({ action: properties.select, data: data });
         }
         selectedIndex = {};
         selectedIndex[index] = true;

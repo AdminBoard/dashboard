@@ -9,7 +9,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
 
-    export let popup;
     export let title = null;
     export let content; //content of admin_page_widget
     export let data = null;
@@ -29,12 +28,14 @@
             );
         },
     };
+    // const system = {
+    //     storage: storage,
+    // }
 </script>
 
 {#if content != null}
     <svelte:component
         this={widgetMap[content.name]}
-        {popup}
         {storage}
         {title}
         {data}
