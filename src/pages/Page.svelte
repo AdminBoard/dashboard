@@ -1,7 +1,10 @@
 <script>
+    import { onDestroy } from "svelte";
+
     import { pageByPath } from "../Api.svelte";
     import Router from "../router";
     import { Widget } from "../widgets";
+    import { Popup } from "../window";
 
     let widgets;
 
@@ -9,6 +12,10 @@
         title: null,
         path: window.location.pathname,
     };
+
+    onDestroy(() => {
+        Popup.dismiss();
+    });
 
     pageByPath(page.path)
         .then((resp) => {
