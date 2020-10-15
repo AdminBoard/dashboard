@@ -62,7 +62,7 @@
             <div class="actions">
                 {#each actions as action}
                     <button
-                        on:click={() => actionClick(action)}>{action.label}</button>
+                        on:click|stopPropagation={() => actionClick(action)}>{action.label}</button>
                 {/each}
             </div>
         {/if}

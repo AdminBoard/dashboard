@@ -12,7 +12,6 @@
         show.set(true);
         data = action.data;
 
-        console.log(action);
         if (action.page_id != null) {
             pageById(action.page_id)
                 .then((resp) => {
