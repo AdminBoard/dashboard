@@ -15,6 +15,7 @@
     let filterParam = {};
     let sortParam = {};
     let pageParam = { location: 1, length: 100 };
+    let actions = [];
 
     let visibleCols = [];
     let filterCols = [];
@@ -145,6 +146,7 @@
         selectable = properties.select == null ? 0 : 1;
 
         if (properties.multiple) selectable = 2;
+        actions = properties.actions;
 
         visibleCols = visibleCols; //refresh view
         reload();
@@ -264,5 +266,10 @@
             </tbody>
         {/if}
     </table>
-    <Footer bind:records bind:this={footer} bind:pageParam on:reload={reload} />
+    <Footer
+        bind:this={footer}
+        bind:records
+        bind:actions
+        bind:pageParam
+        on:reload={reload} />
 </div>

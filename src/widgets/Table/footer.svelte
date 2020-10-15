@@ -3,6 +3,7 @@
 
     export let pageParam;
     export let records;
+    export let actions;
 
     let pages = [];
     let dispatch = createEventDispatcher();
@@ -32,15 +33,20 @@
 <style lang="scss">
     @import "../../style/color";
 
-    .component {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-
-        & .paging {
-            margin: 0 8px 8px 0;
+    .components {
+        & .actions,
+        .paging {
+            position: fixed;
+            bottom: 0;
+            margin: 8px;
             background-color: transparentize(#eee, 0.1);
             box-shadow: 0 0 4px transparentize(#000, 0.3);
+        }
+        & .actions {
+            padding: 4px 8px;
+        }
+        & .paging {
+            right: 0;
             flex: 0;
             & > div {
                 cursor: pointer;
@@ -64,11 +70,45 @@
             }
         }
     }
+
+    .component {
+        margin: 8px;
+        background-color: #eee;
+        box-shadow: 0 0 4px transparentize(#000, 0.5);
+        position: fixed;
+        bottom: 0;
+        right: 0;
+
+        & .paging-label {
+            margin: 8px;
+        }
+    }
 </style>
 
-<div class="component">
-    <div class="column right">
+{#if actions != null || pageParam != null}
+    <div class="component rounded row center">
+        {#if actions != null}{/if}
+
+        {#if pageParam != null}
+            <div class="row center">
+                <div class="paging-label">Page:</div>
+                {#each pages as page}
+                    <button
+                        class:current={page == pageParam.location}
+                        on:click={() => changePage(page)}>
+                        {page}
+                    </button>
+                {/each}
+            </div>
+        {/if}
+    </div>
+{/if}
+
+<!-- <div class="component">
+    <div class="column">
         <div class="row">
+            <div class="actions rounded"><button>Print</button></div>
+
             {#if records != null && records.length > 0 && pages.length > 0}
                 <div class="paging rounded row center">
                     Page:
@@ -83,4 +123,4 @@
             {/if}
         </div>
     </div>
-</div>
+</div> -->
