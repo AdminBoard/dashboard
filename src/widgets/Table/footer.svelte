@@ -43,44 +43,6 @@
 <style lang="scss">
     @import "../../style/color";
 
-    .components {
-        & .actions,
-        .paging {
-            position: fixed;
-            bottom: 0;
-            margin: 8px;
-            background-color: transparentize(#eee, 0.1);
-            box-shadow: 0 0 4px transparentize(#000, 0.3);
-        }
-        & .actions {
-            padding: 4px 8px;
-        }
-        & .paging {
-            right: 0;
-            flex: 0;
-            & > div {
-                cursor: pointer;
-                padding: 4px 8px;
-                border-radius: 4px;
-                background-color: #fff;
-                &:hover {
-                    box-shadow: 0 0 4px $col-secondary;
-                    background-color: transparentize($col-secondary, 0.4);
-                    color: $col-secondary-text;
-                }
-                &:active {
-                    background-color: $col-secondary;
-                }
-                &.current {
-                    box-shadow: 0 0 4px $col-primary;
-                }
-                &:first-child {
-                    margin-left: 8px;
-                }
-            }
-        }
-    }
-
     .component {
         margin: 8px;
         background-color: #eee;
