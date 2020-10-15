@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
     import { post } from "../../Api.svelte";
     import { Popup } from "../../window";
@@ -158,6 +158,9 @@
     }
     onMount(() => {
         init();
+    });
+    onDestroy(() => {
+        Popup.dismiss();
     });
 </script>
 
