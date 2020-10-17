@@ -67,6 +67,7 @@
     }
 
     function select(ev, item, index) {
+        Popup.dismiss();
         if (properties.columns == null) return;
         switch (selectable) {
             case 1:
@@ -273,6 +274,7 @@
     </table>
     <Footer
         bind:this={footer}
+        bind:selectedIndex
         bind:records
         bind:actions
         bind:pageParam
