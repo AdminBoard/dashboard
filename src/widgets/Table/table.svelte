@@ -99,7 +99,7 @@
             }
             const action = Object.assign({}, properties.select);
             action.data = data;
-            Popup.fromRight(action);
+            Popup.open(action);
         }
         selectedIndex = {};
         selectedIndex[index] = true;

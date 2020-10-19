@@ -1,9 +1,10 @@
-import PopupWindow, { dismiss, fromRight } from './PopupWindow.svelte'
+import PopupWindow, { dismiss, open, fromRight } from './PopupWindow.svelte'
 
 
 export const Popup = {
-    fromRight,
     dismiss,
+    open,
+    fromRight,
 }
 
 export { PopupWindow }
