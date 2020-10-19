@@ -29,6 +29,8 @@
         })
             .then((resp) => {
                 if (resp.status == 0) {
+                    sessionStorage.clear();
+                    localStorage.clear();
                     Router.navigate("/home");
                     Router.reload();
                 } else {
