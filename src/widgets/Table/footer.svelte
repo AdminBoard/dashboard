@@ -41,7 +41,7 @@
                 if (data.length == 0) return;
                 const a = Object.assign({}, action);
                 a.data = data;
-                Popup.fromRight(a);
+                Popup.open(a);
                 break;
         }
     }
