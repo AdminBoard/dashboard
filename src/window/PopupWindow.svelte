@@ -2,29 +2,34 @@
     import { writable } from "svelte/store";
     import { pageById } from "../Api.svelte";
 
-    let show = writable(false);
-    let loading = writable(true);
-    let widgets = writable([]);
+    let _show = writable("");
+    let _loading = writable(true);
+    let _widgets = writable([]);
     let data;
 
     export function fromRight(action) {
-        loading.set(true);
-        show.set(true);
+        _loading.set(true);
+        _show.set("right");
         data = action.data;
 
         if (action.page_id != null) {
             pageById(action.page_id)
                 .then((resp) => {
-                    widgets.set(resp.widgets);
+                    _widgets.set(resp.widgets);
                 })
                 .catch((e) => console.log(e))
-                .finally(() => loading.set(false));
+                .finally(() => _loading.set(false));
         }
     }
 
+    export function show(action) {
+        _show.set("center");
+        _loading.set(true);
+    }
+
     export function dismiss() {
-        loading.set(false);
-        show.set(false);
+        _loading.set(false);
+        _show.set("");
     }
 </script>
 
@@ -36,7 +41,7 @@
     .component {
         font-size: 0.9em;
         position: relative;
-        & > div {
+        & .content {
             max-height: calc(100%-60px);
             padding: 16px;
             overflow-y: auto;
@@ -54,22 +59,45 @@
                 right: 0;
                 transition-duration: 500ms;
             }
+            & .loading {
+                width: 100px;
+                height: 80px;
+            }
         }
-        .loading {
-            width: 100px;
-            height: 80px;
+        & .background {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+            background-color: transparentize(#000000, $amount: 0.3);
+            z-index: 1;
+            visibility: hidden;
+            &.show {
+                transition: visibility 0.2s ease-out;
+                visibility: visible;
+            }
         }
     }
 </style>
 
-<svelte:body on:click={dismiss} />
+<svelte:head>
+    {#if $_show != ''}
+        <style>
+            body {
+                overflow: hidden;
+            }
+        </style>
+    {/if}
+</svelte:head>
 
 <div class="component" on:click|stopPropagation>
-    <div class:show={$show}>
-        {#if $loading}
+    <div class="background" on:click={dismiss} class:show={$_show != ''} />
+    <div class="content" class:show={$_show != ''}>
+        {#if $_loading}
             <div class="loading rounded row center">Loading...</div>
         {:else}
-            {#each $widgets as line}
+            {#each $_widgets as line}
                 <div class="row">
                     {#each line as widget}
                         <div class="fill">
