@@ -5,6 +5,7 @@
     export let pageParam;
     export let records;
     export let actions;
+    export let selectedIndex;
 
     let pages = [];
     let dispatch = createEventDispatcher();
@@ -33,7 +34,14 @@
     function actionClick(action) {
         switch (action.command) {
             case "openPage":
-                Popup.fromRight(action);
+                const data = [];
+                for (const key in selectedIndex) {
+                    data.push(records[key]);
+                }
+                if (data.length == 0) return;
+                const a = Object.assign({}, action);
+                a.data = data;
+                Popup.fromRight(a);
                 break;
         }
     }
