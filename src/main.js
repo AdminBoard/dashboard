@@ -4,6 +4,7 @@ import './style/_tag.scss'
 
 import App from './App.svelte'
 import Widgets from './widgets'
+import { post, get } from './Api.svelte'
 
 const app = new App({
 	target: document.body,
@@ -13,4 +14,9 @@ const app = new App({
 
 export default app
 
-export { Widgets } 
+export { Widgets }
+
+export const Api = {
+	post: post,
+	get: get,
+}
