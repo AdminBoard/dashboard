@@ -45,19 +45,21 @@
         font-size: 0.9em;
         position: relative;
         & .content {
+            position: fixed;
+            z-index: 1;
+            box-shadow: 0 0 8px transparentize(#000000, 0.1);
+            padding: 16px;
             max-height: calc(100vh-60px);
             max-width: calc(100vw-60px);
-            padding: 16px;
             overflow-y: auto;
-            box-shadow: 0 0 8px transparentize(#000000, 0.1);
-            position: fixed;
             top: 50%;
+            background-color: #eee;
 
             &.center {
                 border-radius: 8px;
-                visibility: hidden;
                 left: 50%;
                 transform: translate(-50%, -50%);
+                visibility: hidden;
                 &.show {
                     visibility: visible;
                     transition-duration: 500ms;
@@ -74,25 +76,37 @@
                     transition-duration: 500ms;
                 }
             }
-            z-index: 1;
-            background-color: #eee;
             & .loading {
                 width: 100px;
                 height: 80px;
             }
         }
         & .background {
+            background-color: transparentize(#000000, $amount: 0.3);
+            position: fixed;
+            z-index: 1;
             top: 0;
             bottom: 0;
             left: 0;
             right: 0;
-            position: fixed;
-            background-color: transparentize(#000000, $amount: 0.3);
-            z-index: 1;
             visibility: hidden;
             &.show {
                 transition: visibility 0.2s ease-out;
                 visibility: visible;
+            }
+        }
+    }
+    @media print {
+        .component {
+            & .background {
+                display: none;
+            }
+            & .content {
+                margin: 0;
+                padding: 0;
+                position: inherit;
+                max-height: fit-content;
+                box-shadow: none;
             }
         }
     }
@@ -108,7 +122,7 @@
     {/if}
 </svelte:head>
 
-<div class="component" on:click|stopPropagation>
+<div class="component popup" on:click|stopPropagation>
     <div class="background" on:click={dismiss} class:show={$show != ''} />
 
     {#if $show == 'right'}
@@ -128,7 +142,6 @@
             {/if}
         </div>
     {:else if $show == 'center'}
-        center
         <div class="content center" class:show={$show != ''}>
             {#if $loading}
                 <div class="loading rounded row center">Loading...</div>
