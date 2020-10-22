@@ -43,56 +43,67 @@
 <style lang="scss">
     .component {
         font-size: 0.9em;
-        position: relative;
         & .content {
-            position: fixed;
-            z-index: 1;
-            box-shadow: 0 0 8px transparentize(#000000, 0.1);
-            padding: 16px;
-            max-height: calc(100vh-60px);
-            max-width: calc(100vw-60px);
-            overflow-y: auto;
-            top: 50%;
-            background-color: #eee;
+            padding: 8px;
+        }
+    }
 
-            &.center {
-                border-radius: 8px;
-                left: 50%;
-                transform: translate(-50%, -50%);
+    @media screen {
+        .component {
+            position: relative;
+
+            & .content {
+                position: fixed;
+                z-index: 1;
+                box-shadow: 0 0 8px transparentize(#000000, 0.1);
+                max-height: calc(100vh-60px);
+                max-width: calc(100vw-60px);
+                overflow-y: auto;
+                top: 50%;
+                background-color: #eee;
+
+                &.center {
+                    border-radius: 8px;
+                    transform: translate(-50%, -50%);
+                    left: 50%;
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: all 200ms ease-out;
+                    &.show {
+                        opacity: 1;
+                        visibility: visible;
+                        transition-duration: 500ms;
+                    }
+                }
+                &.right {
+                    border-top-left-radius: 8px;
+                    border-bottom-left-radius: 8px;
+                    transform: translateY(-50%);
+                    right: -100%;
+                    transition: all 200ms ease-out;
+                    &.show {
+                        right: 0;
+                        transition-duration: 500ms;
+                    }
+                }
+                & .loading {
+                    width: 100px;
+                    height: 80px;
+                }
+            }
+            & .background {
+                background-color: transparentize(#000000, $amount: 0.3);
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
                 visibility: hidden;
                 &.show {
+                    transition: visibility 0.2s ease-out;
                     visibility: visible;
-                    transition-duration: 500ms;
                 }
-            }
-            &.right {
-                transform: translateY(-50%);
-                border-top-left-radius: 8px;
-                border-bottom-left-radius: 8px;
-                right: -100%;
-                transition: right 0.2s ease-out;
-                &.show {
-                    right: 0;
-                    transition-duration: 500ms;
-                }
-            }
-            & .loading {
-                width: 100px;
-                height: 80px;
-            }
-        }
-        & .background {
-            background-color: transparentize(#000000, $amount: 0.3);
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            visibility: hidden;
-            &.show {
-                transition: visibility 0.2s ease-out;
-                visibility: visible;
             }
         }
     }
@@ -101,13 +112,12 @@
             & .background {
                 display: none;
             }
-            & .content {
-                margin: 0;
-                padding: 0;
-                position: inherit;
-                max-height: fit-content;
-                box-shadow: none;
-            }
+        }
+        :global(.app.container > .sidebar) {
+            display: none;
+        }
+        :global(.app.container > .content) {
+            display: none;
         }
     }
 </style>
