@@ -147,8 +147,8 @@
                         {#if col.id == sortParam.active}
                             <i class="material-icons">
                                 {#if sortParam.direction == 'asc'}
-                                    keyboard_arrow_down
-                                {:else}keyboard_arrow_up{/if}
+                                    keyboard_arrow_up
+                                {:else}keyboard_arrow_down{/if}
                             </i>
                         {/if}
                     </span>
