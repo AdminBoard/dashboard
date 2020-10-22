@@ -3,10 +3,10 @@
     import sha1 from "crypto-js/sha1";
     import hex from "crypto-js/enc-hex";
     import Router from "../router";
+    import Snackbar from "../snackbar";
 
     let username = "";
     let password = "";
-    let error = "";
 
     let loading = false;
 
@@ -33,13 +33,9 @@
                     localStorage.clear();
                     Router.navigate("/home");
                     Router.reload();
-                } else {
-                    error = resp.message;
-                }
+                } else Snackbar.open(resp.message);
             })
-            .catch((e) => {
-                error = e;
-            })
+            .catch((e) => Snackbar.open(e))
             .finally(() => (loading = false));
     }
 </script>
@@ -79,14 +75,6 @@
             width: 100px;
         }
     }
-    .error {
-        padding: 8px;
-        font-size: 1em;
-        border-radius: 8px;
-        font-weight: normal;
-        background-color: lighten($col-error, 20);
-        color: #fff;
-    }
 </style>
 
 <div class="display row center">
@@ -121,12 +109,6 @@
                     on:click={click}
                     disabled={loading}>Login</button>
             </div>
-
-            {#if error != ''}
-                <div class="error">
-                    <div>{error}</div>
-                </div>
-            {/if}
         </div>
     </div>
 </div>
