@@ -45,6 +45,7 @@
         font-size: 0.9em;
         & .content {
             padding: 8px;
+            text-align: left;
         }
     }
 
