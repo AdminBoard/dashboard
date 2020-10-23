@@ -7,7 +7,6 @@
     let modal;
 
     export function confirm(msg) {
-        console.log("confirm", msg);
         return new Promise((resolve) => {
             modal.open();
             message.set(msg);
