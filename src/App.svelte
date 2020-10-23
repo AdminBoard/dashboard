@@ -8,6 +8,7 @@
   import Login from "./pages/Login.svelte";
   import PopupWindow from "./window/PopupWindow.svelte";
   import Snackbar from "./snackbar/Snackbar.svelte";
+  import Confirm from "./window/Confirm.svelte";
 
   let session = null;
   let refresh;
@@ -64,4 +65,5 @@
   </div>
 {/if}
 <PopupWindow />
+<Confirm />
 <Snackbar />

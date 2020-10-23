@@ -1,5 +1,5 @@
 import { dismiss, open, fromRight } from './PopupWindow.svelte'
-
+import { confirm } from './Confirm.svelte'
 
 export const Popup = {
     dismiss,
@@ -7,3 +7,6 @@ export const Popup = {
     fromRight,
 }
 
+export default {
+    confirm,
+}

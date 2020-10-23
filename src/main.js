@@ -4,7 +4,6 @@ import './style/_tag.scss'
 
 import App from './App.svelte'
 import Widgets from './widgets'
-import { Popup } from './window'
 import { post, get } from './Api.svelte'
 
 const app = new App({
@@ -20,5 +19,5 @@ const Api = {
 }
 
 export default app
-export { Api, Widgets, Popup }
+export { Api, Widgets }
 

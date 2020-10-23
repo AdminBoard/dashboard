@@ -26,6 +26,9 @@
     align-items: stretch;
     display: flex;
     flex: 1;
+    &.left {
+        align-items: flex-start;
+    }
     &.center {
         align-items: center;
     }
@@ -40,8 +43,14 @@
     align-items: stretch;
     flex: 1;
 
+    &.top {
+        align-items: flex-start;
+    }
     &.center {
         align-items: center;
+    }
+    &.bottom {
+        align-items: flex-end;
     }
 }
 
