@@ -6,7 +6,7 @@
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
   import Login from "./pages/Login.svelte";
-  import PopupWindow from "./window/PopupWindow.svelte";
+  import Popup from "./window/Popup.svelte";
   import Snackbar from "./snackbar/Snackbar.svelte";
   import Confirm from "./window/Confirm.svelte";
 
@@ -64,6 +64,6 @@
     </div>
   </div>
 {/if}
-<PopupWindow />
+<Popup />
 <Confirm />
 <Snackbar />

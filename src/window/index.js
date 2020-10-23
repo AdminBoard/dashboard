@@ -1,4 +1,4 @@
-import { dismiss, open, fromRight } from './PopupWindow.svelte'
+import { dismiss, open, fromRight } from './Popup.svelte'
 
 export const Popup = {
     dismiss,
