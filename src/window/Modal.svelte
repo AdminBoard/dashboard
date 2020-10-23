@@ -35,20 +35,23 @@
             position: fixed;
             left: 0;
             top: 0;
+            display: flex;
             overflow: auto;
             z-index: 1;
             &:not(.nodrop) {
                 background-color: transparentize(#000000, 0.5);
             }
-            & div.row {
-                height: 100%;
+            &.center {
+                align-items: center;
             }
             & .content {
                 &.window {
+                    max-height: calc(100vh - 32px);
+                    max-width: calc(100vw - 32px);
+                    overflow: auto;
                     padding: 8px;
                     box-shadow: 0 0 8px #000;
                     border-radius: 8px;
-                    margin: 16px;
                     background-color: #fff;
                 }
                 &.shake {
@@ -64,6 +67,11 @@
         }
         :global(.app.component .content) {
             display: none;
+        }
+        .component {
+            & .column {
+                align-items: flex-start;
+            }
         }
     }
 
@@ -111,23 +119,23 @@
 <svelte:options accessors={true} />
 
 <svelte:head>
-    <style>
-        body {
-            overflow: hidden;
-        }
-    </style>
+    {#if show}
+        <style>
+            body {
+                overflow: hidden;
+            }
+        </style>
+    {/if}
 </svelte:head>
 
-<div class="component" class:nodrop class:show on:click={dismissBg}>
-    <div class="row {valign}">
-        <div class="column {align}">
-            <div
-                class="content {mode}"
-                class:shake
-                class:show
-                on:click|stopPropagation>
-                <slot />
-            </div>
+<div class="component {valign}" class:nodrop class:show on:click={dismissBg}>
+    <div class="column {align}">
+        <div
+            class="content {mode}"
+            class:shake
+            class:show
+            on:click|stopPropagation>
+            <slot />
         </div>
     </div>
 </div>

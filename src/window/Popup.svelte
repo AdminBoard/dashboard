@@ -15,6 +15,7 @@
         modal.open();
 
         if (action.page_id != null) {
+            widgets.set([]);
             pageById(action.page_id)
                 .then((resp) => {
                     widgets.set(resp.widgets);
