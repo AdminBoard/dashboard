@@ -10,7 +10,7 @@
         return new Promise((resolve) => {
             message.set(msg);
             show.set(true);
-            answer = resolve;
+            resolveF = resolve;
         });
     }
 </script>
