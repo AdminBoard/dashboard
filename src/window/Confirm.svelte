@@ -42,7 +42,7 @@
     }
 </style>
 
-<Modal bind:this={modal}>
+<Modal bind:this={modal} modal>
     <div class="component">
         <div class="message">{$message}</div>
         <div class="column center buttons">

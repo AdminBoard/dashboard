@@ -3,14 +3,27 @@
     export let nodrop = false;
     export let align = "center"; // left, center, right
     export let valign = "center"; // top, center, bottom
+    export let modal = false;
 
     let show = false;
+    let shake = false;
+    let timeout;
 
     export function dismiss() {
         show = false;
     }
     export function open() {
         show = true;
+    }
+
+    function dismissBg() {
+        if (modal) {
+            shake = true;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                shake = false;
+            }, 500);
+        } else dismiss();
     }
 </script>
 
@@ -37,6 +50,10 @@
                     border-radius: 8px;
                     margin: 16px;
                     background-color: #fff;
+                }
+                &.shake {
+                    animation: shake 500ms ease-out;
+                    transform: translateX(0);
                 }
             }
         }
@@ -66,6 +83,29 @@
             }
         }
     }
+
+    @keyframes shake {
+        10%,
+        90% {
+            transform: translateX(-1px);
+        }
+
+        20%,
+        80% {
+            transform: translateX(2px);
+        }
+
+        30%,
+        50%,
+        70% {
+            transform: translateX(-4px);
+        }
+
+        40%,
+        60% {
+            transform: translateX(4px);
+        }
+    }
 </style>
 
 <svelte:options accessors={true} />
@@ -78,10 +118,14 @@
     </style>
 </svelte:head>
 
-<div class="component" class:nodrop class:show>
+<div class="component" class:nodrop class:show on:click={dismissBg}>
     <div class="row {valign}">
         <div class="column {align}">
-            <div class="content {mode}" class:show>
+            <div
+                class="content {mode}"
+                class:shake
+                class:show
+                on:click|stopPropagation>
                 <slot />
             </div>
         </div>
