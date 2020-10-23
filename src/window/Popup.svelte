@@ -1,6 +1,60 @@
 <script context="module">
     import { writable } from "svelte/store";
     import { pageById } from "../Api.svelte";
+    import Snackbar from "../snackbar/Snackbar.svelte";
+    import { Widget } from "../widgets";
+
+    import Modal from "./Modal.svelte";
+
+    let widgets = writable([]);
+    let data;
+    let modal;
+
+    export function open(action) {
+        data = action.data;
+        modal.open();
+
+        if (action.page_id != null) {
+            pageById(action.page_id)
+                .then((resp) => {
+                    widgets.set(resp.widgets);
+                })
+                .catch((e) => {
+                    Snackbar.open(e);
+                    modal.dismiss();
+                });
+            //     pageById(action.page_id)
+            //         .then((resp) => {
+            //             widgets.set(resp.widgets);
+            //         })
+            //         .catch((e) => console.log(e))
+            //         .finally(() => loading.set(false));
+        }
+
+        // show.set(direction);
+        // loading.set(true);
+    }
+    export function fromRight() {}
+    export function dismiss() {}
+</script>
+
+<Modal bind:this={modal}>
+    <div class="component">
+        {#each $widgets as line}
+            <div class="row">
+                {#each line as widget}
+                    <div class="fill">
+                        <Widget {data} content={widget} />
+                    </div>
+                {/each}
+            </div>
+        {/each}
+    </div>
+</Modal>
+
+<!--<script context="module">
+    import { writable } from "svelte/store";
+    import { pageById } from "../Api.svelte";
 
     let show = writable("");
     let loading = writable(true);
@@ -34,13 +88,9 @@
         loading.set(false);
         show.set("");
     }
-</script>
-
-<script>
+</script><script>
     import Widget from "../widgets/Widget.svelte";
-</script>
-
-<style lang="scss">
+</script><style lang="scss">
     .component {
         font-size: 0.9em;
         & .content {
@@ -121,16 +171,12 @@
             display: none;
         }
     }
-</style>
-
-<svelte:head>
-    {#if $show != ''}
-        <style>
+</style><svelte:head>
+    {#if $show != ''}<style>
             body {
                 overflow: hidden;
             }
-        </style>
-    {/if}
+        </style>{/if}
 </svelte:head>
 
 <div class="component popup" on:click|stopPropagation>
@@ -169,4 +215,4 @@
             {/if}
         </div>
     {/if}
-</div>
+</div> -->

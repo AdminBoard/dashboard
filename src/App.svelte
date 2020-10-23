@@ -36,7 +36,7 @@
 
 <style lang="scss">
   @import "style/color";
-  .app.container {
+  .app.component {
     height: 100%;
   }
   .sidebar {
@@ -55,7 +55,7 @@
 {#if session == null}
   <Outlet />
 {:else}
-  <div class="app container row">
+  <div class="app component row">
     <div class="sidebar primary-bg">
       <Sidebar />
     </div>

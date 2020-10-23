@@ -1,15 +1,16 @@
 <script context="module">
     import { writable } from "svelte/store";
-    import Backdrop from "./Backdrop.svelte";
+    import Modal from "./Modal.svelte";
 
-    const show = writable(false);
     const message = writable("");
     let resolveF;
+    let modal;
 
-    export async function confirm(msg) {
+    export function confirm(msg) {
+        console.log("confirm", msg);
         return new Promise((resolve) => {
+            modal.open();
             message.set(msg);
-            show.set(true);
             resolveF = resolve;
         });
     }
@@ -18,7 +19,7 @@
 <script>
     function click(yes) {
         resolveF(yes);
-        show.set(false);
+        modal.dismiss();
     }
 </script>
 
@@ -41,7 +42,7 @@
     }
 </style>
 
-<Backdrop bind:show={$show}>
+<Modal bind:this={modal}>
     <div class="component">
         <div class="message">{$message}</div>
         <div class="column center buttons">
@@ -52,4 +53,4 @@
             </div>
         </div>
     </div>
-</Backdrop>
+</Modal>
