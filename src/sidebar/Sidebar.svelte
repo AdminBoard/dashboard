@@ -24,44 +24,46 @@
 
 <style lang="scss">
   @import "../style/color";
+  nav#sidebar {
+    & ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
 
-  .menus {
-    padding: 8px;
+      & li {
+        margin: 0;
+        padding: 0;
 
-    & > .item {
-      margin-top: 8px;
-    }
-  }
-  .title {
-    background-color: darken($col-primary, 20);
-    height: 60px;
-    padding: 8px;
-    vertical-align: middle;
-    font-size: 1.4em;
+        &.header {
+          background-color: darken($col-primary, 20);
+          height: 60px;
+          vertical-align: middle;
+          font-size: 1.4em;
+          align-items: center;
 
-    & .caption {
-      height: 100%;
-    }
-
-    &:hover {
-      background-color: darken($col-primary, 10);
+          & div {
+            padding: 8px;
+          }
+        }
+        &.menu-item {
+          margin: 8px;
+        }
+      }
     }
   }
 </style>
 
-<div class="sidebar column stretch">
-  <div class="title column stretch">
-    <Link href="/home">
-      <div class="caption row center">
+<nav id="sidebar">
+  <ul>
+    <li class="header row">
+      <Link href="/home">
         <div>Adminboard</div>
-      </div>
-    </Link>
-  </div>
-  <div class="menus column stretch">
+      </Link>
+    </li>
     {#each menu as m}
-      <div class="item">
+      <li class="menu-item">
         <Menu bind:data={m} bind:expand={expand[m.id]} />
-      </div>
+      </li>
     {/each}
-  </div>
-</div>
+  </ul>
+</nav>
