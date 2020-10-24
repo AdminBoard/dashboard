@@ -2,5 +2,7 @@
     let now = new Date();
 </script>
 
-<div>Home</div>
-{now}
+<main>
+    <div>Home</div>
+    {now}
+</main>

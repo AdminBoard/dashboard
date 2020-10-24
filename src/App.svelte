@@ -39,7 +39,7 @@
   .app.component {
     height: 100%;
   }
-  .sidebar {
+  aside {
     width: 256px;
     position: fixed;
     height: 100%;
@@ -56,9 +56,9 @@
   <Outlet />
 {:else}
   <div class="app component row">
-    <div class="sidebar primary-bg">
+    <aside class="primary-bg">
       <Sidebar />
-    </div>
+    </aside>
     <div class="content">
       <Outlet />
     </div>

@@ -43,14 +43,16 @@
     {/if}
 </svelte:head>
 
-{#if widgets != null}
-    {#each widgets as line}
-        <div class="line">
-            {#each line as widget}
-                <div class="widget">
-                    <Widget {page} content={widget} />
-                </div>
-            {/each}
-        </div>
-    {/each}
-{/if}
+<main>
+    {#if widgets != null}
+        {#each widgets as line}
+            <div class="line">
+                {#each line as widget}
+                    <div class="widget">
+                        <Widget {page} content={widget} />
+                    </div>
+                {/each}
+            </div>
+        {/each}
+    {/if}
+</main>

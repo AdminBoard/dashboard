@@ -43,7 +43,7 @@
 <style lang="scss">
     @import "../style/color";
 
-    .display {
+    main {
         height: 100vh;
         width: 100vw;
         background-color: darken($col-primary, 20);
@@ -77,7 +77,7 @@
     }
 </style>
 
-<div class="display row center">
+<main class="row center">
     <div class="column center">
         <div class="form column stretch rounded">
             <div class="title">Adminboard</div>
@@ -111,4 +111,4 @@
             </div>
         </div>
     </div>
-</div>
+</main>
