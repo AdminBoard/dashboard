@@ -3,10 +3,9 @@
 
   export let data = { caption: "", kind: "" };
 
-  let className = "";
-  export { className as class };
-
   export let expand = false;
+  export { clazz as class };
+  let clazz;
 </script>
 
 <style lang="scss">
@@ -14,60 +13,60 @@
   .menu {
     cursor: pointer;
     border-radius: 8px;
-    border: 2px solid transparentize(#fff, 0.95);
+    padding: 8px;
+    transition: all 200ms ease-out;
+    margin: 0 8px;
 
-    &.page {
-      padding: 6px 8px;
-
-      &:hover {
-        box-shadow: 0 0 4px $col-secondary;
-      }
-      &:active {
-        background-color: $col-secondary;
-      }
+    &:hover {
+      background-color: darken($col-secondary, 10);
     }
-
-    &.group {
-      & .title {
-        padding: 6px 8px;
-        flex: 1;
-        text-align: left;
-        &:hover {
-          border-radius: 8px;
-          box-shadow: 0 0 4px $col-secondary;
-        }
-      }
+    &:active {
+      background-color: lighten($col-secondary, 10);
     }
     &.child {
-      border: 2px solid transparentize(#fff, 0.95);
-      margin: 2px 4px;
+      padding-left: 16px;
+    }
+  }
+
+  .group {
+    border: 1px solid transparentize(#fff, 0.9);
+    margin: 0 8px;
+    border-radius: 8px;
+    & .menu {
+      margin: 0;
+    }
+  }
+  .children {
+    height: 0;
+    overflow: hidden;
+
+    &.expand {
+      height: auto;
     }
   }
 </style>
 
 {#if data.kind == 'page'}
-  <Link href={data.path}>
-    <div class="menu page row center {className}">
-      <div>{data.caption}</div>
-    </div>
-  </Link>
+  <div class="menu {clazz}">
+    <Link href={data.path}>
+      <div class="label">{data.caption}</div>
+    </Link>
+  </div>
 {:else if data.kind == 'group'}
-  <div
-    class="menu group column stretch"
-    class:expand
-    on:click|stopPropagation={() => (expand = !expand)}>
-    <div class="row center">
-      <div class="title row center">
-        <div class="fill">{data.caption}</div>
-        <i class="material-icons">
-          {#if expand}keyboard_arrow_up{:else}keyboard_arrow_down{/if}
-        </i>
-      </div>
+  <div class="group">
+    <div
+      class="menu row center"
+      on:click|stopPropagation={() => (expand = !expand)}>
+      <div class="label">{data.caption}</div>
+      <div class="fill" />
+      <i class="material-icons">
+        {#if expand}keyboard_arrow_up{:else}keyboard_arrow_down{/if}
+      </i>
     </div>
-    {#if expand}
+    <div class="children" class:expand>
       {#each data.submenu as m}
         <svelte:self bind:data={m} class="child" />
       {/each}
-    {/if}
+    </div>
   </div>
 {:else}{data.caption}{/if}

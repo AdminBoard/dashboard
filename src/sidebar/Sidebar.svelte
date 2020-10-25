@@ -40,13 +40,11 @@
           vertical-align: middle;
           font-size: 1.4em;
           align-items: center;
+          margin-bottom: 8px;
 
           & div {
             padding: 8px;
           }
-        }
-        &.menu-item {
-          margin: 8px;
         }
       }
     }
@@ -61,7 +59,7 @@
       </Link>
     </li>
     {#each menu as m}
-      <li class="menu-item">
+      <li>
         <Menu bind:data={m} bind:expand={expand[m.id]} />
       </li>
     {/each}
