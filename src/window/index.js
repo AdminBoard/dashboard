@@ -5,3 +5,9 @@ export const Popup = {
     open,
     fromRight,
 }
+
+export const window = {
+    popup: Popup,
+}
+
+export default window

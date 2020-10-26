@@ -1,13 +1,8 @@
-<script context="module">
-    let widgetMap = {};
-
-    export function register(name, widget) {
-        widgetMap[name] = widget;
-    }
-</script>
-
 <script>
     import { createEventDispatcher } from "svelte";
+    import { getWidget } from "../widgets";
+
+    export let window;
 
     export let page = { title: null };
     export let content; //content of admin_page_widget
@@ -32,7 +27,8 @@
 
 {#if content != null}
     <svelte:component
-        this={widgetMap[content.name]}
+        this={getWidget(content.name)}
+        {window}
         {session}
         {page}
         {data}

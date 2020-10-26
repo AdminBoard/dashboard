@@ -1,9 +1,14 @@
-import Widget, { register } from './Widget.svelte'
-import Label from './Label.svelte'
-import Table from './Table/index'
+const widgetMap = {}
 
-export default {
-    register: register,
+export function registerWidget(name, widget) {
+    widgetMap[name] = widget
 }
 
-export { Widget, Label, Table }
+export function getWidget(name) {
+    return widgetMap[name]
+}
+
+export default {
+    register: registerWidget,
+    get: getWidget,
+}

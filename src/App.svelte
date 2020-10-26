@@ -2,7 +2,6 @@
   import Router, { Outlet } from "./router";
   import { get } from "./Api.svelte";
   import Sidebar from "./sidebar";
-  import Widgets, { Table, Label } from "./widgets";
   import Home from "./pages/Home.svelte";
   import Page from "./pages/Page.svelte";
   import Login from "./pages/Login.svelte";
@@ -10,8 +9,12 @@
   import Snackbar from "./snackbar/Snackbar.svelte";
   import Confirm from "./window/Confirm.svelte";
 
+  import Widgets from "./widgets";
+  import { window } from "./window";
+  import Table from "./widgets/Table";
+  import Label from "./widgets/Label";
+
   let session = null;
-  let refresh;
 
   Widgets.register("Table", Table);
   Widgets.register("Label", Label);
@@ -20,6 +23,13 @@
   Router.register("/home", Home);
   Router.register("*", Page);
 
+  function refreshSession() {
+    setTimeout(() => {
+      get("/api/public?session").then((resp) => {});
+      refreshSession();
+    }, 10 * 60 * 1000);
+  }
+
   //check session
   get("/api/public?session").then((resp) => {
     if (resp.status != 0 || resp.data == null) {
@@ -27,9 +37,7 @@
     } else {
       session = resp.data;
       Router.start();
-      refresh = setInterval(() => {
-        get("/api/public?session");
-      }, 10 * 60 * 1000);
+      refreshSession();
     }
   });
 </script>
@@ -64,6 +72,6 @@
     </div>
   </div>
 {/if}
-<Popup />
+<Popup {window} />
 <Confirm />
 <Snackbar />

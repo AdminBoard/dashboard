@@ -62,7 +62,7 @@
         }
     }
     @media print {
-        :global(.app.component .sidebar) {
+        :global(.app > aside) {
             display: none;
         }
         :global(.app.component .content) {

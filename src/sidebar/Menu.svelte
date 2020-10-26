@@ -4,8 +4,6 @@
   export let data = { caption: "", kind: "" };
 
   export let expand = false;
-  export { clazz as class };
-  let clazz;
 </script>
 
 <style lang="scss">
@@ -39,6 +37,7 @@
   .children {
     height: 0;
     overflow: hidden;
+    padding-left: 8px;
 
     &.expand {
       height: auto;
@@ -47,7 +46,7 @@
 </style>
 
 {#if data.kind == 'page'}
-  <div class="menu {clazz}">
+  <div class="menu">
     <Link href={data.path}>
       <div class="label">{data.caption}</div>
     </Link>
@@ -65,7 +64,7 @@
     </div>
     <div class="children" class:expand>
       {#each data.submenu as m}
-        <svelte:self bind:data={m} class="child" />
+        <svelte:self bind:data={m} />
       {/each}
     </div>
   </div>

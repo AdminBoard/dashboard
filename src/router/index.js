@@ -12,5 +12,6 @@ export default {
     start: () => navigate(window.location.pathname),
     navigate: navigate,
     reload: () => window.location.reload(),
-}
+    pathname: window.location.pathname,
 
+}

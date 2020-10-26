@@ -3,18 +3,18 @@
 
     import { pageByPath } from "../Api.svelte";
     import Router from "../router";
-    import { Widget } from "../widgets";
-    import { Popup } from "../window";
+    import Widget from "../widgets/Widget.svelte";
+    import { window } from "../window";
 
     let widgets;
 
     let page = {
         title: null,
-        path: window.location.pathname,
+        path: Router.pathname,
     };
 
     onDestroy(() => {
-        Popup.dismiss();
+        window.popup.dismiss();
     });
 
     pageByPath(page.path)
@@ -49,7 +49,7 @@
             <div class="line">
                 {#each line as widget}
                     <div class="widget">
-                        <Widget {page} content={widget} />
+                        <Widget {page} {window} content={widget} />
                     </div>
                 {/each}
             </div>

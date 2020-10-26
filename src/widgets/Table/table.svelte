@@ -2,13 +2,13 @@
     import { onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
     import { post } from "../../Api.svelte";
-    import { Popup } from "../../window";
 
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
 
     export let session;
     export let page;
+    export let window;
 
     export let properties;
     export let data;
@@ -67,7 +67,7 @@
     }
 
     function select(ev, item, index) {
-        Popup.dismiss();
+        window.popup.dismiss();
         if (properties.columns == null) return;
         switch (selectable) {
             case 1:
@@ -99,7 +99,7 @@
             }
             const action = Object.assign({}, properties.select);
             action.data = data;
-            Popup.fromRight(action);
+            window.Popup.fromRight(action);
         }
         selectedIndex = {};
         selectedIndex[index] = true;
