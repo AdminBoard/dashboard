@@ -6,8 +6,9 @@
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
 
+    import Dialog from "../../dialog";
+
     export let session;
-    export let window;
 
     export let properties;
     export let data;
@@ -66,7 +67,7 @@
     }
 
     function select(ev, item, index) {
-        window.dismiss();
+        Dialog.dismiss();
         if (properties.columns == null) return;
         switch (selectable) {
             case 1:
@@ -230,7 +231,7 @@
     }
 </style>
 
-<div class="loading-container" class:notitle={window.page.title == null}>
+<div class="loading-container" class:notitle={properties.title == null}>
     <div class="loading secondary-bg rounded" class:hide={!loading}>
         Loading...
     </div>
@@ -240,7 +241,7 @@
     <table>
         {#if properties != null}
             <Header
-                {window}
+                title={properties.title}
                 columns={visibleCols}
                 {filterCols}
                 bind:filterParam
@@ -272,7 +273,6 @@
         {/if}
     </table>
     <Footer
-        {window}
         bind:this={footer}
         bind:selectedIndex
         bind:records

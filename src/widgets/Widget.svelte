@@ -2,8 +2,6 @@
     import { createEventDispatcher } from "svelte";
     import { getWidget } from "../widgets";
 
-    export let window;
-
     export let content; //content of admin_page_widget
     export let data = null;
 
@@ -27,7 +25,6 @@
 {#if content != null}
     <svelte:component
         this={getWidget(content.name)}
-        {window}
         {session}
         {data}
         properties={content.properties}

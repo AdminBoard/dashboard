@@ -6,8 +6,7 @@
     import Filter from "./filter.svelte";
 
     import Menu from "./menu.svelte";
-
-    export let window;
+    import Page from "../../page";
 
     export let sticky;
     export let color;
@@ -16,6 +15,7 @@
     export let filterParam;
     $: filterParam && render();
     export let sortParam;
+    export let title;
 
     let dispatch = createEventDispatcher();
     let selectedFilters = [];
@@ -119,11 +119,11 @@
 </style>
 
 <thead class:sticky class:primary={color == 'primary'}>
-    {#if window.page.title != ''}
+    {#if title != null}
         <tr>
             <th colspan={columns.length} class:primary={color == 'primary'}>
                 <div class="row center">
-                    <div class="caption padding">{window.page.title}</div>
+                    <div class="caption padding">{title}</div>
                     <Menu let:dismiss icon="search">
                         <Filter
                             columns={filterCols}
@@ -140,7 +140,7 @@
     <tr>
         {#each columns as col}
             <td
-                class:notitle={window.page.title == ''}
+                class:notitle={title == null}
                 class:primary={color == 'primary'}>
                 {#if col.sortable}
                     <span class="sort" on:click={sort(col)}>

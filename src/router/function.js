@@ -1,4 +1,5 @@
 import { writable, readable } from "svelte/store"
+import ErrNotFound from '../pages/ErrNotFound.svelte'
 
 export let activePath = null
 
@@ -11,6 +12,7 @@ export const onChange = readable(null, (set) => {
 
 //TODO using regex for path finding 
 export const navigate = (path) => {
+    console.log(activePath, path)
     if (activePath != path) {
         activePath = path
         let page = routeMap.get(path)

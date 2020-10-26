@@ -2,23 +2,23 @@
     import { writable } from "svelte/store";
     import { pageById } from "../Api.svelte";
     import Snackbar from "../snackbar/Snackbar.svelte";
-    import Widget from "../widgets/Widget.svelte";
+    import Renderer from "../widgets/Renderer.svelte";
 
     import Modal from "./Modal.svelte";
 
-    let widgets = writable([]);
-    let data;
+    let widgetStore = writable([]);
+    let dataStore = writable(null);
     let modal;
 
     export function open(action) {
-        data = action.data;
+        dataStore.set(action.data);
         modal.open();
 
         if (action.page_id != null) {
-            widgets.set([]);
+            widgetStore.set([]);
             pageById(action.page_id)
                 .then((resp) => {
-                    widgets.set(resp.widgets);
+                    widgetStore.set(resp.widgets);
                 })
                 .catch((e) => {
                     Snackbar.open(e);
@@ -31,19 +31,14 @@
 </script>
 
 <script>
-    export let window;
+    let widgets;
+    let data;
+    widgetStore.subscribe((w) => (widgets = w));
+    dataStore.subscribe((d) => (data = d));
 </script>
 
 <Modal bind:this={modal}>
     <div class="component">
-        {#each $widgets as line}
-            <div class="row">
-                {#each line as widget}
-                    <div class="fill">
-                        <Widget {window} {data} content={widget} />
-                    </div>
-                {/each}
-            </div>
-        {/each}
+        <Renderer {widgets} {data} />
     </div>
 </Modal>

@@ -1,50 +1,18 @@
 <script>
-  import Router, { Outlet } from "./router";
-  import { get } from "./Api.svelte";
+  import { Outlet } from "./router";
   import Sidebar from "./sidebar";
-  import Home from "./pages/Home.svelte";
-  import Page from "./pages/Page.svelte";
-  import Login from "./pages/Login.svelte";
-  import Dialog from "./window/Dialog.svelte";
   import Snackbar from "./snackbar/Snackbar.svelte";
   import Confirm from "./window/Confirm.svelte";
+  import Session from "./session";
+  import Dialog from "./window/Dialog.svelte";
+  import Renderer from "./widgets/Renderer.svelte";
 
-  import Widgets from "./widgets";
-  import { window } from "../window";
-  import Table from "./widgets/Table";
-  import Label from "./widgets/Label";
+  let state;
+  Session.onChange.subscribe((s) => {
+    state = s;
+  });
 
-  let session = null;
-
-  Widgets.register("Table", Table);
-  Widgets.register("Label", Label);
-
-  Router.register("/login", Login);
-  Router.register("/home", Home);
-  Router.register("*", Page);
-
-  function refreshSession() {
-    setTimeout(() => {
-      get("/api/public?session").then((resp) => {});
-      refreshSession();
-    }, 10 * 60 * 1000);
-  }
-
-  function init() {
-    //check session
-    get("/api/public?session").then((resp) => {
-      if (resp.status != 0 || resp.data == null) {
-        Router.navigate("/login");
-        session = {};
-      } else {
-        session = resp.data;
-        Router.start();
-        refreshSession();
-      }
-    });
-  }
-
-  init();
+  Session.validate();
 </script>
 
 <style lang="scss">
@@ -65,9 +33,7 @@
   }
 </style>
 
-{#if session == null}
-  Loading...
-{:else}
+{#if state}
   <div class="app component row">
     <aside class="primary-bg">
       <Sidebar />
@@ -76,7 +42,10 @@
       <Outlet />
     </div>
   </div>
-{/if}
-<Dialog {window} />
+{:else if state === false}
+  here
+  <Outlet />
+{:else}Loading...{/if}
+<Dialog />
 <Confirm />
 <Snackbar />
