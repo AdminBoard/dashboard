@@ -67,7 +67,7 @@
     }
 
     function select(ev, item, index) {
-        window.popup.dismiss();
+        window.dialog.dismiss();
         if (properties.columns == null) return;
         switch (selectable) {
             case 1:
