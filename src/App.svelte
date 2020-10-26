@@ -30,16 +30,21 @@
     }, 10 * 60 * 1000);
   }
 
-  //check session
-  get("/api/public?session").then((resp) => {
-    if (resp.status != 0 || resp.data == null) {
-      Router.navigate("/login");
-    } else {
-      session = resp.data;
-      Router.start();
-      refreshSession();
-    }
-  });
+  function init() {
+    //check session
+    get("/api/public?session").then((resp) => {
+      if (resp.status != 0 || resp.data == null) {
+        Router.navigate("/login");
+        session = {};
+      } else {
+        session = resp.data;
+        Router.start();
+        refreshSession();
+      }
+    });
+  }
+
+  init();
 </script>
 
 <style lang="scss">
@@ -61,7 +66,7 @@
 </style>
 
 {#if session == null}
-  <Outlet />
+  Loading...
 {:else}
   <div class="app component row">
     <aside class="primary-bg">

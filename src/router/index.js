@@ -1,7 +1,7 @@
 import Outlet from './Outlet.svelte'
 import Link from './Link.svelte'
 import ErrNotFound from "../pages/ErrNotFound.svelte"
-import { register, navigate } from './function'
+import { register, navigate, activePath } from './function'
 
 register('/not-found', ErrNotFound)
 
@@ -12,6 +12,6 @@ export default {
     start: () => navigate(window.location.pathname),
     navigate: navigate,
     reload: () => window.location.reload(),
-    pathname: window.location.pathname,
+    path: () => activePath,
 
 }

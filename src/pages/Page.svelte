@@ -12,7 +12,7 @@
         window.dialog.dismiss();
     });
 
-    pageByPath(window.path)
+    pageByPath(Router.path())
         .then((resp) => {
             if (resp.status == 0) {
                 window.page.title = resp.data.title;

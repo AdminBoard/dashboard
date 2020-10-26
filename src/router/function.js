@@ -1,9 +1,9 @@
 import { writable, readable } from "svelte/store"
 
+export let activePath = null
+
 const pageStore = writable()
 let routeMap = new Map()
-let activePage
-let activePath = window.location.pathname
 
 export const onChange = readable(null, (set) => {
     pageStore.subscribe((page) => set(page))
@@ -11,17 +11,17 @@ export const onChange = readable(null, (set) => {
 
 //TODO using regex for path finding 
 export const navigate = (path) => {
-    if (activePage == null || activePath != path) {
+    if (activePath != path) {
+        activePath = path
         let page = routeMap.get(path)
         if (page == null) {
             page = routeMap.get('*')
         }
         if (page == null) page = ErrNotFound
-        activePage = page
-        pageStore.set(activePage)
+
         history.pushState(null, "", path)
+        pageStore.set(page)
     }
-    activePath = path
 }
 
 export const register = (path, component) => {
