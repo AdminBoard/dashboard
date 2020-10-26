@@ -7,9 +7,10 @@
 
     import Menu from "./menu.svelte";
 
+    export let window;
+
     export let sticky;
     export let color;
-    export let page;
     export let columns;
     export let filterCols;
     export let filterParam;
@@ -118,11 +119,11 @@
 </style>
 
 <thead class:sticky class:primary={color == 'primary'}>
-    {#if page.title != null}
+    {#if window.page.title != ''}
         <tr>
             <th colspan={columns.length} class:primary={color == 'primary'}>
                 <div class="row center">
-                    <div class="caption padding">{page.title}</div>
+                    <div class="caption padding">{window.page.title}</div>
                     <Menu let:dismiss icon="search">
                         <Filter
                             columns={filterCols}
@@ -139,7 +140,7 @@
     <tr>
         {#each columns as col}
             <td
-                class:notitle={page.title == null}
+                class:notitle={window.page.title == ''}
                 class:primary={color == 'primary'}>
                 {#if col.sortable}
                     <span class="sort" on:click={sort(col)}>

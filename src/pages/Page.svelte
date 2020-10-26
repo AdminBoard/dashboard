@@ -8,19 +8,14 @@
 
     let widgets;
 
-    let page = {
-        title: null,
-        path: Router.pathname,
-    };
-
     onDestroy(() => {
-        window.popup.dismiss();
+        window.dialog.dismiss();
     });
 
-    pageByPath(page.path)
+    pageByPath(window.path)
         .then((resp) => {
             if (resp.status == 0) {
-                page.title = resp.data.title;
+                window.page.title = resp.data.title;
                 widgets = resp.data.widgets;
             } else Router.navigate("/not-found");
         })
@@ -38,8 +33,8 @@
 </style>
 
 <svelte:head>
-    {#if page.title != null}
-        <title>AB :: {page.title}</title>
+    {#if window.page.title != ''}
+        <title>AB :: {window.page.title}</title>
     {/if}
 </svelte:head>
 
@@ -49,7 +44,7 @@
             <div class="line">
                 {#each line as widget}
                     <div class="widget">
-                        <Widget {page} {window} content={widget} />
+                        <Widget {window} content={widget} />
                     </div>
                 {/each}
             </div>

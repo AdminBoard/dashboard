@@ -4,7 +4,6 @@
 
     export let window;
 
-    export let page = { title: null };
     export let content; //content of admin_page_widget
     export let data = null;
 
@@ -30,7 +29,6 @@
         this={getWidget(content.name)}
         {window}
         {session}
-        {page}
         {data}
         properties={content.properties}
         on:select={(ev) => dispatch('action', ev.detail)} />

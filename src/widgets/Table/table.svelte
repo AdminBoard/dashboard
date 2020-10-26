@@ -7,7 +7,6 @@
     import Footer from "./footer.svelte";
 
     export let session;
-    export let page;
     export let window;
 
     export let properties;
@@ -231,7 +230,7 @@
     }
 </style>
 
-<div class="loading-container" class:notitle={page.title == null}>
+<div class="loading-container" class:notitle={window.page.title == null}>
     <div class="loading secondary-bg rounded" class:hide={!loading}>
         Loading...
     </div>
@@ -241,7 +240,7 @@
     <table>
         {#if properties != null}
             <Header
-                {page}
+                {window}
                 columns={visibleCols}
                 {filterCols}
                 bind:filterParam
