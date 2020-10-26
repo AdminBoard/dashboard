@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import { Dialog } from "../../window";
 
+    export let window;
     export let pageParam;
     export let records;
     export let actions;
@@ -41,7 +41,7 @@
                 if (data.length == 0) return;
                 const a = Object.assign({}, action);
                 a.data = data;
-                Dialog.open(a);
+                window.open(a);
                 break;
         }
     }

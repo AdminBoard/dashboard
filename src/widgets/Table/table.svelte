@@ -66,7 +66,7 @@
     }
 
     function select(ev, item, index) {
-        window.dialog.dismiss();
+        window.dismiss();
         if (properties.columns == null) return;
         switch (selectable) {
             case 1:
@@ -98,7 +98,7 @@
             }
             const action = Object.assign({}, properties.select);
             action.data = data;
-            window.Dialog.fromRight(action);
+            window.fromRight(action);
         }
         selectedIndex = {};
         selectedIndex[index] = true;
@@ -272,6 +272,7 @@
         {/if}
     </table>
     <Footer
+        {window}
         bind:this={footer}
         bind:selectedIndex
         bind:records

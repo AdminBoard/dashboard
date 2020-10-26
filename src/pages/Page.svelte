@@ -4,12 +4,12 @@
     import { pageByPath } from "../Api.svelte";
     import Router from "../router";
     import Widget from "../widgets/Widget.svelte";
-    import { window } from "../window";
+    import { window } from "../../window";
 
     let widgets;
 
     onDestroy(() => {
-        window.dialog.dismiss();
+        window.dismiss();
     });
 
     pageByPath(Router.path())

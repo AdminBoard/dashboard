@@ -10,7 +10,7 @@
   import Confirm from "./window/Confirm.svelte";
 
   import Widgets from "./widgets";
-  import { window } from "./window";
+  import { window } from "../window";
   import Table from "./widgets/Table";
   import Label from "./widgets/Label";
 
