@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import { Popup } from "../../window";
+    import { Dialog } from "../../window";
 
     export let pageParam;
     export let records;
@@ -41,7 +41,7 @@
                 if (data.length == 0) return;
                 const a = Object.assign({}, action);
                 a.data = data;
-                Popup.open(a);
+                Dialog.open(a);
                 break;
         }
     }

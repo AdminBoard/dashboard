@@ -1,13 +1,13 @@
-import { dismiss, open, fromRight } from './Popup.svelte'
+import { dismiss, open, fromRight } from './Dialog.svelte'
 
-export const Popup = {
+export const Dialog = {
     dismiss,
     open,
     fromRight,
 }
 
 export const window = {
-    popup: Popup,
+    dialog: Dialog,
 }
 
 export default window
