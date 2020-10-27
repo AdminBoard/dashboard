@@ -6,6 +6,7 @@
     import Page from "../page";
     import Renderer from "../widgets/Renderer.svelte";
     import Dialog from "../dialog";
+    import Session from "../../session";
 
     let widgets;
 
@@ -15,10 +16,16 @@
 
     pageByPath(Router.path())
         .then((resp) => {
-            if (resp.status == 0) {
-                Page.title = resp.data.title;
-                widgets = resp.data.widgets;
-            } else Router.navigate("/not-found");
+            switch (resp.status) {
+                case 0:
+                    Page.title = resp.data.title;
+                    widgets = resp.data.widgets;
+                    break;
+                case 401:
+                    Session.clear();
+                default:
+                    Router.navigate("/not-found");
+            }
         })
         .catch((e) => console.log(e));
 </script>
