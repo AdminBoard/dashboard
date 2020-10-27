@@ -1,7 +1,7 @@
 <script>
     import { onDestroy } from "svelte";
 
-    import { pageByPath } from "../Api.svelte";
+    import Api from "../api";
     import Router from "../router";
     import Page from "../page";
     import Renderer from "../widgets/Renderer.svelte";
@@ -14,7 +14,7 @@
         Dialog.dismiss();
     });
 
-    pageByPath(Router.path())
+    Api.pageByPath(Router.path())
         .then((resp) => {
             switch (resp.status) {
                 case 0:

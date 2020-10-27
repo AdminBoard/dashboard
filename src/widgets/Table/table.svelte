@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { formatDate, formatNumber, formatMap } from "./formatter";
-    import { post } from "../../Api.svelte";
+    import Api from "../../api";
 
     import Header from "./header.svelte";
     import Footer from "./footer.svelte";
@@ -53,7 +53,7 @@
             }
         }
 
-        post(properties.data_source.path, params)
+        Api.post(properties.data_source.path, params)
             .then((resp) => {
                 if (resp.status == 0) {
                     records =

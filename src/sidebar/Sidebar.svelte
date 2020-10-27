@@ -1,5 +1,5 @@
 <script>
-  import { post } from "../Api.svelte";
+  import Api from "../api";
   import Menu from "./Menu.svelte";
   import { Link } from "../router";
 
@@ -12,7 +12,7 @@
     const ex = localStorage.getItem("expand");
     if (ex != null) expand = JSON.parse(ex);
 
-    post("/api?menu")
+    Api.post("/api?menu")
       .then((resp) => {
         if (resp.status == 0) menu = resp.data;
       })

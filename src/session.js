@@ -1,5 +1,5 @@
 import Router from './router'
-import { get } from "./Api.svelte"
+import Api from "./api"
 import { writable, readable } from 'svelte/store'
 
 let value = null
@@ -7,24 +7,32 @@ let status = writable(null) //null = not initialize, false = not login, true = l
 
 function refreshSession() {
     setTimeout(() => {
-        get("/api/public?session").then((resp) => { })
+        Api.get("/api/public?session").then((resp) => { })
         refreshSession()
     }, 10 * 60 * 1000)
 }
 
-export default {
-    onChange: readable(null, (set) => {
-        status.subscribe((state) => set(state))
-    }),
-
+const Session = {
     clear: () => { value = {} },
 
     value: () => { return value },
 
     isLogin: () => { return value != null && Object.keys(value).length > 0 },
 
+    set: (key, value) => {
+        sessionStorage.setItem(
+            "widget." + content.id + "." + key,
+            JSON.stringify(value)
+        )
+    },
+    get: (key) => {
+        return JSON.parse(
+            sessionStorage.getItem("widget." + content.id + "." + key)
+        )
+    },
+
     validate: () => {
-        get("/api/public?session").then((resp) => {
+        Api.get("/api/public?session").then((resp) => {
             if (resp.status != 0 || resp.data == null) {
                 status.set(false)
                 Router.navigate("/login")
@@ -36,6 +44,11 @@ export default {
                 refreshSession()
             }
         })
+    },
 
-    }
+    onChange: readable(null, (set) => {
+        status.subscribe((state) => set(state))
+    })
 }
+
+export default Session

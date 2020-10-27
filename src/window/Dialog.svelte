@@ -1,6 +1,6 @@
 <script context="module">
     import { writable } from "svelte/store";
-    import { pageById } from "../Api.svelte";
+    import Api from "../api";
     import Snackbar from "../snackbar/Snackbar.svelte";
     import Renderer from "../widgets/Renderer.svelte";
 
@@ -16,7 +16,7 @@
 
         if (action.page_id != null) {
             widgetStore.set([]);
-            pageById(action.page_id)
+            Api.pageById(action.page_id)
                 .then((resp) => {
                     widgetStore.set(resp.widgets);
                 })

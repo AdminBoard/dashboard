@@ -4,8 +4,6 @@ import './style/_tag.scss'
 
 import App from './App.svelte'
 
-import { post, get } from './Api.svelte'
-
 import Widgets from './widgets'
 import Table from "./widgets/Table"
 import Label from "./widgets/Label"
@@ -30,11 +28,6 @@ Router.register("/login", Login)
 Router.register("/home", Home)
 Router.register("*", PageRenderer)
 
-const Api = {
-	post: post,
-	get: get,
-}
-
-export { Api, Widgets, Dialog }
+export { Widgets, Dialog }
 
 
