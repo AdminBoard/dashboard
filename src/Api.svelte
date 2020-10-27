@@ -43,7 +43,3 @@
     });
   }
 </script>
-
-<script>
-  import { resolve } from "path";
-</script>
