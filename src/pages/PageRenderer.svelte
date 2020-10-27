@@ -6,7 +6,7 @@
     import Page from "../page";
     import Renderer from "../widgets/Renderer.svelte";
     import Dialog from "../dialog";
-    import Session from "../../session";
+    import Session from "../session";
 
     let widgets;
 

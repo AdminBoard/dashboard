@@ -17,6 +17,8 @@ export default {
         status.subscribe((state) => set(state))
     }),
 
+    clear: () => { value = {} },
+
     value: () => { return value },
 
     isLogin: () => { return value != null && Object.keys(value).length > 0 },
@@ -26,7 +28,7 @@ export default {
             if (resp.status != 0 || resp.data == null) {
                 status.set(false)
                 Router.navigate("/login")
-                value = {}
+                clear()
             } else {
                 status.set(true)
                 value = resp.data
