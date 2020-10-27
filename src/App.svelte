@@ -5,7 +5,6 @@
   import Confirm from "./window/Confirm.svelte";
   import Session from "./session";
   import Dialog from "./window/Dialog.svelte";
-  import Renderer from "./widgets/Renderer.svelte";
 
   let state;
   Session.onChange.subscribe((s) => {
@@ -29,22 +28,26 @@
   }
   .content {
     flex: 1;
-    margin-left: 256px;
+    &.with-sidebar {
+      margin-left: 256px;
+    }
   }
 </style>
 
-{#if state}
+{#if state == null}
+  Loading...
+{:else}
   <div class="app component row">
-    <aside class="primary-bg">
-      <Sidebar />
-    </aside>
-    <div class="content">
+    {#if state}
+      <aside class="primary-bg">
+        <Sidebar />
+      </aside>
+    {/if}
+    <div class="content" class:with-sidebar={state}>
       <Outlet />
     </div>
   </div>
-{:else if state === false}
-  <Outlet />
-{:else}Loading...{/if}
+{/if}
 <Dialog />
 <Confirm />
 <Snackbar />
