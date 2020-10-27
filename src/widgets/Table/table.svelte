@@ -7,8 +7,8 @@
     import Footer from "./footer.svelte";
 
     import Dialog from "../../dialog";
-    import Session from "../../session";
 
+    export let prefs;
     export let properties;
     export let data;
 
@@ -32,8 +32,8 @@
 
         if (dataSource == null) return;
 
-        Session.set("filters", filterParam);
-        Session.set("sort", sortParam);
+        prefs.set("filters", filterParam);
+        prefs.set("sort", sortParam);
 
         loading = true;
 
@@ -127,8 +127,8 @@
         }
     }
 
-    function loadFromSession(name) {
-        let val = Session.get(name);
+    function loadFromPrefs(name) {
+        let val = prefs.get(name);
         if (val != null) return val;
         if (properties[name] != null) return properties[name];
         return null;
@@ -140,14 +140,14 @@
             if (el.filter != null) filterCols.push(el);
         });
 
-        let val = loadFromSession("filters");
+        let val = loadFromPrefs("filters");
         if (val == null)
             filterParam = properties.filters != null ? properties.filters : {};
         else filterParam = val;
 
-        val = loadFromSession("sort");
+        val = loadFromPrefs("sort");
         sortParam = val == null ? {} : val;
-        pageParam = loadFromSession("page");
+        pageParam = loadFromPrefs("page");
         selectable = properties.select == null ? 0 : 1;
 
         if (properties.multiple) selectable = 2;

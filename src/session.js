@@ -19,18 +19,6 @@ const Session = {
 
     isLogin: () => { return value != null && Object.keys(value).length > 0 },
 
-    set: (key, value) => {
-        sessionStorage.setItem(
-            "widget." + content.id + "." + key,
-            JSON.stringify(value)
-        )
-    },
-    get: (key) => {
-        return JSON.parse(
-            sessionStorage.getItem("widget." + content.id + "." + key)
-        )
-    },
-
     validate: () => {
         Api.get("/api/public?session").then((resp) => {
             if (resp.status != 0 || resp.data == null) {
