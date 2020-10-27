@@ -43,7 +43,6 @@
     </div>
   </div>
 {:else if state === false}
-  here
   <Outlet />
 {:else}Loading...{/if}
 <Dialog />
