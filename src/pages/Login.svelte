@@ -5,10 +5,13 @@
     import Router from "../router";
     import Snackbar from "../snackbar";
 
+    export let ready;
     let username = "";
     let password = "";
 
     let loading = false;
+
+    ready.set(true);
 
     function click() {
         let u = username.trim();

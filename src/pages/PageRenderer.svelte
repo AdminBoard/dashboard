@@ -8,6 +8,7 @@
     import Dialog from "../dialog";
     import Session from "../session";
 
+    export let ready;
     let widgets;
 
     onDestroy(() => {
@@ -26,7 +27,7 @@
                 default:
                     Router.navigate("/not-found");
             }
-            Page.ready.set(true);
+            ready.set(true);
         })
         .catch((e) => console.log(e));
 </script>

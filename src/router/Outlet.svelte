@@ -55,7 +55,7 @@
 
 {#key unique}
     <div class="content" class:show={!loading}>
-        <svelte:component this={activePage} />
+        <svelte:component this={activePage} ready={Page.ready} />
     </div>
 {/key}
 <div class="loading row center" class:show={loading}>
