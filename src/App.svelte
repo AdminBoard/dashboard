@@ -17,7 +17,7 @@
 <style lang="scss">
   @import "style/color";
   .app.component {
-    height: 100%;
+    height: 100vh;
   }
   aside {
     width: 256px;
@@ -28,6 +28,7 @@
   }
   .content {
     flex: 1;
+    min-height: 100%;
     &.with-sidebar {
       margin-left: 256px;
     }

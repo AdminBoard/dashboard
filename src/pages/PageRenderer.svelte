@@ -26,6 +26,7 @@
                 default:
                     Router.navigate("/not-found");
             }
+            Page.ready.set(true);
         })
         .catch((e) => console.log(e));
 </script>
