@@ -42,7 +42,7 @@
     .content {
         opacity: 0;
         visibility: hidden;
-        transform: translate(64px, 64px);
+        transform: scale(0.95, 1) translateY(64px);
         transition: all 200ms ease-out;
         &.show {
             opacity: 1;
