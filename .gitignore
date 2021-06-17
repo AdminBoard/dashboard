@@ -1,5 +1,9 @@
-/node_modules/
+node_modules
 /public/build/
+/.svelte-kit
+/build
+/functions
 
 .DS_Store
 package-lock.json
+
