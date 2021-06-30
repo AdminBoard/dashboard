@@ -1,17 +1,24 @@
-.flex {
-    &.col {
-        display: flex;
-        flex-direction: column;
-    }
-    &.row {
-        display: flex;
-        flex-direction: row;
+.col {
+    display: flex;
+    flex-direction: column;
 
-        &.vcenter {
-            align-items: center;
-        }
-        &.center {
-            justify-content: center;
-        }
+    & > :global(*:not(:last-child)) {
+        margin-bottom: 8px;
+    }
+
+}
+.row {
+    display: flex;
+    flex-direction: row;
+
+    & > :global(*:not(:last-child)) {
+        margin-right: 8px;
+    }
+
+    &.vcenter {
+        align-items: center;
+    }
+    &.center {
+        justify-content: center;
     }
 }

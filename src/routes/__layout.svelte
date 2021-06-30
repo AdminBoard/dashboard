@@ -4,6 +4,7 @@
 	import Snackbar, { Actions, Label } from "@smui/snackbar";
 	import IconButton from "@smui/icon-button";
 	import snackbar from "$lib/snackbar";
+	import { post } from "$lib/api";
 
 	let snackbarWithClose;
 	let snackbarMsg;
@@ -16,9 +17,6 @@
 
 <main>
 	<slot />
-
-	noti
-
 	<Snackbar bind:this={snackbarWithClose}>
 		<Label>{snackbarMsg}</Label>
 		<Actions>
