@@ -1,5 +1,6 @@
 <script lang="ts">
 	import "../styles/app.scss";
+	import "../styles/flex.scss";
 
 	import Snackbar, { Actions, Label } from "@smui/snackbar";
 	import IconButton from "@smui/icon-button";
